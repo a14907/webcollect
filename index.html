@@ -13,7 +13,7 @@
             const files = await response.json();
             const listElement = document.createElement("ul");
             for (const file of files) {
-                if (file.name != "index.html" || !file.name.startsWith(".")) {
+                if (file.name != "index.html" && !file.name.startsWith(".")) {
                     const itemElement = document.createElement("li");
                     const linkElement = document.createElement("a");
                     linkElement.href = encodeURIComponent(file.path);
