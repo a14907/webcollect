@@ -1,0 +1,839 @@
+<html lang=zh-CN class=translated-ltr><!--
+ Page saved with SingleFile 
+ url: http://cncc.bingj.com/cache.aspx?q=6-lesser-known-features-of-c-net-that-you-should-be-using&d=5015628766253913&mkt=en-US&setlang=en-US&w=uSXlwXsQ9q_o2HsDqr_w9V0NIh8XMDxm 
+ saved date: Thu Apr 14 2022 10:34:17 GMT+0800 (中国标准时间)
+--><meta charset=utf-8><style>.disclaimer{text-align:right;font-size:x-small}.banner{background-color:#fff;text-align:left}.cacheContent{position:relative}.b_vPanel>div{padding-bottom:10px}.b_vPanel>div:last-child{padding:0}.banner a{color:#001ba0}</style><meta http-equiv=origin-trial content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv=origin-trial content=Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9><meta http-equiv=origin-trial content=A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9><meta http-equiv=origin-trial content=AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9><meta http-equiv=origin-trial content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv=origin-trial content=A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9><meta http-equiv=origin-trial content=A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9><meta http-equiv=origin-trial content=A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9><style>.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0,0);transform-origin:bottom right}50%{transform:scale(1.03,1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1,1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0,0);transform-origin:bottom left}50%{transform:scale(1.03,1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1,1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1,1);transform-origin:bottom right}100%{opacity:0;transform:scale(0,0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1,1);transform-origin:bottom left}100%{opacity:0;transform:scale(0,0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}.goog-te-spinner-pos{z-index:1000;position:fixed;transition-delay:0.6s;left:-1000px;top:-1000px}.goog-te-spinner-animation{display:flex;align-items:center;justify-content:center;width:104px;height:104px;border-radius:50px;background:#fff url(data:image/png;base64,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) 50% 50% no-repeat;transition:all 0.6s ease-in-out}.goog-te-spinner-animation-show{transform:scale(0.5);opacity:1}.goog-te-spinner{margin:2px 0 0 2px;animation:goog-te-spinner-rotator 1.4s linear infinite}@keyframes goog-te-spinner-rotator{0%{transform:rotate(0deg)}100%{transform:rotate(270deg)}}.goog-te-spinner-path{stroke-dasharray:187;stroke-dashoffset:0;stroke:#4285f4;transform-origin:center;animation:goog-te-spinner-dash 1.4s ease-in-out infinite}@keyframes goog-te-spinner-dash{0%{stroke-dashoffset:187}50%{stroke-dashoffset:46.75;transform:rotate(135deg)}100%{stroke-dashoffset:187;transform:rotate(450deg)}}</style><meta name=viewport content="width=device-width, initial-scale=1" class=sf-hidden><title class=sf-hidden>您应该使用的 C#/.NET 的 6 个鲜为人知的特性 – Blog&lt;T&gt;</title><meta name=generator content="WordPress 5.0.16" class=sf-hidden><meta name="specificfeeds-verification-code-ZzdZSjZabnh0K1pPdFdIc3Ftb2pDa1hiTUk3OFI1dnJaR2VaQ1ZOQTIvWVU2cnJpMWFZcWYyL0t5VGZFQUZZVFRqZm9HNXZRZVMzcWttN3RMVEtlL0ZyY1NrVU93OHM0MjM2dlY0NWpyVlYrV1VXR3ZiN0p4QUwvT1BBTEVjajF8eHRhUEdic0c2elM0enNjTWkvNGFPVFkwYVhLSytZNy9Fd2RqYjlTL1BqUT0=" content=RY37f1U2jDGF3M3MnsE9 class=sf-hidden><meta name=viewport content="width=device-width, initial-scale=1" class=sf-hidden><meta property=og:image:secure_url content=https://chrisstclair.co.uk/wp-content/uploads/2019/10/C7ACDB69-E9F0-4A62-B39F-62A13FDCDE15.jpeg data-id=sfsi class=sf-hidden><meta property=og:image:type content=image/jpeg data-id=sfsi class=sf-hidden><meta property=og:image:width content=4000 data-id=sfsi class=sf-hidden><meta property=og:image:height content=2667 data-id=sfsi class=sf-hidden><meta property=og:url content=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ data-id=sfsi class=sf-hidden><meta property=og:description content="
+Introduction
+
+
+
+This post is going to setup 6 features of the .NET Framework which I feel are under-utilised by a lot of developers - your opinion on whether they are under-utilised may differ from mine, but I hope some of you will find this post useful.
+
+
+
+1. Stopwatch
+
+
+
+So I’m going to start with something we’ll use further on, the Stopwatch. It's quite likely that at some point, you'll have reason to want to profile parts of your code to find any performance bottlenecks. While there are a plethora of benchmarking packages you can use in your code (Benchmark.NET being one of the most popular), sometimes you just want to benchmark something quickly without any fuss. I imagine most people would do something like the below
+
+
+
+var start = DateTime.Now;
+Thread.Sleep(2000); //Code you want to profile here
+var end = DateTime.Now;
+var duration = (int)(end - start).TotalMilliseconds;
+Console.WriteLine($The operation took {duration} milliseconds);
+
+
+
+This works - it'll tell you it took ~2000 milliseconds. However, this is not the recommended way of benchmarking because DateTime.Now may not give you the required level of precision - DateTime.Now is usually accurate to roughly 15 milliseconds. To demonstrate this, see the very contrived example below:
+
+
+
+var sleeps = new List<int>() { 5, 10, 15, 20 };
+foreach (var sleep in sleeps)
+{
+	var start = DateTime.Now;
+	Thread.Sleep(sleep);
+	var end  = DateTime.Now;
+	var duration = (int)(end - start).TotalMilliseconds;
+	Console.WriteLine(duration);
+}
+
+
+
+The output will likely change every time, but you'll likely get something like this:
+
+
+
+15151531 
+
+
+
+So we've established it's not very precise, but what if you don't care? You can of course carry on using the DateTime.Now method of benchmarking, but there's a much nicer alternative called the Stopwatch which sits in the System.Diagnostics namespace. It's much neater than using DateTime.Now, and expresses your intent much more succinctly - and it's much more accurate! Let's change our last bit of code to use the Stopwatch class:
+
+
+
+var sleeps = new List<int>() { 5, 10, 15, 20 };
+foreach (var sleep in sleeps)
+{
+    var sw = Stopwatch.StartNew();
+    Thread.Sleep(sleep);
+    Debug.WriteLine(sw.ElapsedMilliseconds);
+}
+
+
+
+Our output is then this (of course, it is variable)
+
+
+
+6101520
+
+
+
+Much better! So really, given the ease of using the Stopwatch class, there is really no reason to use the 'old fashioned' way.
+
+
+
+2. Task Parallel Library (TPL)
+
+
+
+var items = Enumerable.Range(0,100).ToList();
+var sw = Stopwatch.StartNew();
+foreach (var item in items)
+{
+	Thread.Sleep(50);
+}
+Console.WriteLine($Took {sw.ElapsedMilliseconds} milliseconds...); 
+
+
+
+This takes, as you'd expect, roughly 5000 millseconds/5 seconds (100 * 50 = 5000). Now let's see our parallel version using the TPL...
+
+
+
+var items = Enumerable.Range(0,100).ToList();
+var sw = Stopwatch.StartNew();
+Parallel.ForEach(items, (item) => 
+{
+	Thread.Sleep(50);					 
+});
+Console.WriteLine($Took {sw.ElapsedMilliseconds} milliseconds...); 
+
+
+
+This takes, on average, just 1000 milliseconds - which is a 500% improvement! Results will differ depending on your setup, but it's likely you'll see a similar improvement to what I have. And notice how simple the loop is - it's barely any more complicated than a regular foreach loop.
+
+
+
+But...if you operate on a non thread safe object inside the loop, then you're gonna have a bad time. So you can't just go replacing any foreach you see fit! Again, see my article on the TPL for some tips on this.
+
+
+
+3. Expression Trees
+
+
+
+Expression Trees are an extremely powerful part of the .NET Framework, yet they are also one of the most poorly understood parts (by non-expert programmers) too. It took me a long time to fully grasp the concept of these, and I'm still far from an expert on the matter, but essentially it allows you to wrap a lambda expression, such as Func<T> or Action<T>, and analyze the actual lambda expression itself. It's probably best to illustrate this with an example - and .NET Framework has plenty of these, especially in LINQ to SQL and Entity Framework.
+
+
+
+The 'Where' extension method in LINQ to Objects takes a Func<T,int, bool> as its main parameter - see the below code which I have stolen from Reference Source (which contains the .NET source code)
+
+
+
+static IEnumerable<TSource> WhereIterator<TSource>(IEnumerable<TSource> source, Func<TSource, int, bool> predicate) 
+{
+     int index = -1;
+     foreach (TSource element in source) 
+     {
+          checked { index++; }
+          if (predicate(element, index)) yield return element;
+     }
+}
+
+
+
+This is as you'd expect - it iterates through the IEnumerable and yields what matches the predicate. However, clearly this would not work in LINQ to SQL/Entity Framework - it needs to translate your predicate to SQL! So the signature for the IQueryable version is a bit different...
+
+
+
+static IQueryable<TSource> Where<TSource>(this IQueryable<TSource> source, Expression<Func<TSource, int, bool>> predicate) 
+{
+      return source.Provider.CreateQuery<TSource>( 
+                Expression.Call(
+                    null,
+                    GetMethodInfo(Queryable.Where, source, predicate),
+                    new Expression[] { source.Expression, Expression.Quote(predicate) }
+                    ));
+}
+
+
+
+If you look past the daunting nature of the method, you'll notice that the function now takes the Func<T,int,bool> wrapped in an Expression - this essentially allows the LINQ 'provider' to read through the Func to see exactly what predicate was passed through, and translate it to SQL.  So in essence, Expressions allow you to examine your code at runtime.
+
+
+
+Let's quickly look at something a bit simpler - imagine you have the below code that adds settings to a dictionary (we used to use this in some real code)
+
+
+
+var settings = new List<Setting>();
+settings.Add(new Setting(EnableBugs,Settings.EnableBugs));
+settings.Add(new Setting(EnableFluxCapacitor,Settings.EnableFluxCapacitor));
+
+
+
+I hope it's not difficult to see the danger/repetition here - the name of the setting in the dictionary is a string, and a typo here could cause some issues. Plus, it's tedious to have to do this! If we create a new method that takes an Expression<Func<T>> (essentially, takes a lambda expression that returns something), we get the actual name of the variable passed in!
+
+
+
+private Setting GetSetting<T>(Expression<Func<T>> expr)
+{
+	var me = expr.Body as MemberExpression;
+	if (me == null)
+             throw new ArgumentException(Invalid expression. It should be MemberExpression);
+
+        var func = expr.Compile(); //This converts our expression back to a Func
+	var value = func(); //Run the func to get the setting value
+	return new Setting(me.Member.Name,value);
+}
+
+
+
+We can then call it as below...
+
+
+
+var settings = new List<Setting>();
+settings.Add(GetSetting(() => Settings.EnableBugs));
+settings.Add(GetSetting(() => Settings.EnableFluxCapacitor));	
+
+
+
+Much nicer! You'll note that in our GetSetting method, I need to check if the expression passed in as a 'MemberExpression' - this is because there's nothing stopping calling code from passing something like a method call or a constant value in, in which case there is no 'member name'.
+
+
+
+Obviously I am scratching the surface of what Expressions are capable of, and I hope to write a future post detailing this
+
+
+
+4. Caller Information Attributes
+
+
+
+Caller Information attributes were introduced in .NET Framework 4.0, and while they aren't useful in most cases, they really show their worth when writing code to log debugging information. Let's imagine you have  crude Log function as defined below:
+
+
+
+public static void Log(string text)
+{
+   using (var writer = File.AppendText(log.txt))
+   {
+       writer.WriteLine(text);
+   }
+}
+
+
+
+So you can call this at various points in your code to log some information to the text file, however a single string may not be very useful to you when debugging, unless you've made the effort to put sufficient detail into the string. What you'll likely want is where the log entry occurred - i.e. what method. You can do this by examining the stack trace as below
+
+
+
+public static void Log(string text)
+{
+   using (var writer = File.AppendText(log.txt))
+   {
+       writer.WriteLine(${text} - {new StackTrace().GetFrame(1).GetMethod().Name});
+   }
+}
+
+
+
+This works - it will print 'Main' if I call this from my Main method. However, it is slow and inefficient as you're essentially capturing the stack trace as you would if an exception was thrown. .NET Framework 4.0 introduces the aforementioned 'caller information attributes', which allows the Framework to automatically tell your method information about what's calling it - specifically the file path, method/property name and line number. Essentially, you use these by allowing your method to take optional string parameters that you mark with an attribute. See below where I use the 3 available attributes
+
+
+
+public static void Log(string text,
+[CallerMemberName] string memberName = ,
+[CallerFilePath] string sourceFilePath = ,
+[CallerLineNumber] int sourceLineNumber = 0)
+{
+	Console.WriteLine(${text} - {sourceFilePath}/{memberName} (line {sourceLineNumber}));	
+}
+
+
+
+This does exactly as you'd expect - it outputs the path to the source file, the method it's called from and also the line number. Obviously, this information (especially the latter two) are very useful for debugging purposes.  And this has no impact on speed at all, because the information is actually passed through as static values at compile time.  The only downside is that it pollutes your method signature with these optional values, when you never really want any caller to supply them automatically. But I think that's a small price to pay
+
+
+
+ 
+
+
+
+5. The 'Path' class
+
+
+
+This one may be a bit more well known, but I still see developers doing things like getting the file extension of a file name manually, when the Path class has built in and tried and tested methods to do this for you. The class lives in the System.IO namespace, and contains many helpful methods that reduces the amount of boilerplate code you have to write. A lot of you will be familar with methods such as Path.GetFileName and Path.GetExtension (which do just as you'd expect), but I'll mention some slightly more obscure ones below 
+
+
+
+Path.Combine
+
+
+
+This method takes 2,3 or 4 paths and combines them into one. Generally, people do this to append a filename to a directory path such as directoryPath + \ + filename . The problem with that is that  you making the assumption that '\' is the directory separator on the system your application is running on - what if the application is running on Unix, which uses a forward slash ('/') as its directory separator? This is becoming more of a concern as .NET Core is allowing .NET applications to run on many more platforms now. Path.Combine will use the directory separator applicable for the operating system, and will also deal with redundant separators - i.e. if you append a directory with '\' at the end to a filename with '\' at the start, Path.Combine will strip one out. You can see more reasons why you should use Path.Combine here
+
+
+
+Path.GetTempFileName
+
+
+
+Quite often, you'll need to write a file that you only need access to temporarily. You don't care about the name or where it's stored, but you just need to write to it and soon after read from it.
+
+
+
+While you could write code to manage this yourself, it's going to be tedious and error prone. Enter the insanely useful Path.GetTempFileName method in the Path class - it takes no parameters, but it creates an empty file in the users defined temporary directory and returns the full path for you to use. As it's in the users temporary directory, Windows will automatically maintain this and you won't need to worry about clogging the system with redundant files. See this article for some information on this method, plus the related 'GetTempPath'
+
+
+
+Path.GetInvalidPathChars / Path.GetInvalidFileNameChars
+
+
+
+Path.GetInvalidPathChars, and its brother Path.GetInvalidFileNameChars, returns an array of all characters that are invalid as paths/filenames on the current system. I've seen so much code that manually strips out some of the most common invalid characters such as quotes but not any of the other invalid characters, which is a disaster waiting to happen. And in the spirit of cross platform compatibility, it's incorrect to assume that what is invalid on one system will be invalid on another. My only criticism of these methods is that they do not provide a way of checking if a path contains any of these characters, which usually involves me writing the below 'boiler plate' methods
+
+
+
+public static bool HasInvalidPathChars(string path)
+{
+	if (path  == null)
+		throw new ArgumentNullException(nameof(path));
+	
+	return path.IndexOfAny(Path.GetInvalidPathChars()) >= 0;
+}
+	
+public static bool HasInvalidFileNameChars(string fileName)
+{
+	if (fileName == null)
+		throw new ArgumentNullException(nameof(fileName));
+	
+	return fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
+}
+
+
+
+6. StringBuilder
+
+
+
+String concatenation in .NET is very common, but can also be very inefficient if not done properly. Because strings are immutable, any string concatenation results in a new string being returned for every concatenation. For a small number of concatenations, this difference will be minimal, but performance can quickly deteriorate.
+
+
+
+Enter the aptly named StringBuilder class, which allows you to concatenate with minimal performance overhead. How it does this is fairly straightforward - on a high level, it's storing a list of every character you append, and only building up your string once you actually need it. For a demonstration of how to use it, plus the performance benefits, see the below code that benchmarks both of these (using the useful Stopwatch class I mentioned earlier)
+
+
+
+var sw = Stopwatch.StartNew();
+string test = ;
+for (int i = 0; i < 10000; i++)
+{
+	test += $test{i}{Environment.NewLine};	
+}
+Console.WriteLine($Took {sw.ElapsedMilliseconds} milliseconds to concatenate strings using string concatenation);
+		
+sw = Stopwatch.StartNew();
+var sb = new StringBuilder();
+for (int i = 0; i < 10000; i++)
+{
+	sb.Append($test{i});
+	sb.AppendLine();
+}
+Console.WriteLine($Took {sw.ElapsedMilliseconds} milliseconds to concatenate strings using StringBuilder);
+
+
+
+The results of this benchmark are below:
+
+
+
+Took&nbsp;785&nbsp;milliseconds&nbsp;to&nbsp;concatenate&nbsp;strings&nbsp;using&nbsp;the&nbsp;string&nbsp;concatenationTook&nbsp;3&nbsp;milliseconds&nbsp;to&nbsp;concatenate&nbsp;strings&nbsp;using&nbsp;StringBuilder 
+
+
+
+Wow - that is over 250x faster! And this is for only 10000 concatenations - if you're building up a large CSV file manually (which is bad practice anyway but let's not worry about that), your figure may be larger. If you are only concatenating a couple of strings, it's probably fine to use concatenate without using StringBuilder, but to be honest I like to get in the habit of always using it - the cost of newing up the StringBuilder is, relatively speaking, minuscule.
+
+
+
+In my code sample, I am using sb.Append followed by sb.AppendLine - you can actually just call sb.AppendLine, passing through your text you want to append, and it'll add a new line at the end. I wanted to include Append and AppendLine just to make it a bit clearer. 
+
+
+
+Conclusion
+
+
+
+I imagine to any seasoned professional, most of the above will be familiar to you. Personally, however, it took me years to find out about all of the above, so I hope this article helps  out some of the less experienced developers out there and helps avoid wasting time by writing boilerplate and potentially buggy code that Microsoft have already kindly done for us!
+
+
+
+I'd love to hear from anyone who uses other underused features in .NET/C#, so please comment below if so!
+" data-id=sfsi class=sf-hidden><meta property=og:title content="6 lesser-known features of C# / .NET that you should be using" data-id=sfsi class=sf-hidden><link type=image/x-icon rel="shortcut icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><style>.sf-hidden{display:none!important}</style><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:;"><body class="post-template-default single single-post postid-223 single-format-standard blog-grid-layout"><div class=banner><div class=b_vPanel><div><font style=vertical-align:inherit><font style=vertical-align:inherit>您已到达</font></font><strong><a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ h="ID=SERP,5003.1"><font style=vertical-align:inherit><font style=vertical-align:inherit>https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/的缓存页面</font></font></a></strong></div><div><font style=vertical-align:inherit></font><strong><font style=vertical-align:inherit><font style=vertical-align:inherit>下面是2022/4/7</font></font></strong><font style=vertical-align:inherit><font style=vertical-align:inherit>（我们的爬虫最后一次访问它）</font><font style=vertical-align:inherit>出现的网页快照。</font><font style=vertical-align:inherit>这是用于对搜索结果进行排名的页面版本。</font><font style=vertical-align:inherit>自从我们上次缓存以来，该页面可能已更改。</font><font style=vertical-align:inherit>要查看可能发生的变化（没有突出显示），</font></font><a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ h="ID=SERP,5003.2"><font style=vertical-align:inherit><font style=vertical-align:inherit>请转到当前页面</font></font></a><font style=vertical-align:inherit><font style=vertical-align:inherit>。</font></font></div><div><div class=disclaimer><font style=vertical-align:inherit><font style=vertical-align:inherit>Bing 不对本页的内容负责。</font></font></div></div></div></div><div class=cacheContent>
+<link rel=profile href=http://gmpg.org/xfn/11 class=sf-hidden>
+<link rel=alternate type=application/rss+xml title="博客<T> » 饲料" href=https://chrisstclair.co.uk/feed/ class=sf-hidden>
+<link rel=alternate type=application/rss+xml title="博客<T> » 评论源" href=https://chrisstclair.co.uk/comments/feed/ class=sf-hidden>
+<link rel=alternate type=application/rss+xml title="博客<T> » 6 个鲜为人知的 C# / .NET 特性，你应该使用评论源" href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/feed/ class=sf-hidden>
+ 
+ 
+<link rel=https://api.w.org/ href=https://chrisstclair.co.uk/wp-json/ class=sf-hidden>
+<link rel=EditURI type=application/rsd+xml title=标准差 href=https://chrisstclair.co.uk/xmlrpc.php?rsd class=sf-hidden>
+<link rel=wlwmanifest type=application/wlwmanifest+xml href=https://chrisstclair.co.uk/wp-includes/wlwmanifest.xml class=sf-hidden> 
+<link rel=prev title=单元测试——使现有代码可测试 href=https://chrisstclair.co.uk/unit-testing-making-existing-code-testable/ class=sf-hidden>
+<link rel=canonical href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ class=sf-hidden>
+<link rel=shortlink href="https://chrisstclair.co.uk/?p=223" class=sf-hidden>
+<link rel=alternate type=application/json+oembed href="https://chrisstclair.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fchrisstclair.co.uk%2F6-lesser-known-features-of-c-net-that-you-should-be-using%2F" class=sf-hidden>
+<link rel=alternate type=text/xml+oembed href="https://chrisstclair.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fchrisstclair.co.uk%2F6-lesser-known-features-of-c-net-that-you-should-be-using%2F&amp;format=xml" class=sf-hidden>
+<link rel=pingback href=https://chrisstclair.co.uk/xmlrpc.php class=sf-hidden>
+ <style class=sf-hidden>.recentcomments a{display:inline!important;padding:0!important;margin:0!important}</style>
+ <style id=wp-custom-css class=sf-hidden>.site-title{font-family:monospace;font-size:3rem}.site-title a:link,.site-title a:visited{color:#C1242C!important}</style>
+ 
+ <div id=page class=site>
+ <a class="skip-link screen-reader-text" href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#content><font style=vertical-align:inherit><font style=vertical-align:inherit>跳到内容</font></font></a>
+ 
+ <header id=masthead class="site-header clearfix" role=banner>
+ <div class="header-main container clearfix">
+ <div id=logo class="site-branding clearfix">
+ 
+ <p class=site-title><a href=https://chrisstclair.co.uk/ rel=home><font style=vertical-align:inherit><font style=vertical-align:inherit>博客&lt;T&gt;</font></font></a></p>
+ 
+ <p class=site-description><font style=vertical-align:inherit><font style=vertical-align:inherit>Chris St Clair 的 C# 和 ASP.NET 博客</font></font></p>
+ 
+ </div>
+ 
+ </div>
+ 
+<div id=main-navigation-wrap class=primary-navigation-wrap>
+ <div id=main-navigation-container class="primary-navigation-container container">
+ 
+ <nav id=main-navigation class="primary-navigation navigation clearfix" role=navigation>
+ <ul id=menu-main class=main-navigation-menu><li id=menu-item-86 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-86"><a href=https://chrisstclair.co.uk/category/extension-methods/><font style=vertical-align:inherit><font style=vertical-align:inherit>扩展方法</font></font></a></li>
+</ul> </nav>
+ </div>
+</div>
+ 
+ 
+ </header>
+ <div id=content class="site-content container">
+ <div id=primary class=content-area>
+ <main id=main class=site-main>
+ 
+<article id=post-223 class="post-223 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized tag-c">
+ 
+ <div class=post-image>
+ <img width=1360 height=765 src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt> </div>
+ 
+ <div class=post-content>
+ <header class=entry-header>
+ <h1 class=entry-title><font style=vertical-align:inherit><font style=vertical-align:inherit>您应该使用的 6 个鲜为人知的 C# / .NET 功能</font></font></h1>
+ <div class="entry-meta post-details"><span class="posted-on meta-date"><font style=vertical-align:inherit><font style=vertical-align:inherit>发表于</font></font><a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ rel=bookmark><time class="entry-date published" datetime=2019-10-07T18:28:32+00:00><font style=vertical-align:inherit><font style=vertical-align:inherit>2019 年 10 月 7 日</font></font></time><time class=updated datetime=2019-10-07T18:41:24+00:00><font style=vertical-align:inherit><font style=vertical-align:inherit>2019 年 10 月 7 日</font></font></time></a></span><span class="posted-by meta-author"><font style=vertical-align:inherit><font style=vertical-align:inherit>通过</font></font><span class="author vcard"><a class="url fn n" href=https://chrisstclair.co.uk/author/Chris/ title=查看克里斯的所有帖子 rel=author><font style=vertical-align:inherit><font style=vertical-align:inherit>克里斯</font></font></a></span></span></div>
+ </header>
+ <div class="entry-content clearfix">
+ 
+<h2><font style=vertical-align:inherit><font style=vertical-align:inherit>介绍</font></font></h2>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>这篇文章将设置 .NET Framework 的 6 个功能，我觉得很多开发人员都没有充分利用它们——你对它们是否未被充分利用的看法可能与我的不同，但我希望你们中的一些人会发现这篇文章有用。</font></font></p>
+<h2><font style=vertical-align:inherit><font style=vertical-align:inherit>1.秒表</font></font></h2>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>所以我将从我们将进一步使用的东西开始，秒表。</font><font style=vertical-align:inherit>很有可能在某个时候，您将有理由想要分析您的部分代码以发现任何性能瓶颈。</font><font style=vertical-align:inherit>虽然您可以在代码中使用大量基准测试包（</font></font><a href=https://github.com/dotnet/BenchmarkDotNet><font style=vertical-align:inherit><font style=vertical-align:inherit>Benchmark.NET</font></font></a><font style=vertical-align:inherit><font style=vertical-align:inherit>是最受欢迎的包之一），但有时您只是想快速地对某些东西进行基准测试而不用大惊小怪。</font><font style=vertical-align:inherit>我想大多数人会做类似下面的事情</font></font></p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var start = DateTime.Now;
+Thread.Sleep(2000); //Code you want to profile here
+var end = DateTime.Now;
+var duration = (int)(end - start).TotalMilliseconds;
+Console.WriteLine($"The operation took {duration} milliseconds");</pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>这行得通——它会告诉你它花了大约 2000 毫秒。</font><font style=vertical-align:inherit>但是，这不是推荐的基准测试方法，因为 DateTime.Now 可能无法为您提供所需的精度水平 - DateTime.Now 通常精确到</font></font><a href=https://blogs.msdn.microsoft.com/ericlippert/2010/04/08/precision-and-accuracy-of-datetime/><font style=vertical-align:inherit><font style=vertical-align:inherit>大约 15 毫秒</font></font></a><font style=vertical-align:inherit><font style=vertical-align:inherit>。</font><font style=vertical-align:inherit>为了证明这一点，请参见下面非常人为的示例：</font></font></p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var sleeps = new List&lt;int&gt;() { 5, 10, 15, 20 };
+foreach (var sleep in sleeps)
+{
+	var start = DateTime.Now;
+	Thread.Sleep(sleep);
+	var end  = DateTime.Now;
+	var duration = (int)(end - start).TotalMilliseconds;
+	Console.WriteLine(duration);
+}</pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>输出可能每次都会改变，但您可能会得到如下内容：</font></font></p>
+<pre class="wp-block-preformatted notranslate">15<br>15<br>15<br>31 </pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>所以我们已经确定它不是很精确，但是如果你不在乎呢？</font><font style=vertical-align:inherit>您当然可以继续使用 DateTime.Now 基准测试方法，但是有一个更好的替代方法，称为</font></font><strong><a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=netframework-4.8"><font style=vertical-align:inherit><font style=vertical-align:inherit>Stopwatch</font></font></a></strong><a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=netframework-4.8"> </a><font style=vertical-align:inherit><font style=vertical-align:inherit>，它位于 System.Diagnostics 命名空间中。</font><font style=vertical-align:inherit>它比使用 DateTime.Now 更简洁，并且更简洁地表达您的意图 - 而且更准确！</font><font style=vertical-align:inherit>让我们修改最后一段代码以使用 Stopwatch 类：</font></font></p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var sleeps = new List&lt;int&gt;() { 5, 10, 15, 20 };
+foreach (var sleep in sleeps)
+{
+    var sw = Stopwatch.StartNew();
+    Thread.Sleep(sleep);
+    Debug.WriteLine(sw.ElapsedMilliseconds);
+}</pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>那么我们的输出就是这个（当然，它是可变的）</font></font></p>
+<pre class="wp-block-preformatted notranslate">6<br>10<br>15<br>20</pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>好多了！</font><font style=vertical-align:inherit>所以说真的，鉴于使用 Stopwatch 类的易用性，真的没有理由使用“老式”的方式。</font></font></p>
+<h2><font style=vertical-align:inherit><font style=vertical-align:inherit>2. 任务并行库（TPL）</font></font></h2>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var items = Enumerable.Range(0,100).ToList();
+var sw = Stopwatch.StartNew();
+foreach (var item in items)
+{
+	Thread.Sleep(50);
+}
+Console.WriteLine($"Took {sw.ElapsedMilliseconds} milliseconds..."); </pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>如您所料，这大约需要 5000 毫秒/5 秒 (100 * 50 = 5000)。</font><font style=vertical-align:inherit>现在让我们看看使用 TPL 的并行版本……</font></font></p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var items = Enumerable.Range(0,100).ToList();
+var sw = Stopwatch.StartNew();
+Parallel.ForEach(items, (item) =&gt; 
+{
+	Thread.Sleep(50);					 
+});
+Console.WriteLine($"Took {sw.ElapsedMilliseconds} milliseconds..."); </pre>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>平均而言，这只需 1000 毫秒 - 这是 500% 的改进！</font><font style=vertical-align:inherit>结果会因您的设置而异，但您可能会看到与我所拥有的类似的改进。</font><font style=vertical-align:inherit>并注意循环是多么简单——它几乎不比常规的 foreach 循环复杂。</font></font></p>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>但是……如果你在循环内操作一个非线程安全的对象，那么你会很糟糕。</font><font style=vertical-align:inherit>因此，您不能只替换您认为合适的任何 foreach！</font><font style=vertical-align:inherit>同样，</font></font><a href=https://chrisstclair.co.uk/multithreading-made-easy-parallel-foreach/><font style=vertical-align:inherit><font style=vertical-align:inherit>请参阅我关于 TPL 的文章以</font></font></a><font style=vertical-align:inherit><font style=vertical-align:inherit>获取有关此方面的一些提示。</font></font></p>
+<h2><font style=vertical-align:inherit><font style=vertical-align:inherit>3. 表达式树</font></font></h2>
+<p><font style=vertical-align:inherit><font style=vertical-align:inherit>表达式树是 .NET Framework 中一个极其强大的部分，但它们也是（非专业程序员）最不了解的部分之一。</font><font style=vertical-align:inherit>我花了很长时间才完全掌握这些概念，我离这方面的专家还很远，但本质上它允许你包装一个 lambda 表达式，例如 Func&lt;T&gt; 或 Action&lt;T&gt;，并分析实际的 lambda 表达式本身。</font><font style=vertical-align:inherit>最好用一个例子来说明这一点——.NET Framework 有很多这样的例子，尤其是在 LINQ to SQL 和 Entity Framework 中。</font></font></p>
+<p>The ‘Where’ extension method in LINQ to Objects takes a Func&lt;T,int, bool&gt; as its main parameter – see the below code which I have stolen from <a href=https://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs,e2d8014ab698cbfc>Reference Source</a> (which contains the .NET source code)</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>static IEnumerable&lt;TSource&gt; WhereIterator&lt;TSource&gt;(IEnumerable&lt;TSource&gt; source, Func&lt;TSource, int, bool&gt; predicate) 
+{
+     int index = -1;
+     foreach (TSource element in source) 
+     {
+          checked { index++; }
+          if (predicate(element, index)) yield return element;
+     }
+}</pre>
+<p>This is as you’d expect – it iterates through the IEnumerable and yields what matches the predicate. However, clearly this would not work in LINQ to SQL/Entity Framework – it needs to translate your predicate to SQL! So the signature for the IQueryable version is a bit different…</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>static IQueryable&lt;TSource&gt; Where&lt;TSource&gt;(this IQueryable&lt;TSource&gt; source, Expression&lt;Func&lt;TSource, int, bool&gt;&gt; predicate) 
+{
+      return source.Provider.CreateQuery&lt;TSource&gt;( 
+                Expression.Call(
+                    null,
+                    GetMethodInfo(Queryable.Where, source, predicate),
+                    new Expression[] { source.Expression, Expression.Quote(predicate) }
+                    ));
+}</pre>
+<p>If you look past the daunting nature of the method, you’ll notice that the function now takes the Func&lt;T,int,bool&gt; wrapped in an Expression – this essentially allows the LINQ ‘provider’ to read through the Func to see exactly what predicate was passed through, and translate it to SQL. So in essence, Expressions allow you to examine your code at runtime.</p>
+<p>Let’s quickly look at something a bit simpler – imagine you have the below code that adds settings to a dictionary (we used to use this in some real code)</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var settings = new List&lt;Setting&gt;();
+settings.Add(new Setting("EnableBugs",Settings.EnableBugs));
+settings.Add(new Setting("EnableFluxCapacitor",Settings.EnableFluxCapacitor));</pre>
+<p>I hope it’s not difficult to see the danger/repetition here – the name of the setting in the dictionary is a string, and a typo here could cause some issues. Plus, it’s tedious to have to do this! If we create a new method that takes an Expression&lt;Func&lt;T&gt;&gt; (essentially, takes a lambda expression that returns <strong><em>something</em></strong>), we get the actual name of the variable passed in!</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>private Setting GetSetting&lt;T&gt;(Expression&lt;Func&lt;T&gt;&gt; expr)
+{
+	var me = expr.Body as MemberExpression;
+	if (me == null)
+             throw new ArgumentException("Invalid expression. It should be MemberExpression");
+
+        var func = expr.Compile(); //This converts our expression back to a Func
+	var value = func(); //Run the func to get the setting value
+	return new Setting(me.Member.Name,value);
+}</pre>
+<p>We can then call it as below…</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var settings = new List&lt;Setting&gt;();
+settings.Add(GetSetting(() =&gt; Settings.EnableBugs));
+settings.Add(GetSetting(() =&gt; Settings.EnableFluxCapacitor));	</pre>
+<p>Much nicer! You’ll note that in our GetSetting method, I need to check if the expression passed in as a ‘MemberExpression’ – this is because there’s nothing stopping calling code from passing something like a method call or a constant value in, in which case there is no ‘member name’.</p>
+<p>Obviously I am scratching the surface of what Expressions are capable of, and I hope to write a future post detailing this</p>
+<h2>4. Caller Information Attributes</h2>
+<p><a href=https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/caller-information>Caller Information attributes</a> were introduced in .NET Framework 4.0, and while they aren’t useful in most cases, they really show their worth when writing code to log debugging information. Let’s imagine you have crude Log function as defined below:</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>public static void Log(string text)
+{
+   using (var writer = File.AppendText("log.txt"))
+   {
+       writer.WriteLine(text);
+   }
+}</pre>
+<p>So you can call this at various points in your code to log some information to the text file, however a single string may not be very useful to you when debugging, unless you’ve made the effort to put sufficient detail into the string. What you’ll likely want is <em>where</em> the log entry occurred – i.e. what method. You can do this by examining the stack trace as below</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>public static void Log(string text)
+{
+   using (var writer = File.AppendText("log.txt"))
+   {
+       writer.WriteLine($"{text} - {new StackTrace().GetFrame(1).GetMethod().Name});
+   }
+}</pre>
+<p>This works – it will print ‘Main’ if I call this from my Main method. However, it is <a href=https://kozmic.net/2008/10/13/slower-than-reflection-meet-stacktrace/>slow</a> and inefficient as you’re essentially capturing the stack trace as you would if an exception was thrown. .NET Framework 4.0 introduces the aforementioned ‘caller information attributes’, which allows the Framework to automatically tell your method information about what’s calling it – specifically the file path, method/property name and line number. Essentially, you use these by allowing your method to take optional string parameters that you mark with an attribute. See below where I use the 3 available attributes</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>public static void Log(string text,
+[CallerMemberName] string memberName = "",
+[CallerFilePath] string sourceFilePath = "",
+[CallerLineNumber] int sourceLineNumber = 0)
+{
+	Console.WriteLine($"{text} - {sourceFilePath}/{memberName} (line {sourceLineNumber})");	
+}</pre>
+<p>This does exactly as you’d expect – it outputs the path to the source file, the method it’s called from and also the line number. Obviously, this information (especially the latter two) are very useful for debugging purposes. And this has no impact on speed at all, because the information is actually passed through as static values at compile time. The only downside is that it pollutes your method signature with these optional values, when you never really want any caller to supply them automatically. But I think that’s a small price to pay</p>
+<p> </p>
+<h2>5. The ‘Path’ class</h2>
+<p>This one may be a bit more well known, but I still see developers doing things like getting the file extension of a file name manually, when the Path class has built in and tried and tested methods to do this for you. The class lives in the System.IO namespace, and contains many helpful methods that reduces the amount of boilerplate code you have to write. A lot of you will be familar with methods such as Path.GetFileName and Path.GetExtension (which do just as you’d expect), but I’ll mention some slightly more obscure ones below </p>
+<h3>Path.Combine</h3>
+<p>This method takes 2,3 or 4 paths and combines them into one. Generally, people do this to append a filename to a directory path such as <em>directoryPath + “\” + filename</em> . The problem with that is that you making the assumption that ‘\’ is the directory separator on the system your application is running on – what if the application is running on Unix, which uses a forward slash (‘/’) as its directory separator? This is becoming more of a concern as .NET Core is allowing .NET applications to run on many more platforms now. Path.Combine will use the directory separator applicable for the operating system, and will also deal with redundant separators – i.e. if you append a directory with ‘\’ at the end to a filename with ‘\’ at the start, Path.Combine will strip one out. You can see more reasons why you should use Path.Combine <a href=https://www.devcurry.com/2011/03/use-pathcombine-instead-of.html>here</a></p>
+<h3>Path.GetTempFileName</h3>
+<p>Quite often, you’ll need to write a file that you only need access to temporarily. You don’t care about the name or where it’s stored, but you just need to write to it and soon after read from it.</p>
+<p>While you could write code to manage this yourself, it’s going to be tedious and error prone. Enter the insanely useful Path.GetTempFileName method in the Path class – it takes no parameters, but it creates an empty file in the users defined temporary directory and returns the full path for you to use. As it’s in the users temporary directory, Windows will automatically maintain this and you won’t need to worry about clogging the system with redundant files. See <a href=http://www.vcskicks.com/temporary-file.php>this article</a> for some information on this method, plus the related ‘GetTempPath’</p>
+<h3>Path.GetInvalidPathChars / Path.GetInvalidFileNameChars</h3>
+<p>Path.GetInvalidPathChars, and its brother Path.GetInvalidFileNameChars, returns an array of all characters that are invalid as paths/filenames on the current system. I’ve seen so much code that manually strips out some of the most common invalid characters such as quotes but not any of the other invalid characters, which is a disaster waiting to happen. And in the spirit of cross platform compatibility, it’s incorrect to assume that what is invalid on one system will be invalid on another. My only criticism of these methods is that they do not provide a way of checking if a path contains any of these characters, which usually involves me writing the below ‘boiler plate’ methods</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>public static bool HasInvalidPathChars(string path)
+{
+	if (path  == null)
+		throw new ArgumentNullException(nameof(path));
+	
+	return path.IndexOfAny(Path.GetInvalidPathChars()) &gt;= 0;
+}
+	
+public static bool HasInvalidFileNameChars(string fileName)
+{
+	if (fileName == null)
+		throw new ArgumentNullException(nameof(fileName));
+	
+	return fileName.IndexOfAny(Path.GetInvalidFileNameChars()) &gt;= 0;
+}</pre>
+<h2>6. StringBuilder</h2>
+<p>String concatenation in .NET is very common, but can also be very inefficient if not done properly. Because strings are immutable, any string concatenation results in a new string being returned for every concatenation. For a small number of concatenations, this difference will be minimal, but performance can quickly deteriorate.</p>
+<p>Enter the aptly named <a href=https://docs.microsoft.com/en-us/dotnet/standard/base-types/stringbuilder>StringBuilder </a>class, which allows you to concatenate with minimal performance overhead. How it does this is fairly straightforward – on a high level, it’s storing a list of every character you append, and only building up your string once you actually need it. For a demonstration of how to use it, plus the performance benefits, see the below code that benchmarks both of these (using the useful Stopwatch class I mentioned earlier)</p>
+<pre class="EnlighterJSRAW notranslate" data-enlighter-language=csharp data-enlighter-theme data-enlighter-highlight data-enlighter-linenumbers data-enlighter-lineoffset data-enlighter-title data-enlighter-group>var sw = Stopwatch.StartNew();
+string test = "";
+for (int i = 0; i &lt; 10000; i++)
+{
+	test += $"test{i}{Environment.NewLine}";	
+}
+Console.WriteLine($"Took {sw.ElapsedMilliseconds} milliseconds to concatenate strings using string concatenation");
+		
+sw = Stopwatch.StartNew();
+var sb = new StringBuilder();
+for (int i = 0; i &lt; 10000; i++)
+{
+	sb.Append($"test{i}");
+	sb.AppendLine();
+}
+Console.WriteLine($"Took {sw.ElapsedMilliseconds} milliseconds to concatenate strings using StringBuilder");</pre>
+<p>The results of this benchmark are below:</p>
+<pre class="wp-block-preformatted notranslate">Took&nbsp;785&nbsp;milliseconds&nbsp;to&nbsp;concatenate&nbsp;strings&nbsp;using&nbsp;the&nbsp;string&nbsp;concatenation<br>Took&nbsp;3&nbsp;milliseconds&nbsp;to&nbsp;concatenate&nbsp;strings&nbsp;using&nbsp;StringBuilder </pre>
+<p>Wow – that is over 250x faster! And this is for <em>only</em> 10000 concatenations – if you’re building up a large CSV file manually (which is bad practice anyway but let’s not worry about that), your figure may be larger. If you are only concatenating a couple of strings, it’s probably fine to use concatenate without using StringBuilder, but to be honest I like to get in the habit of always using it – the cost of newing up the StringBuilder is, relatively speaking, minuscule.</p>
+<p>In my code sample, I am using sb.Append followed by sb.AppendLine – you can actually just call sb.AppendLine, passing through your text you want to append, and it’ll add a new line at the end. I wanted to include Append and AppendLine just to make it a bit clearer. </p>
+<h2>Conclusion</h2>
+<p>I imagine to any seasoned professional, most of the above will be familiar to you. Personally, however, it took me years to find out about all of the above, so I hope this article helps out some of the less experienced developers out there and helps avoid wasting time by writing boilerplate and potentially buggy code that Microsoft have already kindly done for us!</p>
+<p>I’d love to hear from anyone who uses other underused features in .NET/C#, so please comment below if so!</p>
+<div class=sfsi_Sicons style=width:100%;display:inline-block;vertical-align:middle;text-align:left><div style="margin:0px 8px 0px 0px;line-height:24px"><span></span></div><div class=sfsi_socialwpr><div class=sf_subscrbe style=text-align:left;vertical-align:middle;float:left;width:64px><a href="http://www.specificfeeds.com/widgets/emailSubscribeEncFeed/ZzdZSjZabnh0K1pPdFdIc3Ftb2pDa1hiTUk3OFI1dnJaR2VaQ1ZOQTIvWVU2cnJpMWFZcWYyL0t5VGZFQUZZVFRqZm9HNXZRZVMzcWttN3RMVEtlL0ZyY1NrVU93OHM0MjM2dlY0NWpyVlYrV1VXR3ZiN0p4QUwvT1BBTEVjajF8eHRhUEdic0c2elM0enNjTWkvNGFPVFkwYVhLSytZNy9Fd2RqYjlTL1BqUT0=/OA==/" target=_blank><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=错误></a></div><div class=sf_fb style=text-align:left;vertical-align:middle;width:98px><div class="fb-like fb_iframe_widget" data-href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ data-width=180 data-send=false data-show-faces=false data-action=like data-share=true data-layout=button fb-xfbml-state=rendered fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=98&amp;href=https%3A%2F%2Fchrisstclair.co.uk%2F6-lesser-known-features-of-c-net-that-you-should-be-using%2F&amp;layout=button&amp;locale=en_US&amp;sdk=joey&amp;send=false&amp;share=true&amp;show_faces=false&amp;width=180"><span style=vertical-align:bottom;width:120px;height:28px><iframe name=f1e9e5e763f2e7c width=180px height=1000px data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook 社交插件" frameborder=0 allowtransparency=true allowfullscreen scrolling=no allow=encrypted-media style=border:none;visibility:visible;width:120px;height:28px sandbox="allow-popups allow-top-navigation allow-top-navigation-by-user-activation" srcdoc="<!DOCTYPE html> <html lang=en id=facebook class=&quot;svg no_js&quot;><meta charset=utf-8><meta name=referrer content=origin-when-crossorigin id=meta_referrer><title>Facebook</title><style>body.plugin{background:transparent;font-family:Helvetica,Arial,sans-serif;line-height:1.28;overflow:hidden;-webkit-text-size-adjust:none}.plugin,.plugin td{font-size:11px}html{touch-action:manipulation}body{color:#1c1e21;direction:ltr;margin:0;padding:0;unicode-bidi:embed}td{font-family:Helvetica,Arial,sans-serif}a{color:#385898;cursor:pointer;text-decoration:none}a:hover{text-decoration:underline}td{text-align:left}._2pi7{padding-left:4px;padding-right:4px}._2pir{padding-left:4px}._51mz{border:0;border-collapse:collapse;border-spacing:0}.uiGrid .vTop{vertical-align:top}.uiGrid .hCent{text-align:center}._51mx:first-child>._51m-{padding-top:0}._51mx:last-child>._51m-{padding-bottom:0}._51mz ._51mw{padding-right:0}._51mz ._51m-:first-child{padding-left:0}form{margin:0;padding:0}.inlineBlock{display:inline-block;zoom:1}._2tga{color:#fff;cursor:pointer;font-family:Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;margin:0;position:relative;-webkit-user-select:none;white-space:nowrap}._89n_{background:#1877f2;border:0}._2tga._8j9v{border-radius:3px;font-size:11px;height:20px;padding:0 6px}._2tga:hover{background:#365899;border:1px solid #365899}._89n_:hover{background:#1877f2;border:0}._2tga:active{background:#577fbc;border:1px solid #577fbc}._89n_:active{background:#1877f2;border:0}._2tga:focus{outline-color:transparent;outline-style:none}._8f1i{background-color:rgba(9,30,66);border-radius:inherit;height:100%;left:0;opacity:0;position:absolute;top:0;width:100%}._8f1i:active{opacity:.3}._3jn-{height:16px;vertical-align:middle;width:16px}@keyframes burst{from{background-position:0 0}to{background-position:-616px 0}}._49vg{vertical-align:middle}._2tga ._49vg{display:inline-block;zoom:1}#facebook ._2tga span._49vh{font-family:Helvetica,Arial,sans-serif;vertical-align:middle}._49vh{font-weight:bold}._2tga ._1pbq{height:16px;width:16px}._2n-v ._49vh{padding-left:2px}._4mr9{-webkit-touch-callout:none;-webkit-user-select:none}._li._li._li{overflow:initial}.sf-hidden{display:none!important}</style><meta http-equiv=content-security-policy content=&quot;default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:;&quot;><body dir=ltr class=&quot;plugin _4mr9 chrome webkit win x1 Locale_en_US&quot;><div class=_li><div class=&quot;pluginSkinLight pluginFontHelvetica&quot;><div><table class=&quot;uiGrid _51mz&quot; cellspacing=0 cellpadding=0 id=u_0_0_OP style=width:120px><tbody><tr class=_51mx><td class=&quot;_51m- vTop hCent&quot;><div><form rel=async ajaxify=/plugins/like/connect method=post action=/plugins/like/connect id=u_0_1_SS><button id=icon-button type=submit class=&quot;inlineBlock _2tga _89n_ _8j9v&quot; title=Like><span class=_8f1i></span><div><span class=&quot;_3jn- inlineBlock _2v7&quot;><span class=&quot;_3jn_ sf-hidden&quot;></span><span class=_49vg><svg xmlns=http://www.w3.org/2000/svg viewBox=&quot;0 0 16 16&quot; class=_1pbq color=#ffffff><path fill=#ffffff fill-rule=evenodd d=&quot;M4.55,7 C4.7984,7 5,7.23403636 5,7.52247273 L5,13.4775273
+          C5,13.7659636 4.7984,14 4.55,14 L2.45,14 C2.2016,14 2,13.7659636
+          2,13.4775273 L2,7.52247273 C2,7.23403636 2.2016,7 2.45,7 L4.55,7 Z
+          M6.54470232,13.2 C6.24016877,13.1641086 6.01734614,12.8982791
+          6,12.5737979 C6.01734614,12.5737979 6.01344187,9.66805666 6,8.14398693
+          C6.01344187,7.61903931 6.10849456,6.68623352 6.39801308,6.27384278
+          C7.10556287,5.26600749 7.60281698,4.6079584 7.89206808,4.22570082
+          C8.18126341,3.8435016 8.52813047,3.4708734 8.53777961,3.18572676
+          C8.55077527,2.80206854 8.53655255,2.79471518 8.53777961,2.35555666
+          C8.53900667,1.91639814 8.74565444,1.5 9.27139313,1.5 C9.52544997,1.5
+          9.7301456,1.55690094 9.91922413,1.80084547 C10.2223633,2.15596568
+          10.4343097,2.71884727 10.4343097,3.60971169 C10.4343097,4.50057612
+          9.50989975,6.1729303 9.50815961,6.18 C9.50815961,6.18
+          13.5457098,6.17908951 13.5464084,6.18 C14.1635544,6.17587601
+          14.5,6.72543196 14.5,7.29718426 C14.5,7.83263667 14.1341135,8.27897346
+          13.6539433,8.3540827 C13.9452023,8.49286263 14.1544715,8.82364675
+          14.1544715,9.20555417 C14.1544715,9.68159617 13.8293011,10.0782687
+          13.3983805,10.1458495 C13.6304619,10.2907572 13.7736931,10.5516845
+          13.7736931,10.847511 C13.7736931,11.2459343 13.5138356,11.5808619
+          13.1594388,11.6612236 C13.3701582,11.7991865 13.5063617,12.0543945
+          13.5063617,12.3429843 C13.5063617,12.7952155 13.1715421,13.1656844
+          12.7434661,13.2 L6.54470232,13.2 Z&quot;></path></svg><img class=&quot;_1pbs inlineBlock img sf-hidden&quot; src=&quot;data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==&quot; alt width=16 height=16></span></span><span class=&quot;_49vh _2pi7&quot;>Like</span></div></button></form></div><td class=&quot;_51m- vTop _2pir _51mw&quot;><div><a class=_2vmz href=&quot;https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchrisstclair.co.uk%2F6-lesser-known-features-of-c-net-that-you-should-be-using%2F&amp;amp;display=popup&amp;amp;ref=plugin&amp;amp;src=like&amp;amp;kid_directed_site=0&quot; target=_blank id=u_0_2_0F><button id=icon-button type=submit class=&quot;inlineBlock _2tga _89n_ _8j9v&quot;><span class=_8f1i></span><div class=_2n-v><span class=&quot;_49vh _2pi7&quot;>Share</span></div></button></a></div></table><span id=jsbundle-loader>&amp;nbsp;</span></div></div></div>"></iframe></span></div></div><div class=sf_twiter style=text-align:left;float:left;vertical-align:middle;width:auto><iframe id=twitter-widget-0 scrolling=no frameborder=0 allowtransparency=true allowfullscreen class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style=position:static;visibility:visible;width:73px;height:20px title=推特推文按钮 data-url=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/ sandbox="allow-popups allow-top-navigation allow-top-navigation-by-user-activation" srcdoc="<!DOCTYPE html> <html data-scribe=page:button lang=en><meta charset=utf-8>
+<title>Tweet Button</title>
+<style>html{margin:0;padding:0;font:normal normal normal 12px/18px 'Helvetica Neue',Arial,sans-serif;color:#333;-webkit-user-select:none;-ms-user-select:none;-moz-user-select:none;user-select:none}body{margin:0;padding:0;background:0 0}a{outline:0;text-decoration:none}#widget{display:inline-block;white-space:nowrap;overflow:hidden;text-align:left}.btn,.btn .label,.btn-o{display:inline-block;vertical-align:top;zoom:1}.btn-o{max-width:100%}.btn{position:relative;height:20px;box-sizing:border-box;padding:1px 12px 1px 12px;background-color:#1d9bf0;color:#fff;border-radius:9999px;font-weight:500;cursor:pointer}.btn:active,.btn:focus,.btn:hover{background-color:#0c7abf}.btn:active{box-shadow:inset 0 3px 5px rgba(0,0,0,.1)}.btn i{position:relative;top:2px;display:inline-block;width:14px;height:14px;background:transparent 0 0 no-repeat;background-image:url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2072%2072%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h72v72H0z%22%2F%3E%3Cpath%20class%3D%22icon%22%20fill%3D%22%23fff%22%20d%3D%22M68.812%2015.14c-2.348%201.04-4.87%201.744-7.52%202.06%202.704-1.62%204.78-4.186%205.757-7.243-2.53%201.5-5.33%202.592-8.314%203.176C56.35%2010.59%2052.948%209%2049.182%209c-7.23%200-13.092%205.86-13.092%2013.093%200%201.026.118%202.02.338%202.98C25.543%2024.527%2015.9%2019.318%209.44%2011.396c-1.125%201.936-1.77%204.184-1.77%206.58%200%204.543%202.312%208.552%205.824%2010.9-2.146-.07-4.165-.658-5.93-1.64-.002.056-.002.11-.002.163%200%206.345%204.513%2011.638%2010.504%2012.84-1.1.298-2.256.457-3.45.457-.845%200-1.666-.078-2.464-.23%201.667%205.2%206.5%208.985%2012.23%209.09-4.482%203.51-10.13%205.605-16.26%205.605-1.055%200-2.096-.06-3.122-.184%205.794%203.717%2012.676%205.882%2020.067%205.882%2024.083%200%2037.25-19.95%2037.25-37.25%200-.565-.013-1.133-.038-1.693%202.558-1.847%204.778-4.15%206.532-6.774z%22%2F%3E%3C%2Fsvg%3E)}.btn .label{margin-left:3px;white-space:nowrap}</style>
+<meta http-equiv=content-security-policy content=&quot;default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:;&quot;></head>
+<body data-scribe=section:share class=&quot;regular ltr ready&quot;>
+<div id=widget>
+ <div class=btn-o data-scribe=component:button style=width:73px><a href=&quot;https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fcncc.bingj.com%2F&amp;amp;ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Eshare%7Ctwgr%5E&amp;amp;text=6%20lesser-known%20features%20of%20C%23%20%2F%20.NET%20that%20you%20should%20be%20using&amp;amp;url=https%3A%2F%2Fchrisstclair.co.uk%2F6-lesser-known-features-of-c-net-that-you-should-be-using%2F&quot; class=btn id=b><i></i><span class=label id=l>Tweet</span></a></div>
+</div>
+"></iframe></div><div class=sf_pinit style=text-align:left;vertical-align:middle;float:left;line-height:20px;width:47px><a href="https://www.pinterest.com/pin/create/button/?url=&amp;media=&amp;description=" data-pin-do=buttonPin data-pin-save=true data-pin-count=none></a></div></div></div>
+ 
+ </div>
+ 
+ </div>
+ <footer class="entry-footer post-details">
+ <div class=entry-categories> <svg class="icon icon-category" aria-hidden=true role=img> <use xlink:href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></use> </svg><a href=https://chrisstclair.co.uk/category/uncategorized/ rel="category tag">Uncategorized</a></div>
+ <div class="entry-tags clearfix">
+ <svg class="icon icon-tag" aria-hidden=true role=img> <use xlink:href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></use> </svg> <a href=https://chrisstclair.co.uk/tag/c/ rel=tag>c#</a> </div>
+ </footer>
+</article>
+ <nav class="navigation post-navigation" role=navigation>
+ <h2 class=screen-reader-text>Post navigation</h2>
+ <div class=nav-links><div class=nav-previous><a href=https://chrisstclair.co.uk/unit-testing-making-existing-code-testable/ rel=prev><span class=nav-link-text>Previous Post</span><h3 class=entry-title>Unit testing – Making existing code testable</h3></a></div></div>
+ </nav>
+<div id=comments class=comments-area>
+ 
+ <h2 class=comments-title>
+ 5 thoughts on “<span>6 lesser-known features of C# / .NET that you should be using</span>” </h2>
+ 
+ <ol class=comment-list>
+ <li id=comment-807 class="comment even thread-even depth-1">
+ <article id=div-comment-807 class=comment-body>
+ <footer class=comment-meta>
+ <div class="comment-author vcard">
+ <img alt src=data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAOAA4AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+t80Zo4o4oAM0ZrsPBvw7m8Sxi7uZDa2GcKwHzyeu30HvXdf8Kp0Dytnlz7v+ennHP8Ah+lAHiuaM12XjL4dTeG4jd2sjXViDhiR88f1x1HvXG8UAGaKOKKADI9Kkt4vtFxFEOC7Bc/U4qPJ9KVXZGDLwwOQaAPpS0tY7G1ht4VCRRKEVcdABipc1meG9eh8RaRBeRMNzACRB1R+4/z2rU/OgCK5t47y3lgmUPFKpR1I6gjBr5uu4fst1NCefLdkz64OK+g/EWuQ+HtJnvJmHyjCIerv2Ar55klaWRnblmJJPqaAG5HpRRk+lFABzVnTtOutWvY7W0iMs8hwqj+Z9BVbB9a9o+GXhlNI0VL2VR9rvFD5PVY/4R+PX8vSgCfwX4EXwsDNJdSTXTrh1RisQ/Dv9T+QrrP89aT8qPyoA5Txr4FHilRNHdSQ3Ua4RHYtEfw7fUfrXjOo6dc6Tey2t3EYp4zgqf5j1FfSP5VxvxN8Mpq+jPfRKPtlmpfI6tH/ABD8Ov5+tAHi/NFGDRQBY060+3aja22f9dKsf5kD+tfSKIsaKigKqjAAHAFFFAC/j+lL+P6UUUAH4/pTXRZEZGG5WGCCOooooA+btRtPsOoXVtn/AFMrR/kSKKKKAP/Z srcset class="avatar avatar-56 photo" height=56 width=56 data-sf-original-srcset="https://secure.gravatar.com/avatar/175b6ee2aa3af6c572422bd85d5684c1?s=112&amp;d=mm&amp;r=g 2x" sizes> <b class=fn><a href=http://google.com/ rel="external nofollow" class=url>Klaus</a></b> <span class=says>says:</span> </div>
+ <div class=comment-metadata>
+ <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#comment-807>
+ <time datetime=2019-10-08T04:25:07+00:00>
+ October 8, 2019 at 04:25 </time>
+ </a>
+ </div>
+ </footer>
+ <div class=comment-content>
+ <p>Why in 2019 should we be satisfied by handling paths with strings? Paths should be handled with an OOP library like <a href=https://github.com/psmacchia/NDepend.Path rel=nofollow>https://github.com/psmacchia/NDepend.Path</a>.</p>
+ </div>
+ <div class=reply><a rel=nofollow class=comment-reply-link href="https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/?replytocom=807#respond" aria-label=回复克劳斯>Reply</a></div> </article>
+</li>
+ <li id=comment-808 class="pingback odd alt thread-odd thread-alt depth-1">
+ <div class=comment-body>
+ Pingback: <a href=https://www.henkla.se/6-lesser-known-features-of-c-net-that-you-should-be-using/ rel="external nofollow" class=url>6 lesser-known features of C# / .NET that you should be using – henkla.se</a> </div>
+</li>
+ <li id=comment-824 class="comment even thread-even depth-1">
+ <article id=div-comment-824 class=comment-body>
+ <footer class=comment-meta>
+ <div class="comment-author vcard">
+ <img alt src=data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAOAA4AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+t80Zo4o4oAM0ZrsPBvw7m8Sxi7uZDa2GcKwHzyeu30HvXdf8Kp0Dytnlz7v+ennHP8Ah+lAHiuaM12XjL4dTeG4jd2sjXViDhiR88f1x1HvXG8UAGaKOKKADI9Kkt4vtFxFEOC7Bc/U4qPJ9KVXZGDLwwOQaAPpS0tY7G1ht4VCRRKEVcdABipc1meG9eh8RaRBeRMNzACRB1R+4/z2rU/OgCK5t47y3lgmUPFKpR1I6gjBr5uu4fst1NCefLdkz64OK+g/EWuQ+HtJnvJmHyjCIerv2Ar55klaWRnblmJJPqaAG5HpRRk+lFABzVnTtOutWvY7W0iMs8hwqj+Z9BVbB9a9o+GXhlNI0VL2VR9rvFD5PVY/4R+PX8vSgCfwX4EXwsDNJdSTXTrh1RisQ/Dv9T+QrrP89aT8qPyoA5Txr4FHilRNHdSQ3Ua4RHYtEfw7fUfrXjOo6dc6Tey2t3EYp4zgqf5j1FfSP5VxvxN8Mpq+jPfRKPtlmpfI6tH/ABD8Ov5+tAHi/NFGDRQBY060+3aja22f9dKsf5kD+tfSKIsaKigKqjAAHAFFFAC/j+lL+P6UUUAH4/pTXRZEZGG5WGCCOooooA+btRtPsOoXVtn/AFMrR/kSKKKKAP/Z srcset class="avatar avatar-56 photo" height=56 width=56 data-sf-original-srcset="https://secure.gravatar.com/avatar/5641a4d3655baaf7fe014416b3e0c6be?s=112&amp;d=mm&amp;r=g 2x" sizes> <b class=fn>Pascal Ried</b> <span class=says>says:</span> </div>
+ <div class=comment-metadata>
+ <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#comment-824>
+ <time datetime=2019-10-13T16:56:11+00:00>
+ October 13, 2019 at 16:56 </time>
+ </a>
+ </div>
+ </footer>
+ <div class=comment-content>
+ <p>Hey Chris,</p>
+<p>Great little collection, especially the expression tree seems useful.<br>
+Interesting, didn’t know there was a way to “enforce” using an Expression.<br>
+You check, if the expression is a “MemberExpression” – so putting in a function that returns a MemberExpression wouldn’t work, I guess? Guess that’s giving up a bit of flexibility… Maybe adding some more logic would be needed.</p>
+ </div>
+ <div class=reply><a rel=nofollow class=comment-reply-link href="https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/?replytocom=824#respond" aria-label=回复帕斯卡·里德>Reply</a></div> </article>
+</li>
+ <li id=comment-832 class="comment odd alt thread-odd thread-alt depth-1">
+ <article id=div-comment-832 class=comment-body>
+ <footer class=comment-meta>
+ <div class="comment-author vcard">
+ <img alt src=data:image/jpeg;base64,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 srcset class="avatar avatar-56 photo" height=56 width=56 data-sf-original-srcset="https://secure.gravatar.com/avatar/dc9c9edcd964b5f06c8bd42a52620c79?s=112&amp;d=mm&amp;r=g 2x" sizes> <b class=fn>Steve Crane</b> <span class=says>says:</span> </div>
+ <div class=comment-metadata>
+ <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#comment-832>
+ <time datetime=2019-10-14T10:28:38+00:00>
+ October 14, 2019 at 10:28 </time>
+ </a>
+ </div>
+ </footer>
+ <div class=comment-content>
+ <p>I thought I would use your example to try expression trees but it doesn’t work; expr.Body can’t be cast to MemberExpression (it is ConstantExpression) so me == null.</p>
+ </div>
+ <div class=reply><a rel=nofollow class=comment-reply-link href="https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/?replytocom=832#respond" aria-label=回复史蒂夫·克兰>Reply</a></div> </article>
+</li>
+ <li id=comment-999 class="comment even thread-even depth-1">
+ <article id=div-comment-999 class=comment-body>
+ <footer class=comment-meta>
+ <div class="comment-author vcard">
+ <img alt src=data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAOAA4AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+t80Zo4o4oAM0ZrsPBvw7m8Sxi7uZDa2GcKwHzyeu30HvXdf8Kp0Dytnlz7v+ennHP8Ah+lAHiuaM12XjL4dTeG4jd2sjXViDhiR88f1x1HvXG8UAGaKOKKADI9Kkt4vtFxFEOC7Bc/U4qPJ9KVXZGDLwwOQaAPpS0tY7G1ht4VCRRKEVcdABipc1meG9eh8RaRBeRMNzACRB1R+4/z2rU/OgCK5t47y3lgmUPFKpR1I6gjBr5uu4fst1NCefLdkz64OK+g/EWuQ+HtJnvJmHyjCIerv2Ar55klaWRnblmJJPqaAG5HpRRk+lFABzVnTtOutWvY7W0iMs8hwqj+Z9BVbB9a9o+GXhlNI0VL2VR9rvFD5PVY/4R+PX8vSgCfwX4EXwsDNJdSTXTrh1RisQ/Dv9T+QrrP89aT8qPyoA5Txr4FHilRNHdSQ3Ua4RHYtEfw7fUfrXjOo6dc6Tey2t3EYp4zgqf5j1FfSP5VxvxN8Mpq+jPfRKPtlmpfI6tH/ABD8Ov5+tAHi/NFGDRQBY060+3aja22f9dKsf5kD+tfSKIsaKigKqjAAHAFFFAC/j+lL+P6UUUAH4/pTXRZEZGG5WGCCOooooA+btRtPsOoXVtn/AFMrR/kSKKKKAP/Z srcset class="avatar avatar-56 photo" height=56 width=56 data-sf-original-srcset="https://secure.gravatar.com/avatar/b2c9e2ead1126d81b3cef689a0ae7dd7?s=112&amp;d=mm&amp;r=g 2x" sizes> <b class=fn>Zev Spitz</b> <span class=says>says:</span> </div>
+ <div class=comment-metadata>
+ <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#comment-999>
+ <time datetime=2020-02-11T19:06:25+00:00>
+ February 11, 2020 at 19:06 </time>
+ </a>
+ </div>
+ </footer>
+ <div class=comment-content>
+ <p>I’ve written a debugging visualizer for expression trees, that may be helpful in understanding them (<a href=https://github.com/zspitz/ExpressionTreeVisualizer rel=nofollow>https://github.com/zspitz/ExpressionTreeVisualizer</a>).</p>
+ </div>
+ <div class=reply><a rel=nofollow class=comment-reply-link href="https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/?replytocom=999#respond" aria-label="回复 Zev Spitz">Reply</a></div> </article>
+</li>
+ </ol>
+ <div id=respond class=comment-respond>
+ <h3 id=reply-title class=comment-reply-title>Leave a Reply <small><a rel=nofollow id=cancel-comment-reply-link href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#respond style=display:none></a></small></h3> <form action=https://chrisstclair.co.uk/wp-comments-post.php method=post id=commentform class=comment-form novalidate>
+ <p class=comment-notes><span id=email-notes>Your email address will not be published.</span> Required fields are marked <span class=required>*</span><p class=comment-form-comment><label for=comment>Comment</label> <textarea id=comment name=comment cols=45 rows=8 maxlength=65525 required></textarea><p class=comment-form-author><label for=author>Name <span class=required>*</span></label> <input id=author name=author type=text value size=30 maxlength=245 required></p>
+<p class=comment-form-email><label for=email>Email <span class=required>*</span></label> <input id=email name=email type=email value size=30 maxlength=100 aria-describedby=email-notes required></p>
+<p class=comment-form-url><label for=url>Website</label> <input id=url name=url type=url value size=30 maxlength=200></p>
+<p class=comment-form-cookies-consent><input id=wp-comment-cookies-consent name=wp-comment-cookies-consent type=checkbox value=yes><label for=wp-comment-cookies-consent>Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class=form-submit><input name=submit type=submit id=submit class=submit value="Post Comment"> 
+</p>
+ <p class="antispam-group antispam-group-q" style=clear:both>
+ <label>Current ye@r <span class=required>*</span></label>
+ 
+ <input type=text name=antspm-q class="antispam-control antispam-control-q" value=5.5 autocomplete=off>
+ </p>
+ <p class="antispam-group antispam-group-e" style=display:none>
+ 
+ 
+ </p>
+ </form>
+ </div>
+ 
+</div>
+ </main>
+ </div>
+ <section id=secondary class="sidebar widget-area clearfix" role=complementary>
+ <section id=custom_html-3 class="widget_text widget widget_custom_html"><h4 class=widget-title>About</h4><div class="textwidget custom-html-widget"><div style=text-align:center>
+ <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+</div>
+I've been using C# since 2010, and wanted to start this blog to share what I've picked up along the way.</div></section><section id=search-2 class="widget widget_search">
+<form role=search class=search-form action=https://chrisstclair.co.uk/>
+ <label>
+ <span class=screen-reader-text>Search for:</span>
+ <input type=search class=search-field placeholder="搜索 …" value name=s title=搜索：>
+ </label>
+ <button type=submit class=search-submit>
+ <svg class="icon icon-search" aria-hidden=true role=img> <use xlink:href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></use> </svg> <span class=screen-reader-text>Search</span>
+ </button>
+</form>
+</section> <section id=recent-posts-2 class="widget widget_recent_entries"> <h4 class=widget-title>Recent Posts</h4> <ul>
+ <li>
+ <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/>6 lesser-known features of C# / .NET that you should be using</a>
+ </li>
+ <li>
+ <a href=https://chrisstclair.co.uk/unit-testing-making-existing-code-testable/>Unit testing – Making existing code testable</a>
+ </li>
+ <li>
+ <a href=https://chrisstclair.co.uk/7-dangerous-mistakes-in-c-net-that-are-easy-to-make/>7 dangerous mistakes in C#/.NET that are easy to make</a>
+ </li>
+ <li>
+ <a href=https://chrisstclair.co.uk/demystifying-async-await/>Demystifying Async/Await</a>
+ </li>
+ <li>
+ <a href=https://chrisstclair.co.uk/multithreading-made-easy-parallel-foreach/>Multithreading made easy – Parallel ForEach</a>
+ </li>
+ </ul>
+ </section><section id=recent-comments-2 class="widget widget_recent_comments"><h4 class=widget-title>Recent Comments</h4><ul id=recentcomments><li class=recentcomments><span class=comment-author-link>Zev Spitz</span> on <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#comment-999>6 lesser-known features of C# / .NET that you should be using</a><li class=recentcomments><span class=comment-author-link>Steve Crane</span> on <a href=https://chrisstclair.co.uk/6-lesser-known-features-of-c-net-that-you-should-be-using/#comment-832>6 lesser-known features of C# / .NET that you should be using</a><li class=recentcomments><span class=comment-author-link>Leszek</span> on <a href=https://chrisstclair.co.uk/unit-testing-making-existing-code-testable/#comment-827>Unit testing – Making existing code testable</a><li class=recentcomments><span class=comment-author-link>Leszek</span> on <a href=https://chrisstclair.co.uk/unit-testing-making-existing-code-testable/#comment-826>Unit testing – Making existing code testable</a><li class=recentcomments><span class=comment-author-link>Pascal Ried</span> on <a href=https://chrisstclair.co.uk/unit-testing-making-existing-code-testable/#comment-825>Unit testing – Making existing code testable</a></ul></section><section id=categories-2 class="widget widget_categories"><h4 class=widget-title>Categories</h4> <ul>
+ <li class="cat-item cat-item-10"><a href=https://chrisstclair.co.uk/category/best-practices/>Best Practices</a>
+</li>
+ <li class="cat-item cat-item-6"><a href=https://chrisstclair.co.uk/category/extension-methods/>Extension Methods</a>
+</li>
+ <li class="cat-item cat-item-14"><a href=https://chrisstclair.co.uk/category/miscellaneous/>Miscellaneous</a>
+</li>
+ <li class="cat-item cat-item-1"><a href=https://chrisstclair.co.uk/category/uncategorized/>Uncategorized</a>
+</li>
+ <li class="cat-item cat-item-2"><a href=https://chrisstclair.co.uk/category/vague-errors/>Vague Errors</a>
+</li>
+ </ul>
+</section><section id=archives-2 class="widget widget_archive"><h4 class=widget-title>Archives</h4> <ul>
+ <li><a href=https://chrisstclair.co.uk/2019/10/>October 2019</a></li>
+ <li><a href=https://chrisstclair.co.uk/2019/09/>September 2019</a></li>
+ <li><a href=https://chrisstclair.co.uk/2019/03/>March 2019</a></li>
+ <li><a href=https://chrisstclair.co.uk/2019/02/>February 2019</a></li>
+ <li><a href=https://chrisstclair.co.uk/2018/09/>September 2018</a></li>
+ <li><a href=https://chrisstclair.co.uk/2018/08/>August 2018</a></li>
+ <li><a href=https://chrisstclair.co.uk/2018/07/>July 2018</a></li>
+ </ul>
+ </section><section id=tag_cloud-3 class="widget widget_tag_cloud"><h4 class=widget-title><font style=vertical-align:inherit><font style=vertical-align:inherit>标签</font></font></h4><div class=tagcloud><a href=https://chrisstclair.co.uk/tag/2100/ class="tag-cloud-link tag-link-8 tag-link-position-1" style=font-size:8pt aria-label="2100 (1 件)"><font style=vertical-align:inherit><font style=vertical-align:inherit>2100</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/about/ class="tag-cloud-link tag-link-17 tag-link-position-2" style=font-size:8pt aria-label="约（1 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>关于</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/async/ class="tag-cloud-link tag-link-20 tag-link-position-3" style=font-size:8pt aria-label="异步（1 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>异步</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/batch/ class="tag-cloud-link tag-link-7 tag-link-position-4" style=font-size:8pt aria-label="批次（1 件）"><font style=vertical-align:inherit><font style=vertical-align:inherit>批处理</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/c/ class="tag-cloud-link tag-link-3 tag-link-position-5" style=font-size:22pt aria-label="c# (10 项)"><font style=vertical-align:inherit><font style=vertical-align:inherit>c#</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/entity-framework/ class="tag-cloud-link tag-link-22 tag-link-position-6" style=font-size:8pt aria-label=实体框架（1项）><font style=vertical-align:inherit><font style=vertical-align:inherit>实体框架</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/ex/ class="tag-cloud-link tag-link-12 tag-link-position-7" style=font-size:8pt aria-label="前 (1 项)"><font style=vertical-align:inherit><font style=vertical-align:inherit>ex</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/exceptions/ class="tag-cloud-link tag-link-11 tag-link-position-8" style=font-size:11.4054054054pt aria-label="例外（2 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>异常</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/general/ class="tag-cloud-link tag-link-16 tag-link-position-9" style=font-size:8pt aria-label=一般（1项）><font style=vertical-align:inherit><font style=vertical-align:inherit>一般</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/grouping/ class="tag-cloud-link tag-link-9 tag-link-position-10" style=font-size:8pt aria-label=分组（1项）><font style=vertical-align:inherit><font style=vertical-align:inherit>分组</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/life/ class="tag-cloud-link tag-link-15 tag-link-position-11" style=font-size:8pt aria-label=生活（1项）><font style=vertical-align:inherit><font style=vertical-align:inherit>生活</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/linq/ class="tag-cloud-link tag-link-5 tag-link-position-12" style=font-size:18.4054054054pt aria-label="linq (6 项)"><font style=vertical-align:inherit><font style=vertical-align:inherit>linq </font></font></a>
+<a href=https://chrisstclair.co.uk/tag/linq-to-sql/ class="tag-cloud-link tag-link-4 tag-link-position-13" style=font-size:15.5675675676pt aria-label="linq-to-sql（4 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>linq-to-sql</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/parallel/ class="tag-cloud-link tag-link-19 tag-link-position-14" style=font-size:8pt aria-label="平行（1 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>并行</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/threading/ class="tag-cloud-link tag-link-18 tag-link-position-15" style=font-size:11.4054054054pt aria-label="穿线（2 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>线程</font></font></a>
+<a href=https://chrisstclair.co.uk/tag/unit-testing/ class="tag-cloud-link tag-link-21 tag-link-position-16" style=font-size:8pt aria-label="单元测试（1 项）"><font style=vertical-align:inherit><font style=vertical-align:inherit>单元测试</font></font></a></div>
+</section>
+ </section>
+ </div>
+ 
+ <div id=footer class=footer-wrap>
+ <footer id=colophon class="site-footer container clearfix" role=contentinfo>
+ 
+ <div id=footer-line class=site-info>
+ 
+ <span class=credit-link><font style=vertical-align:inherit><font style=vertical-align:inherit>
+ WordPress 主题： ThemeZee 的</font></font><a href=https://themezee.com/themes/donovan/ title="多诺万 WordPress 主题"><font style=vertical-align:inherit><font style=vertical-align:inherit>Donovan</font></font></a><font style=vertical-align:inherit><font style=vertical-align:inherit>。 </font></font></span>
+ </div>
+ </footer>
+ </div>
+</div>
+ 
+ <div id=fb-root class=fb_reset><div style=position:absolute;top:-10000px;width:0px;height:0px><div></div></div></div>
+ 
+ 
+ 
+ 
+</div><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status=done style=display:none!important data-ad-status=unfilled></ins><iframe scrolling=no frameborder=0 allowtransparency=true title="Twitter 设置 iframe" style=display:none></iframe><iframe width=0 height=0 style=display:none></iframe><div id=goog-gt-tt class="skiptranslate sf-hidden" dir=ltr></div><iframe id=rufous-sandbox scrolling=no frameborder=0 allowtransparency=true allowfullscreen style=position:absolute;visibility:hidden;display:none;width:0px;height:0px;padding:0px;border:none title="Twitter 分析 iframe"></iframe><div class="goog-te-spinner-pos goog-te-spinner-pos-show"><div class="goog-te-spinner-animation goog-te-spinner-animation-show"><svg xmlns=http://www.w3.org/2000/svg class=goog-te-spinner width=96px height=96px viewBox="0 0 66 66"><circle class=goog-te-spinner-path fill=none stroke-width=6 stroke-linecap=round cx=33 cy=33 r=30></circle></svg></div></div><iframe id=google_esf name=google_esf style=display:none></iframe>
