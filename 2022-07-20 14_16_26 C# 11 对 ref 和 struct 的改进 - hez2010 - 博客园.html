@@ -1,0 +1,1458 @@
+<!DOCTYPE html> <html lang=zh-cn style=--olcb-folder-code-block-max-height:80vh><!--
+ Page saved with SingleFile 
+ url: https://www.cnblogs.com/hez2010/p/ref-struct-improvements-in-csharp-11.html 
+ saved date: Wed Jul 20 2022 14:16:26 GMT+0800 (中国标准时间)
+--><meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1.0">
+<meta name=referrer content=origin-when-cross-origin>
+<meta name=description content="前言 C# 11 中即将到来一个可以让重视性能的开发者狂喜的重量级特性，这个特性主要是围绕着一个重要底层性能设施 ref 和 struct 的一系列改进。 但是这部分的改进涉及的内容较多，不一定能在 ">
+<meta property=og:description content="前言 C# 11 中即将到来一个可以让重视性能的开发者狂喜的重量级特性，这个特性主要是围绕着一个重要底层性能设施 ref 和 struct 的一系列改进。 但是这部分的改进涉及的内容较多，不一定能在 ">
+<meta http-equiv=Cache-Control content=no-transform>
+<meta http-equiv=Cache-Control content=no-siteapp>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<title>C# 11 对 ref 和 struct 的改进 - hez2010 - 博客园</title>
+<style>#home :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs),:not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs){background:rgb(245,245,245);padding:12px;border:1px solid rgb(204,204,204);border-radius:3px;border-color:transparent;color:rgb(68,68,68);font-family:"Courier New",sans-serif;font-size:12px}input[type=button]{-webkit-appearance:button}img{max-width:100%;height:auto}#blog_post_info_block{margin-top:20px}#EntryTag{margin-top:0!important}.cnblogs-markdown :not(pre,div,td)>code,.blogpost-body :not(pre,div,td)>code{font-family:"Courier New",sans-serif;font-size:12px;padding:0 5px;line-height:1.8;margin:0 3px;display:inline-block;overflow-x:auto;vertical-align:middle;border-radius:3px;background-color:#f6f6f6;color:#e83e8c}pre,pre code,pre code *{transition-duration:.2s;transition-property:background-color,border-color,border-radius,padding-top,padding-bottom,margin-top,margin-bottom,color,opacity}.hljs-engine pre{transition-property:color,opacity,padding-top,padding-bottom,margin-top,margin-bottom,height}.hljs-engine pre code{transition-property:color,opacity,border-color,padding-top,padding-bottom,margin-top,margin-bottom,height}.cnblogs-markdown pre code{line-height:1.5;margin:0;white-space:pre-wrap}pre{overflow:auto}pre{margin-top:0;margin-bottom:0}#div_digg{margin-bottom:10px;margin-right:30px;font-size:12px;text-align:center;margin-top:10px}.diggit{float:left;text-align:center;margin-top:2px;padding-top:5px}.diggnum{font-family:Verdana}.buryit{float:right;margin-left:20px;text-align:center;margin-top:2px;padding-top:5px}.burynum{font-family:Verdana}.diggword{margin-top:5px;margin-left:0;font-size:12px;color:#808080}.blog_comment_body{word-wrap:break-word;overflow-wrap:break-word}.comment-sort{display:flex;align-items:center;opacity:.65;font-size:10px;cursor:pointer;float:right}.comment-sort svg{width:16px;height:16px}.comment-sort:active,.comment-sort:hover{opacity:.85}#post_next_prev{line-height:1.8}#post_next_prev a.p_n_p_prefix:link{text-decoration:none}#post_next_prev a.p_n_p_prefix:hover{text-decoration:underline}blockquote{background:none;border:2px solid #efefef;padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;margin-top:10px;margin-bottom:10px}.under-post-card{margin-top:10px;line-height:1.5}#cnblogs_post_body{margin-bottom:20px}#cnblogs_post_body ul{margin-left:30px;padding-left:0}#cnblogs_post_body ul li{list-style-type:disc}#cnblogs_post_body table{word-break:break-word}#cnblogs_post_body .table-wrapper{display:block;overflow-x:auto}#cnblogs_post_body th{background-color:#fafafa}.blogpost-body th,.blogpost-body td{border-collapse:collapse;min-width:50px}.ad_text_commentbox{margin-top:5px;margin-bottom:5px}#cnblogs_ch{margin-top:5px;line-height:1.8}#opt_under_post{line-height:1.8}#HistoryToday{max-width:600px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.comment_btn{margin:0;line-height:22px}#commentbox_opt a{padding-left:10px}.comment_vote{text-align:right}.comment_vote a{text-decoration:none!important;padding-left:10px}.comment_actions a{padding-right:10px}.comment_actions a:last-child{padding-right:0}#cnblogs_post_body{word-break:break-word}#cnblogs_post_body>pre{margin:10px auto}#cnblogs_post_body p{text-indent:0}#cnblogs_post_body h2{font-weight:bold;line-height:1.5;margin:10px 0}#cnblogs_post_body h3{font-weight:bold;line-height:1.5;margin:10px 0}.blog_comment_body hr{visibility:hidden}#div_digg .diggnum{line-height:1.5em!important}#div_digg .burynum{line-height:1.5em!important}.vertical-middle>*{vertical-align:middle}#blog-comments-placeholder:empty{display:none}#cnblogs_c1{width:300px;height:250px}@keyframes fadeIn{0%{opacity:0}100%{opacity:var(--cnb-code-toolbar-initial-opacity)}}pre:fullscreen,pre:fullscreen code{box-sizing:border-box;border-radius:0;height:100vh;width:100vw}#commentform_title{background-repeat:no-repeat;padding:0 0 0 25px;margin-bottom:10px}.comment_textarea{padding:8px 14px;-webkit-box-sizing:border-box;box-sizing:border-box;max-width:100%;border-radius:3px;-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;margin-bottom:10px}div.commentform textarea{line-height:1.6;width:100%;height:250px;resize:vertical;-webkit-box-sizing:border-box;box-sizing:border-box;outline:none;font-size:13px;border:none;font-family:"PingFang SC","Helvetica Neue","Helvetica","Arial",sans-serif;padding:8px 0}#tbCommentBodyPreview{margin-left:5px}div.commentform p{margin:10px 0}.commentbox_footer,.commentbox_title{width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.commentbox_footer{border-top:1px solid #d2d2d2;padding-top:10px}.commentbox_tab{margin:0 1rem 0 0;list-style:none;line-height:28px;cursor:pointer;padding:0 5px 0 5px;letter-spacing:.1rem;text-align:center;color:#707070}.commentbox_tab:hover,.commentbox_tab.active{border-bottom:2px solid #367cc2;color:#000}.commentbox_title_left{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.commentbox_title_right{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:5px}textarea#tbCommentBody::-webkit-input-placeholder{color:#a9a9a9}textarea#tbCommentBody::placeholder{color:#a9a9a9}.comment_icon{cursor:pointer;margin:0 0 0 20px}.comment_option{cursor:pointer;margin-bottom:4px;background:none;border:none;outline:none;color:#808080;fill:gray}.comment_option svg{display:inline-block;vertical-align:middle;width:18px;height:18px}.comment_option:hover{fill:#000;color:#000}.inline_middle{display:inline-block;vertical-align:middle}.comment_svg{display:inline-block;vertical-align:middle;width:18px;height:18px;fill:gray}.comment_svg_stroke{stroke:gray}.comment_svg_stroke:hover{stroke:#000}.comment_svg:hover{fill:#000}#comment_nav{text-align:right}#comment_nav a{padding-left:10px}:root{--highlighted-line-bg:#d1e3c9;--highlighted-line-bg-dark:#264b33}@-webkit-keyframes collapse{from{max-height:var(--olcb-folder-code-block-scroll-height,80vh)}to{max-height:var(--olcb-folder-code-block-max-height,80vh)}}@keyframes collapse{from{max-height:var(--olcb-folder-code-block-scroll-height,80vh)}to{max-height:var(--olcb-folder-code-block-max-height,80vh)}}@-webkit-keyframes expand{from{max-height:var(--olcb-folder-code-block-max-height,80vh);overflow-y:hidden}to{max-height:var(--olcb-folder-code-block-scroll-height,"");overflow-y:hidden}}@keyframes expand{from{max-height:var(--olcb-folder-code-block-max-height,80vh);overflow-y:hidden}to{max-height:var(--olcb-folder-code-block-scroll-height,"");overflow-y:hidden}}@keyframes modal-open{0%{height:0;opacity:0}95%{height:505px}100%{height:auto;opacity:1}}:root{--cnblogs-toc-bg-color:rgba(245,245,245,.98);--cnblogs-toc-highlight-color:rgba(255,255,255,.9);--cnblogs-toc-color:#000}@keyframes wb-fade-in{0%{opacity:0}to{opacity:.85}}.hljs-number{color:#800}/*!
+ * ui-dialog.css
+ * Date: 2014-07-03
+ * https://github.com/aui/artDialog
+ * (c) 2009-2014 TangBin, http://www.planeArt.cn
+ *
+ * This is licensed under the GNU LGPL, version 2.1 or later.
+ * For details, see: http://www.gnu.org/licenses/lgpl-2.1.html
+ */@-webkit-keyframes ui-dialog-loading{0%{-webkit-transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg)}}@keyframes ui-dialog-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}#EntryTag{margin-top:20px}*{margin:0;padding:0}html{height:100%}body{font-size:9pt}img{border:0}ul{word-break:break-all}li{list-style:none}a:link{color:#000;text-decoration:none}a:visited{color:#000;text-decoration:none}a:hover{color:#f60;text-decoration:underline}a:active{color:#000;text-decoration:none}.clear{clear:both}#home{margin:0 auto;min-width:930px}#header{margin-top:10px}#blogTitle{clear:both}#blogTitle h1{font-weight:bold;line-height:1.5em;float:left}#blogLogo{float:right}#navigator{clear:both}#navList{min-height:30px;float:left}#navList li{float:left}#navList a{display:block;width:5em;height:22px;float:left;text-align:center;padding-top:8px;border-right:1px solid #ccc}#navList a:link,#navList a:visited,#navList a:active{color:#ccc}#navList a:hover{color:#fff;background-color:#f60;text-decoration:none}#main{min-width:950px;text-align:left}#mainContent .forFlow{float:none;width:auto}#mainContent{min-height:200px;padding:0 0 10px 0;-o-text-overflow:ellipsis;text-overflow:ellipsis;overflow:hidden;word-break:break-all;float:right;margin-left:-25em;width:100%}.postTitle{clear:both}.postTitle a:link,.postTitle a:visited,.postTitle a:active{color:#444}.postTitle a:hover{color:#f60;text-decoration:none}.postDesc{clear:both}.postDesc a:link,.postDesc a:visited,.postDesc a:active{color:#666}.postDesc a:hover{color:#f60;text-decoration:none}#topics{width:100%;min-height:200px;padding:0 0 10px 0;float:left;-o-text-overflow:ellipsis;text-overflow:ellipsis;overflow:hidden;word-break:break-all}#topics .postTitle{float:left;line-height:1.5em;width:100%}#EntryTag a{margin-left:5px}#EntryTag a:link,#EntryTag a:visited,#EntryTag a:active{color:#666}#EntryTag a:hover{color:#f60}#topics .postDesc{float:right;width:100%;text-align:right;padding-right:5px;color:#666;margin-top:5px}.feedback_area_title{margin-top:20px}.louzhu{padding-right:16px}.feedbackListSubtitle a:link,.feedbackListSubtitle a:visited,.feedbackListSubtitle a:active{color:#666;font-weight:normal}.feedbackListSubtitle a:hover{color:#f60;text-decoration:none}.feedbackManage{width:230px;text-align:right;float:right}.feedbackCon{min-height:35px;margin-bottom:1em;line-height:1.5em}#footer{text-align:center;min-height:15px;margin-top:10px;padding-top:10px;margin-bottom:10px}.postBody a:link,.postBody a:visited,.postBody a:active{text-decoration:underline}.postBody li{margin-bottom:1em}.hljs{border-radius:3px}.hljs-built_in{color:#00f}body{background:#fff;min-height:100%;height:100%;color:#314659!important;font-family:Lato,"PingFang SC","Microsoft YaHei",sans-serif!important}a{transition:all .3s ease!important}a:hover{color:#2D8CF0!important;text-decoration:none!important}#ad_c1,#ad_c2,#ad_t2,#author_profile,#blogCalendar,#blogTitle h2,#comment_form_container p:nth-of-type(3),#comments_pager_top,#green_channel,#homepage_top_pager,#sidebar_imagecategory,#sidebar_postarchive,#sidebar_recentcomments,#sidebar_recentposts,#sidebar_scorerank,#sidebar_search,#sidebar_search .catListTitle,#sidebar_shortcut,#sidebar_topcommentedposts,#tip_comment2,#under_post_kb,#under_post_news,.blogStats,.c_ad_block,.dayTitle{display:none}#home{width:100%;height:100%}#header{width:960px;position:fixed;top:0;right:0;left:0;margin:0 auto;border-top:0;background:#fff;opacity:.95;border-bottom:1px #eef2f8 solid;padding-bottom:0;display:block;height:60px;z-index:999}#header #blogTitle{position:relative;height:60px}#header #blogTitle h1{font-size:25px;font-family:Georgia;width:auto;margin-left:0;margin-top:12px}#header #blogTitle h1 a{color:#404040}#header #navigator{height:inherit;position:absolute;right:0;top:0;background-color:transparent;display:inline-block;z-index:999}#header #navList{height:inherit}#header #navList>li{position:relative}#header #navList>li:hover i{width:100%;left:0}#header #navList>li>a:active,#header #navList>li>a:link,#header #navList>li>a:visited{font-size:17px;padding-top:0;border-right:0;color:#314659;display:block;font-weight:300;width:auto;padding:19px 16px;height:inherit;-webkit-transition:all .3s;transition:all .3s}#header #navList>li>a:hover{background:0 0}#header #navList>li>i{width:0;height:4px;background-color:#2D8CF0;content:"";position:absolute;left:50%;bottom:0;transition:1s}#main{width:960px;margin:0 auto;min-height:calc(100% - 135px);padding:75px 10px 0 10px;animation-name:fadeIn;animation-duration:1s;animation-iteration-count:1;-webkit-animation-name:fadeIn;-webkit-animation-duration:1s;-webkit-animation-iteration-count:1}#main #mainContent{background-color:transparent}#main #mainContent .forFlow{margin:0 auto;margin-left:0;max-width:960px}.post .postDesc{font-size:13px;font-weight:300;padding-right:0!important;color:#314659!important}.post .postDesc a{color:#314659}#topics .postTitle{font-size:20px;font-weight:300;padding-left:0;border-bottom:none}#topics .postTitle a{color:#314659}#topics .postBody{font-weight:300;font-size:16px;padding:10px 0;line-height:1.75;color:#314659;border-bottom:1px solid #eef2f8}#topics .postBody a:active,#topics .postBody a:link,#topics .postBody a:visited{color:#2D8CF0;text-decoration:none}#topics .postBody h2{font-size:20px!important;color:#314659}#topics .postBody h2 a:not([class=esa-anchor]){color:inherit!important;text-decoration:underline}#topics .postBody h3{font-size:19px!important;color:#314659}#topics .postBody h3 a:not([class=esa-anchor]){color:inherit!important;text-decoration:underline}#topics .postBody p{margin:13px auto}#topics .postBody ul li{margin:3px 0;font-size:16px;color:#314659}#topics .postBody table{font-size:13px;border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #eef2f8;width:100%;margin:13px 0}#topics .postBody table th{font-family:inherit;font-size:inherit;background:#f7f7f7!important;white-space:nowrap;font-weight:600;border:1px solid #eef2f8!important;padding:8px 16px!important}#topics .postBody table td{border:1px solid #eef2f8!important;padding:8px 16px!important}#topics .postBody li code,#topics .postBody p code,#topics .postBody table code{color:#314659;line-height:1;font-family:consolas!important;vertical-align:middle;margin:0 3px;background:#f2f4f5!important;font-size:14px!important;padding:.2em .3em!important;border-radius:3px!important;border:1px solid #eee!important}#topics .postBody #EntryTag{font-size:14px;color:#314659}#topics .postBody #EntryTag a{color:#2D8CF0}#topics .postBody #post_next_prev{font-size:13px}.github-corner svg{fill:#2D8CF0}#footer{border-top:1px solid #eef2f8;font-size:13px;font-weight:300;margin:10px 0 0 0;padding:10px 0}#footer .esa-copyright a{color:#314659}.cnblogs-markdown pre{white-space:pre!important;position:relative!important}.esa-clipboard-button{font-size:12px;cursor:pointer;position:absolute;right:13px;top:10px;box-shadow:0 0 15px 0 rgba(0,0,0,.1);color:#314659;padding:0 6px;border-radius:5px}.esa-toolbar{position:fixed;display:grid;z-index:999;bottom:30px;right:30px}.esa-toolbar .esa-toolbar-contents,.esa-toolbar .esa-toolbar-follow{height:45px;width:45px;font-weight:400;position:relative;outline:0;cursor:pointer;border:1px solid transparent;transition:color .2s linear,background-color .2s linear,border .2s linear,box-shadow .2s linear;margin-top:5px;border-color:#eef2f8;background-color:#fff;background-position:center;background-repeat:no-repeat}.esa-toolbar .esa-toolbar-contents:hover,.esa-toolbar .esa-toolbar-follow:hover,.esa-toolbar .esa-toolbar-gotop:hover{color:#2D8CF0;border-color:#2D8CF0}.esa-toolbar .esa-toolbar-contents{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAuUlEQVRIS2NkoANgpIMdDPSxZO6qbQeQffOf+X98SrD3w0WLdnL/5vi7lRo+ZZy7att/ZIMYGRi0k8K8rs1ctZufheH3B6pYMnv1dgdkg/5x/DmV7uv7bdWqVcwfGXltqWIJNQwhZAZ9Ip6QK6ghP4x8Mnfl1gaUJMzIODUpzOv1pG3b2Lk//6+kSnDRJZ/QxSfUCA5CZgyj1EXIq9SQp09w0aUUpk8+oUelRY2IJWQGfSKekCuoIQ8At39XNxqN1mQAAAAASUVORK5CYII=)}.esa-toolbar .esa-toolbar-follow{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAsUlEQVRIS2NkIAHMXbU98D/D/zn/GRlTU0M91xGrlZFYhSB1c1Zu62RkZChj+M/QmxzuVUKs3lFLRoOLcFoZTV30ySdzV29zY2BgtGT494+ghf8ZGF0YGRmskXP8pG3b2Lm/MqQx/PsvjBGrTEz/Gf8xHmWcs3LrC0ZGRnHC0Y6kAqlYmbNyqx0jI+NBnPr/M/xgpKlPwDYzPiUYRMguHE3Co8E1WtQTzvPDJ5+Q2+4CADezs7EkSK8aAAAAAElFTkSuQmCC)}.esa-search-btn{display:block;padding:14px 0;cursor:pointer}.esa-search-close{display:none;padding:14px 0;cursor:pointer}.esa-catalog{position:fixed;top:120px;right:1px;width:auto;height:auto;z-index:1000}.esa-catalog-title{cursor:move;padding-left:12px;width:100%;height:35px;line-height:36px;border-bottom:1px solid #eef2f8;font-size:12px;font-weight:600;color:#314659}.esa-catalog-title:before{content:"☲";margin-right:5px}.esa-catalog-close{position:absolute;right:15px;top:10px;cursor:pointer}.esa-catalog-contents{overflow:hidden;color:#314659;border:1px solid #eef2f8;min-width:150px;opacity:1;font-size:inherit;font-weight:300;background-color:#fff;z-index:19941112}.esa-catalog-contents ul{padding:10px 15px;max-height:350px;overflow-y:auto}.esa-catalog-contents ul li{margin-top:5px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;color:#314659}.esa-catalog-contents ul li a:hover{color:#2D8CF0;text-decoration:none}.esa-catalog-contents ul li .level1{margin-left:0}.esa-catalog-contents ul li .level2{margin-left:10px}.esa-anchor{opacity:0;-webkit-transition:opacity .3s ease;transition:opacity .3s ease;margin-left:8px}#div_digg{position:static;float:none;margin:35px auto 85px auto;z-index:-1;width:200px}#div_digg .buryit,#div_digg .diggit{background:#fff;margin:0;display:inline-block;width:auto;height:32px;border-width:0;cursor:pointer;color:#fff;user-select:none;padding:0 10px;border-radius:5px;transition:color .2s linear,background-color .2s linear,border .2s linear,box-shadow .2s linear}#div_digg .diggit{background-color:#18b566;border-color:#18b566}#div_digg .diggit:hover{background-color:#47cb89;border-color:#47cb89}#div_digg .buryit{background-color:#ed4014;border-color:#ed4014}#div_digg .buryit:hover{background-color:#f16643;border-color:#f16643}#div_digg .buryit .burynum,#div_digg .diggit .diggnum{color:snow;display:inline-block;font-size:15px;position:relative;top:5px;width:65px}#div_digg .diggit .diggnum:before{content:"推荐";font-size:15px;margin-right:5px}#div_digg .buryit .burynum:before{content:"反对";font-size:15px;margin-right:5px}.feedbackItem .feedbackListSubtitle{color:transparent}.feedbackItem a{color:#314659}.feedbackItem .louzhu{background:#2D8CF0!important;color:#fff;border-radius:2px;margin:0 2px;padding:0 6px 2px 6px!important}.feedbackItem .comment_date{color:#666}#comment_nav{visibility:hidden}.feedbackItem .feedbackCon{background:0 0;padding:10px 0 10px 0;border-bottom:1px solid #eef2f8}.feedbackItem .feedbackCon .esa-comment-avatar{float:left}.feedbackItem .feedbackCon .esa-comment-avatar img{border-radius:50%;transition:all .5s ease-out;-webkit-transition:all .6s ease-out;-moz-transition:all .5s ease-out;-ms-transition:all .5s ease-out;-o-transition:all .5s ease-out}.feedbackItem .feedbackCon .esa-comment-avatar img:hover{-webkit-transform:rotateZ(360deg);-moz-transform:rotateZ(360deg);-ms-transform:rotateZ(360deg);-o-transform:rotateZ(360deg);transform:rotateZ(360deg)}.feedbackItem .feedbackCon .blog_comment_body{font-size:14px;font-weight:300;border-radius:3px;padding:10px;margin-left:55px;color:#314659;background-color:rgba(193,193,193,.2)}.feedbackItem .feedbackCon .blog_comment_body a{color:#2D8CF0}.feedbackItem .feedbackCon .comment_vote{margin-top:12px}.feedback_area_title{border-bottom:1px solid #eef2f8;margin-bottom:15px;font-size:20px;font-weight:300;padding-left:0;padding-bottom:5px}.commentform #commentform_title{background-image:none;padding-left:0;font-size:20px}.commentform #tip_comment{color:#f37f7f!important;margin:15px 0;display:block}.commentform .commentbox_title{border-bottom:1px solid #eef2f8;font-size:14px;font-weight:300}.commentform .commentbox_title .commentbox_title_left .commentbox_tab.active,.commentform .commentbox_title .commentbox_title_left .commentbox_tab:hover{border-bottom:2px solid #2D8CF0;color:#2D8CF0}.commentform .commentbox_title .commentbox_title_right .comment_svg:hover,.commentform .commentbox_title .commentbox_title_right .comment_svg_stroke:hover{fill:#2D8CF0}.commentform .comment_textarea{width:100%;border:1px solid #eef2f8;background-color:transparent;color:#314659}.commentform .comment_textarea:focus{outline:0}.commentform .comment_textarea:hover{border-color:#2D8CF0}.commentform #tbCommentBody{color:#314659;background-color:transparent}.commentform .feedbackCon{border-bottom:1px solid #eef2f8;background:0 0;padding:0}.commentform #commentbox_opt{display:block}.commentform #commentbox_opt a{color:#314659}.commentform #btn_comment_submit{width:auto;height:auto;border-width:0;cursor:pointer;color:#fff;background-color:#2D8CF0;border-color:#2D8CF0;font-weight:300;user-select:none;padding:5px 20px;font-size:12px;border-radius:5px;outline:0;transition:all .3s}.commentform #btn_comment_submit:hover{opacity:.7}.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-thumb{border-radius:1px;box-shadow:inset 0 0 5px #314659;background:#314659}::-webkit-scrollbar-track{background:0 0;border-radius:1px}@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@media screen and (min-width:768px) and (max-width:980px){#blog-comments-placeholder,#comment_form{padding:10px;margin-left:0}}@media only screen and (max-width:767px){#home{font-size:12px!important}#mainContent .forFlow{padding-top:15px}.esa-catalog,.postDesc{display:none}.postBody{padding:0!important}#main{margin-top:60px;padding:0 15px!important}#topics .postTitle{padding-left:0!important;padding-top:10px}#cnblogs_post_body table{display:table!important}#comment_nav{margin:0}#comment_form{padding:5px;margin-left:0}.forFlow{margin-right:0;margin-left:0!important}#header{width:auto}#header #navigator{display:none;width:100%;margin-top:60px}#navList{width:inherit}#navList li{float:none}#navList a:active,#navList a:link,#navList a:visited{width:100%;background-color:#2c3e50;color:#fff!important;padding:15px 0}#navList a:hover{color:#2D8CF0;background-color:#2c3e50!important}.feedbackItem .feedbackManage{width:auto}.github-corner{display:none}}@media only screen and (max-width:410px){#div_digg{display:grid;width:100%}#div_digg .buryit,#div_digg .diggit{margin:5px 0}}[data-tips]{overflow:hidden}[data-tips]:hover{overflow:visible}[data-tips]::after,[data-tips]::before{position:absolute;transition:all .3s;transform:translate3d(-50%,0,0);opacity:0;left:37px;z-index:10}[data-tips]::before{content:attr(data-tips);border-radius:6px;background-color:rgba(100,100,100,.8);color:#fff;height:24px;line-height:24px;padding:0 6px;font-size:12px;white-space:nowrap;top:-24px;left:50%}[data-tips]::after{content:"";border:5px solid #333;border-color:rgba(100,100,100,.8) transparent transparent transparent;top:0;left:50%}[data-tips]:hover::after,[data-tips]:hover::before{opacity:1}[data-tips]:hover::after,[data-tips]:hover::before{transform:translate3d(-50%,-7px,0)}@keyframes showQR{from{transform:rotateX(90deg)}8%{opacity:1;transform:rotateX(-60deg)}18%{opacity:1;transform:rotateX(40deg)}34%{opacity:1;transform:rotateX(-28deg)}44%{opacity:1;transform:rotateX(18deg)}58%{opacity:1;transform:rotateX(-12deg)}72%{opacity:1;transform:rotateX(9deg)}88%{opacity:1;transform:rotateX(-5deg)}96%{opacity:1;transform:rotateX(2deg)}to{opacity:1}}@keyframes hideQR{20%,50%{transform:scale(1.08,1.08);opacity:1}to{opacity:0;transform:rotateZ(40deg) scale(.6,.6)}}.cnblogs-markdown .hljs{display:block;color:#333;overflow-x:auto;background:#F2F4F5!important;border:none!important;font-family:Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace!important;padding:1em!important;font-size:14px!important}.hljs-comment{color:#969896}.hljs-string{color:#df5000}.hljs-keyword{color:#a71d5d}.hljs-literal{color:#0086b3}.hljs-title{color:#795da3}</style>
+<style media="only screen and (max-width: 767px)">body{font-size:14px!important;-webkit-text-size-adjust:none}#blog_nav_rss{display:none!important}#blog_nav_newpost{display:none!important}div.commentform textarea{min-height:200px}.commentbox_title{width:auto}#cnblogs_post_body table{display:block;overflow-x:scroll;-webkit-overflow-scrolling:regular;max-height:800px}#cnblogs_post_body table::-webkit-scrollbar:horizontal{height:12px}#cnblogs_post_body table::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);border-radius:10px;background-color:#f5f5f5}#cnblogs_post_body table::-webkit-scrollbar{width:12px;background-color:#f5f5f5}#cnblogs_post_body table::-webkit-scrollbar-thumb{border-radius:10px;-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);background-color:#555}#cnblogs_c1{text-align:center;margin:10px auto 0 auto}#cnblogs_c1{width:300px}.commentform{margin-left:10px}.commentbox_tab{width:100%}.comment_textarea{width:100%}div.commentform textarea{font-size:16px}.commentbox_title_right,.commentbox_title_left{width:100%;max-width:100%;justify-content:space-between}.commentbox_title_right{padding:8px 5px}#home,#main{width:auto;min-width:initial}#main{padding:0 5px}#mainContent{float:none;margin-left:0}#mainContent .forFlow{margin-left:0}.postBody{padding:5px}#comment_form{padding:5px}</style>
+<link type=application/rss+xml rel=alternate href=https://www.cnblogs.com/hez2010/rss>
+<link type=application/rsd+xml rel=EditURI href=https://www.cnblogs.com/hez2010/rsd.xml>
+<link type=application/wlwmanifest+xml rel=wlwmanifest href=https://www.cnblogs.com/hez2010/wlwmanifest.xml>
+<meta http-equiv=origin-trial content="AzoawhTRDevLR66Y6MROu167EDncFPBvcKOaQispTo9ouEt5LvcBjnRFqiAByRT+2cDHG1Yj4dXwpLeIhc98/gIAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv=origin-trial content="A6+nc62kbJgC46ypOwRsNW6RkDn2x7tgRh0wp7jb3DtFF7oEhu1hhm4rdZHZ6zXvnKZLlYcBlQUImC4d3kKihAcAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv=origin-trial content="A/9La288e7MDEU2ifusFnMg1C2Ij6uoa/Z/ylwJIXSsWfK37oESIPbxbt4IU86OGqDEPnNVruUiMjfKo65H/CQwAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><style>#MathJax_Message{position:fixed;left:1em;bottom:1.5em;background-color:#E6E6E6;border:1px solid #959595;margin:0px;padding:2px 8px;z-index:102;color:black;font-size:80%;width:auto;white-space:nowrap}.lightbox{text-align:center;line-height:0;position:absolute;left:0}.lightboxOverlay{position:absolute;top:0;left:0;z-index:9999;background-color:#000;opacity:.8}.lightbox{width:100%;z-index:10000;font-weight:400;outline:0}</style><link id=favicon rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGNsaXBQYXRoIGlkPSJwcmVmaXhfX2NsaXAtcGF0aCI+PHBhdGggY2xhc3M9InByZWZpeF9fY2xzLTEiIGQ9Ik0yOS40OCAyNS4yNGMtLjE2LTEuODktLjA4LTEuNS0uMjQtMy4xNmE3Mi4yNCA3Mi4yNCAwIDAwLTItMTAuMzdMMjYgNi4yNWwtMi42IDUuNDEtLjQ0Ljg5cS0uMjQuNDgtLjU0IDFhMjAuNDMgMjAuNDMgMCAwMS0xLjI0IDEuODQgMjAuMDggMjAuMDggMCAwMS0zLjA4IDMuMjQgMTkuNzIgMTkuNzIgMCAwMS0zLjg3IDIuNTNjLS43Mi4zMy0xLjQ1LjcxLTIuMjMgMS0uMzQuMTQtMS4xOS40NC0xLjkzLjY2YTIuNTUgMi41NSAwIDAxLTEuMDctLjNjLS4zNC0xLS44My0yLjI0LTEuMi0zLjE5LS41LTEuMjUtMS0yLjUtMS41MS0zLjczYTU5LjExIDU5LjExIDAgMDAtMy42Mi03LjI1IDU5LjgyIDU5LjgyIDAgMDAxLjUxIDcuOTRjLjMgMS4zLjcgMi41OCAxLjA1IDMuODdTNiAyMi43MSA2LjQ0IDI0YTEuNCAxLjQgMCAwMDEuMjkuOTNjMS4yOCAwIDIuNTcuMDYgMy44Ni4wNXMyLjU5IDAgMy44OC0uMTFhNTYgNTYgMCAwMDcuNzktLjg3Yy0xLjkyLS40OS03LjUtLjgxLTEwLjc5LTEuMDZhNDMgNDMgMCAwMDYuNTMtMS43IDI0LjA2IDI0LjA2IDAgMDA1LjM4LTMuNDVjLjcxLS42MiAxLjIxIDEuODggMi4zOSA1LjI3LjYyIDEuNjkuMzQgMSAxIDIuNjZzMS4zNyA0LjM4IDIuMTcgNmMtLjA3LTEuODItLjMxLTQuNjctLjQ2LTYuNDh6Ii8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9InByZWZpeF9fY2xpcC1wYXRoLTIiPjxwYXRoIGNsYXNzPSJwcmVmaXhfX2Nscy0xIiBkPSJNMjAuOTIgMy40NmE0LjI1IDQuMjUgMCAwMS4zMSA1Ljg2IDMuOTEgMy45MSAwIDAxLTUuNjYuMjQgNC4yNSA0LjI1IDAgMDEtLjMxLTUuODYgMy45MSAzLjkxIDAgMDE1LjY2LS4yNG0xLjM1LTEuNTRhNS44OSA1Ljg5IDAgMDAtOC41My4zNiA2LjQxIDYuNDEgMCAwMC40OCA4LjgzIDUuOTEgNS45MSAwIDAwOC41My0uMzYgNi40MSA2LjQxIDAgMDAtLjQ4LTguODN6Ii8+PC9jbGlwUGF0aD48c3R5bGU+LnByZWZpeF9fY2xzLTF7ZmlsbDojM2UzYTM5fUBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6ZGFyayl7LnByZWZpeF9fY2xzLTF7ZmlsbDojZWZlZmVmfX08L3N0eWxlPjwvZGVmcz48ZyBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiPjxnIGlkPSJwcmVmaXhfX2xheWVyXzEiIGRhdGEtbmFtZT0ibGF5ZXIgMSI+PHBhdGggY2xhc3M9InByZWZpeF9fY2xzLTEiIGQ9Ik0yOS40OCAyNS4yNGMtLjE2LTEuODktLjA4LTEuNS0uMjQtMy4xNmE3Mi4yNCA3Mi4yNCAwIDAwLTItMTAuMzdMMjYgNi4yNWwtMi42IDUuNDEtLjQ0Ljg5cS0uMjQuNDgtLjU0IDFhMjAuNDMgMjAuNDMgMCAwMS0xLjI0IDEuODQgMjAuMDggMjAuMDggMCAwMS0zLjA4IDMuMjQgMTkuNzIgMTkuNzIgMCAwMS0zLjg3IDIuNTNjLS43Mi4zMy0xLjQ1LjcxLTIuMjMgMS0uMzQuMTQtMS4xOS40NC0xLjkzLjY2YTIuNTUgMi41NSAwIDAxLTEuMDctLjNjLS4zNC0xLS44My0yLjI0LTEuMi0zLjE5LS41LTEuMjUtMS0yLjUtMS41MS0zLjczYTU5LjExIDU5LjExIDAgMDAtMy42Mi03LjI1IDU5LjgyIDU5LjgyIDAgMDAxLjUxIDcuOTRjLjMgMS4zLjcgMi41OCAxLjA1IDMuODdTNiAyMi43MSA2LjQ0IDI0YTEuNCAxLjQgMCAwMDEuMjkuOTNjMS4yOCAwIDIuNTcuMDYgMy44Ni4wNXMyLjU5IDAgMy44OC0uMTFhNTYgNTYgMCAwMDcuNzktLjg3Yy0xLjkyLS40OS03LjUtLjgxLTEwLjc5LTEuMDZhNDMgNDMgMCAwMDYuNTMtMS43IDI0LjA2IDI0LjA2IDAgMDA1LjM4LTMuNDVjLjcxLS42MiAxLjIxIDEuODggMi4zOSA1LjI3LjYyIDEuNjkuMzQgMSAxIDIuNjZzMS4zNyA0LjM4IDIuMTcgNmMtLjA3LTEuODItLjMxLTQuNjctLjQ2LTYuNDh6Ii8+PGcgY2xpcC1wYXRoPSJ1cmwoI3ByZWZpeF9fY2xpcC1wYXRoKSI+PHBhdGggY2xhc3M9InByZWZpeF9fY2xzLTEiIGQ9Ik0tLjg3LS43OGgzNC40MnYzMy4wN0gtLjg3eiIvPjwvZz48cGF0aCBjbGFzcz0icHJlZml4X19jbHMtMSIgZD0iTTIwLjkyIDMuNDZhNC4yNSA0LjI1IDAgMDEuMzEgNS44NiAzLjkxIDMuOTEgMCAwMS01LjY2LjI0IDQuMjUgNC4yNSAwIDAxLS4zMS01Ljg2IDMuOTEgMy45MSAwIDAxNS42Ni0uMjRtMS4zNS0xLjU0YTUuODkgNS44OSAwIDAwLTguNTMuMzYgNi40MSA2LjQxIDAgMDAuNDggOC44MyA1LjkxIDUuOTEgMCAwMDguNTMtLjM2IDYuNDEgNi40MSAwIDAwLS40OC04LjgzeiIvPjxnIGNsaXAtcGF0aD0idXJsKCNwcmVmaXhfX2NsaXAtcGF0aC0yKSI+PHBhdGggY2xhc3M9InByZWZpeF9fY2xzLTEiIGQ9Ik0tLjg3LS43OGgzNC40MnYzMy4wN0gtLjg3eiIvPjwvZz48L2c+PC9nPjwvc3ZnPg==" type=image/svg+xml><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://www.cnblogs.com/hez2010/p/ref-struct-improvements-in-csharp-11.html><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body class="skin-custom no-navbar mathjax2 hljs-engine"><div class="esa-mobile-menu sf-hidden"></div><div id=MathJax_Message style=display:none></div>
+<a name=top></a>
+<div id=top_nav class="navbar forpc navbar-custom sf-hidden">
+ 
+</div>
+<div id=home>
+<div id=header>
+ <div id=blogTitle>
+ <a id=lnkBlogLogo href=https://www.cnblogs.com/hez2010/><img id=blogLogo src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt=返回主页></a> 
+ 
+<h1><a id=Header1_HeaderTitle class="headermaintitle HeaderMainTitle" href=https://www.cnblogs.com/hez2010/>hez2010</a>
+</h1>
+<h2 class=sf-hidden></h2>
+ 
+ </div>
+ <div id=navigator>
+ 
+<ul id=navList>
+<li><a id=blog_nav_sitehome class=menu href=https://www.cnblogs.com/>
+博客园</a>
+<i></i></li>
+<li>
+<a id=blog_nav_myhome class=menu href=https://www.cnblogs.com/hez2010/>
+首页</a>
+<i></i><li><a class=menu href=https://www.cnblogs.com/hez2010/tag/>标签</a><i></i><li><a class=menu href=https://www.cnblogs.com/hez2010/p/>随笔</a><i></i><li><a class=menu href=https://github.com/hez2010>GitHub</a><i></i></li>
+<li>
+<a id=blog_nav_newpost class=menu href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+<i></i></li>
+<li>
+<a id=blog_nav_contact class=menu href=https://msg.cnblogs.com/send/hez2010>
+联系</a><i></i></li>
+<li>
+<a id=blog_nav_rss class=menu data-rss=https://www.cnblogs.com/hez2010/rss/>订阅</a>
+<i></i></li>
+<li>
+<a id=blog_nav_admin class=menu href=https://i.cnblogs.com/>
+管理</a>
+<i></i></li>
+</ul>
+ <div class="blogStats sf-hidden">
+ 
+ </div>
+ 
+ <svg t=1573264861612 class="icon esa-search-btn" viewBox="0 0 1024 1024" version=1.1 xmlns=http://www.w3.org/2000/svg p-id=7386 width=32 height=32 data-spm-anchor-id=a313x.7781069.0.i8>
+ <path fill="rgb(49, 70, 89)" d="M616.362667 580.608h-23.808l-8.533334-8.128a196.16 196.16 0 1 0-21.098666 21.098667l8.128 8.533333v23.808l150.805333 150.165333 44.8-44.8z m-180.8 0a135.594667 135.594667 0 1 1 135.594666-135.594667 135.402667 135.402667 0 0 1-135.573333 135.594667z" p-id=7387></path>
+ </svg>
+ <svg t=1573265135257 class="icon esa-search-close" viewBox="0 0 1024 1024" version=1.1 xmlns=http://www.w3.org/2000/svg p-id=15367 width=32 height=32>
+ <path fill="rgb(49, 70, 89)" d="M515.23600182 491.06853843L378.27564815 354.10818478a17.09155825 17.09155825 0 1 0-24.17885764 24.15606913l136.96035332 136.97174792-136.96035331 136.97174789a17.09155825 17.09155825 0 1 0 24.16746339 24.16746337l136.97174791-136.96035366 136.9717479 136.96035366a17.09155825 17.09155825 0 1 0 24.16746337-24.15606912l-136.96035366-136.98314215 136.96035366-136.96035367a17.09155825 17.09155825 0 1 0-24.16746337-24.16746337l-136.96035366 136.96035364z" p-id=15368></path>
+ </svg></div>
+ <div class="esa-search-box sf-hidden">
+ 
+ </div></div>
+<div id=main>
+ <div id=mainContent>
+ <div class=forFlow>
+ <div id=post_detail>
+ 
+ <div id=topics>
+ <div class=post>
+ <h1 class=postTitle>
+ 
+<a id=cb_post_title_url class="postTitle2 vertical-middle" href=https://www.cnblogs.com/hez2010/p/ref-struct-improvements-in-csharp-11.html>
+ <span role=heading aria-level=2>C# 11 对 ref 和 struct 的改进</span>
+ 
+</a><button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button>
+ </h1>
+ <div class=clear></div>
+ <div class=postBody>
+ <div id=cnblogs_post_body class="blogpost-body cnblogs-markdown">
+<h2 id=475597200>前言<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#475597200 class=esa-anchor style=opacity:0>#</a></h2>
+<p>C# 11 中即将到来一个可以让重视性能的开发者狂喜的重量级特性，这个特性主要是围绕着一个重要底层性能设施 <code>ref</code> 和 <code>struct</code> 的一系列改进。</p>
+<p>但是这部分的改进涉及的内容较多，不一定能在 .NET 7（C# 11）做完，因此部分内容推迟到 C# 12 也是有可能的。当然，还是很有希望能在 C# 11 的时间点就看到完全体的。</p>
+<p>本文仅仅就这一个特性进行介绍，因为 C# 11 除了本特性之外，还有很多其他的改进，一篇文章根本说不完，其他那些我们就等到 .NET 7 快正式发布的时候再说吧。</p>
+<h2 id=1252585470>背景<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#1252585470 class=esa-anchor style=opacity:0>#</a></h2>
+<p>C# 自 7.0 版本引入了新的 <code>ref struct</code> 用来表示不可被装箱的栈上对象，但是当时局限性很大，甚至无法被用于泛型约束，也无法作为 <code>struct</code> 的字段。在 C# 11 中，由于特性 <code>ref</code> 字段的推动，需要允许类型持有其它值类型的引用，这方面的东西终于有了大幅度进展。</p>
+<p>这些设施旨在允许开发者使用安全的代码编写高性能代码，而无需面对不安全的指针。接下来我就来对 C# 11 甚至 12 在此方面的即将到来的改进进行介绍。</p>
+<h2 id=3129703418>ref 字段<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#3129703418 class=esa-anchor style=opacity:0>#</a></h2>
+<p>C# 以前是不能在类型中持有对其它值类型的引用的，但是在 C# 11 中，这将变得可能。从 C# 11 开始，将允许 <code>ref struct</code> 定义 <code>ref</code> 字段。</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_0>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_0><span class=hljs-keyword>readonly</span> <span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span> Span&lt;T&gt;
+{
+    <span class=hljs-keyword>private</span> <span class=hljs-keyword>readonly</span> <span class=hljs-keyword>ref</span> T _field;
+    <span class=hljs-keyword>private</span> <span class=hljs-keyword>readonly</span> <span class=hljs-built_in>int</span> _length;
+    <span class=hljs-function><span class=hljs-keyword>public</span> <span class=hljs-title>Span</span>(<span class=hljs-params><span class=hljs-keyword>ref</span> T <span class=hljs-keyword>value</span></span>)</span>
+    {
+        _field = <span class=hljs-keyword>ref</span> <span class=hljs-keyword>value</span>;
+        _length = <span class=hljs-number>1</span>;
+    }
+}
+</code></pre>
+<p>直观来看，这样的特性将允许我们写出上面的代码，这段代码中构造了一个 <code>Span&lt;T&gt;</code>，它持有了对其他 <code>T</code> 对象的引用。</p>
+<p>当然，<code>ref struct</code> 也是可以被 <code>default</code> 来初始化的：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_1>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_1>Span&lt;<span class=hljs-built_in>int</span>&gt; span = <span class=hljs-literal>default</span>;
+</code></pre>
+<p>但这样 <code>_field</code> 就会是个空引用，不过我们可以通过 <code>Unsafe.IsNullRef</code> 方法来进行检查：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_2>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_2><span class=hljs-keyword>if</span> (Unsafe.IsNullRef(<span class=hljs-keyword>ref</span> _field))
+{
+    <span class=hljs-keyword>throw</span> <span class=hljs-keyword>new</span> NullReferenceException(...);
+}
+</code></pre>
+<p>另外，<code>ref</code>字段的可修改性也是一个非常重要的事情，因此引入了：</p>
+<ul>
+<li><code>readonly ref</code>：一个对对象的只读引用，这个引用本身不能在构造方法或 <code>init</code> 方法之外被修改</li>
+<li><code>ref readonly</code>：一个对只读对象的引用，这个引用指向的对象不能在构造方法或 init 方法之外被修改</li>
+<li><code>readonly ref readonly</code>：一个对只读对象的只读引用，是上述两种的组合</li>
+</ul>
+<p>例如：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_3>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_3><span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span> Foo
+{
+    <span class=hljs-keyword>ref</span> <span class=hljs-keyword>readonly</span> <span class=hljs-built_in>int</span> f1;
+    <span class=hljs-keyword>readonly</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> f2;
+    <span class=hljs-keyword>readonly</span> <span class=hljs-keyword>ref</span> <span class=hljs-keyword>readonly</span> <span class=hljs-built_in>int</span> f3;
+
+    <span class=hljs-function><span class=hljs-keyword>void</span> <span class=hljs-title>Bar</span>(<span class=hljs-params><span class=hljs-built_in>int</span>[] array</span>)</span>
+    {
+        f1 = <span class=hljs-keyword>ref</span> array[<span class=hljs-number>0</span>];  <span class=hljs-comment>// 没问题</span>
+        f1 = array[<span class=hljs-number>0</span>];      <span class=hljs-comment>// 错误，因为 f1 引用的值不能被修改</span>
+        f2 = <span class=hljs-keyword>ref</span> array[<span class=hljs-number>0</span>];  <span class=hljs-comment>// 错误，因为 f2 本身不能被修改</span>
+        f2 = array[<span class=hljs-number>0</span>];      <span class=hljs-comment>// 没问题</span>
+        f3 = <span class=hljs-keyword>ref</span> array[<span class=hljs-number>0</span>];  <span class=hljs-comment>// 错误：因为 f3 本身不能被修改</span>
+        f3 = array[<span class=hljs-number>0</span>];      <span class=hljs-comment>// 错误：因为 f3 引用的值不能被修改</span>
+    }
+}
+</code></pre>
+<h2 id=4189180711>生命周期<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#4189180711 class=esa-anchor>#</a></h2>
+<p>这一切看上去都很美好，但是真的没有任何问题吗？</p>
+<p>假设我们有下面的代码来使用上面的东西：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_4>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_4><span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>Foo</span>()</span>
+{
+    <span class=hljs-built_in>int</span> v = <span class=hljs-number>42</span>;
+    <span class=hljs-keyword>return</span> <span class=hljs-keyword>new</span> Span&lt;<span class=hljs-built_in>int</span>&gt;(<span class=hljs-keyword>ref</span> v);
+}
+</code></pre>
+<p><code>v</code> 是一个局部变量，在函数返回之后其生命周期就会结束，那么上面这段代码就会导致 <code>Span&lt;int&gt;</code> 持有的 <code>v</code> 的引用变成无效的。顺带一提，上面这段代码是完全合法的，因为 C# 之前不支持 <code>ref</code> 字段，因此上面的代码是不可能出现逃逸问题的。但是 C# 11 加入了 <code>ref</code> 字段，栈上的对象就有可能通过 <code>ref</code> 字段而发生引用逃逸，于是代码变得不安全。</p>
+<p>如果我们有一个 <code>CreateSpan</code> 方法用来创建一个引用的 <code>Span</code> ：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_5>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_5><span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>CreateSpan</span>(<span class=hljs-params><span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> v</span>)</span>
+{
+     <span class=hljs-comment>// ...</span>
+}
+</code></pre>
+<p>这就衍生出了一系列在以前的 C# 中没问题（因为 <code>ref</code> 的生命周期为当前方法），但是在 C# 11 中由于可能存在 <code>ref</code> 字段而导致用安全的方式写出的非安全代码：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_6>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_6><span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>Foo</span>(<span class=hljs-params><span class=hljs-built_in>int</span> v</span>)</span>
+{
+    <span class=hljs-comment>// 1</span>
+    <span class=hljs-keyword>return</span> CreateSpan(<span class=hljs-keyword>ref</span> v);
+
+    <span class=hljs-comment>// 2</span>
+    <span class=hljs-built_in>int</span> local = <span class=hljs-number>42</span>;
+    <span class=hljs-keyword>return</span> CreateSpan(<span class=hljs-keyword>ref</span> local);
+
+    <span class=hljs-comment>// 3</span>
+    Span&lt;<span class=hljs-built_in>int</span>&gt; span = <span class=hljs-keyword>stackalloc</span> <span class=hljs-built_in>int</span>[<span class=hljs-number>42</span>];
+    <span class=hljs-keyword>return</span> CreateSpan(<span class=hljs-keyword>ref</span> span[<span class=hljs-number>0</span>]);
+}
+</code></pre>
+<p>因此，在 C# 11 中则不得不引入破坏性更改，不允许上述代码通过编译。但这并没有完全解决问题。</p>
+<p>为了解决逃逸问题， C# 11 制定了引用逃逸安全规则。对于一个在 <code>e</code> 中的字段 <code>f</code>：</p>
+<ul>
+<li>如果 <code>f</code> 是个 <code>ref</code> 字段，并且 <code>e</code>是<code>this</code>，则 <code>f</code> 在它被包围的方法中是引用逃逸安全的</li>
+<li>否则如果 <code>f</code> 是个 <code>ref</code> 字段，则 <code>f</code> 的引用逃逸安全范围和 <code>e</code> 的逃逸安全范围相同</li>
+<li>否则如果 <code>e</code> 是一个引用类型，则 <code>f</code> 的引用逃逸安全范围是调用它的方法</li>
+<li>否则 <code>f</code> 的引用逃逸安全范围和 <code>e</code> 相同</li>
+</ul>
+<p>由于 C# 中的方法是可以返回引用的，因此根据上面的规则，一个 <code>ref struct</code> 中的方法将不能返回一个对非 <code>ref</code> 字段的引用：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_7>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_7><span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span> Foo
+{
+    <span class=hljs-keyword>private</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> _f1;
+    <span class=hljs-keyword>private</span> <span class=hljs-built_in>int</span> f2;
+
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> P1 =&gt; <span class=hljs-keyword>ref</span> _f1; <span class=hljs-comment>// 没问题</span>
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> P2 =&gt; <span class=hljs-keyword>ref</span> _f2; <span class=hljs-comment>// 错误，因为违反了第四条规则</span>
+}
+</code></pre>
+<p>除了引用逃逸安全规则之外，同样还有对 <code>ref</code> 赋值的规则：</p>
+<ul>
+<li>对于 <code>x.e1 = ref e2</code>， 其中 <code>x</code> 是在调用方法中逃逸安全的，那么 <code>e2</code> 必须在调用方法中是引用逃逸安全的</li>
+<li>对于 <code>e1 = ref e2</code>，其中 <code>e1</code> 是个局部变量，那么 <code>e2</code> 的引用逃逸安全范围必须至少和 <code>e1</code> 的引用逃逸安全范围一样大</li>
+</ul>
+<p>于是， 根据上述规则，下面的代码是没问题的：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_8>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_8><span class=hljs-keyword>readonly</span> <span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span> Span&lt;T&gt;
+{
+    <span class=hljs-keyword>readonly</span> <span class=hljs-keyword>ref</span> T _field;
+    <span class=hljs-keyword>readonly</span> <span class=hljs-built_in>int</span> _length;
+
+    <span class=hljs-function><span class=hljs-keyword>public</span> <span class=hljs-title>Span</span>(<span class=hljs-params><span class=hljs-keyword>ref</span> T <span class=hljs-keyword>value</span></span>)</span>
+    {
+        <span class=hljs-comment>// 没问题，因为 x 是 this，this 的逃逸安全范围和 value 的引用逃逸安全范围都是调用方法，满足规则 1</span>
+        _field = <span class=hljs-keyword>ref</span> <span class=hljs-keyword>value</span>;
+        _length = <span class=hljs-number>1</span>;
+    }
+}
+</code></pre>
+<p>于是很自然的，就需要在字段和参数上对生命周期进行标注，帮助编译器确定对象的逃逸范围。</p>
+<p>而我们在写代码的时候，并不需要记住以上这么多的规则，因为有了生命周期标注之后一切都变得显式和直观了。</p>
+<h3 id=2097428496>scoped<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#2097428496 class=esa-anchor>#</a></h3>
+<p>在 C# 11 中，引入了 <code>scoped</code> 关键字用来限制逃逸安全范围：</p>
+<div class=table-wrapper><table>
+<thead>
+<tr>
+<th>局部变量 s</th>
+<th>引用逃逸安全范围</th>
+<th>逃逸安全范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Span&lt;int&gt; s</code></td>
+<td>当前方法</td>
+<td>调用方法</td>
+</tr>
+<tr>
+<td><code>scoped Span&lt;int&gt; s</code></td>
+<td>当前方法</td>
+<td>当前方法</td>
+</tr>
+<tr>
+<td><code>ref Span&lt;int&gt; s</code></td>
+<td>调用方法</td>
+<td>调用方法</td>
+</tr>
+<tr>
+<td><code>scoped ref Span&lt;int&gt; s</code></td>
+<td>当前方法</td>
+<td>调用方法</td>
+</tr>
+<tr>
+<td><code>ref scoped Span&lt;int&gt; s</code></td>
+<td>当前方法</td>
+<td>当前方法</td>
+</tr>
+<tr>
+<td><code>scoped ref scoped Span&lt;int&gt; s</code></td>
+<td>当前方法</td>
+<td>当前方法</td>
+</tr>
+</tbody>
+</table></div>
+<p>其中，<code>scoped ref scoped</code> 是多余的，因为它可以被 <code>ref scoped</code> 隐含。而我们只需要知道 <code>scoped</code> 是用来把逃逸范围限制到当前方法的即可，放在谁的前面（引用 <code>ref</code> 本身或者引用到的东西），谁的逃逸范围就被限制到当前方法，是不是非常简单？</p>
+<p>如此一来，我们就可以对参数进行逃逸范围（生命周期）的标注：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_9>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_9><span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>CreateSpan</span>(<span class=hljs-params>scoped <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> v</span>)</span>
+{
+    <span class=hljs-comment>// ...</span>
+}
+</code></pre>
+<p>然后，之前的代码就变得没问题了，因为都是 <code>scoped ref</code>：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_10>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_10><span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>Foo</span>(<span class=hljs-params><span class=hljs-built_in>int</span> v</span>)</span>
+{
+    <span class=hljs-comment>// 1</span>
+    <span class=hljs-keyword>return</span> CreateSpan(<span class=hljs-keyword>ref</span> v);
+
+    <span class=hljs-comment>// 2</span>
+    <span class=hljs-built_in>int</span> local = <span class=hljs-number>42</span>;
+    <span class=hljs-keyword>return</span> CreateSpan(<span class=hljs-keyword>ref</span> local);
+
+    <span class=hljs-comment>// 3</span>
+    Span&lt;<span class=hljs-built_in>int</span>&gt; span = <span class=hljs-keyword>stackalloc</span> <span class=hljs-built_in>int</span>[<span class=hljs-number>42</span>];
+    <span class=hljs-keyword>return</span> CreateSpan(<span class=hljs-keyword>ref</span> span[<span class=hljs-number>0</span>]);
+}
+</code></pre>
+<p><code>scoped</code> 同样可以被用在局部变量上：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_11>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_11><span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>Foo</span>()</span>
+{
+    <span class=hljs-comment>// 错误，因为 span 不能逃逸当前方法</span>
+    scoped Span&lt;<span class=hljs-built_in>int</span>&gt; span1 = <span class=hljs-literal>default</span>;
+    <span class=hljs-keyword>return</span> span1;
+
+    <span class=hljs-comment>// 没问题，因为初始化器的逃逸安全范围是调用方法，因为 span2 可以逃逸到调用方法</span>
+    Span&lt;<span class=hljs-built_in>int</span>&gt; span2 = <span class=hljs-literal>default</span>;
+    <span class=hljs-keyword>return</span> span2;
+
+    <span class=hljs-comment>// span3 和 span4 是一样的，因为初始化器的逃逸安全范围是当前方法，加不加 scoped 都没区别</span>
+    Span&lt;<span class=hljs-built_in>int</span>&gt; span3 = <span class=hljs-keyword>stackalloc</span> <span class=hljs-built_in>int</span>[<span class=hljs-number>42</span>];
+    scoped Span&lt;<span class=hljs-built_in>int</span>&gt; span4 = <span class=hljs-keyword>stackalloc</span> <span class=hljs-built_in>int</span>[<span class=hljs-number>42</span>];
+}
+</code></pre>
+<p>另外，<code>struct</code> 的 <code>this</code> 也加上了 <code>scoped ref</code> 的逃逸范围，即引用逃逸安全范围为当前方法，而逃逸安全范围为调用方法。</p>
+<p>剩下的就是和 <code>out</code>、<code>in</code> 参数的配合，在 C# 11 中，<code>out</code> 参数将会默认为 <code>scoped ref</code>，而 <code>in</code> 参数仍然保持默认为 <code>ref</code>：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_12>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_12><span class=hljs-function><span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> <span class=hljs-title>Foo</span>(<span class=hljs-params><span class=hljs-keyword>out</span> <span class=hljs-built_in>int</span> r</span>)</span>
+{
+    r = <span class=hljs-number>42</span>;
+    <span class=hljs-keyword>return</span> <span class=hljs-keyword>ref</span> r; <span class=hljs-comment>// 错误，因为 r 的引用逃逸安全范围是当前方法</span>
+}
+</code></pre>
+<p>这非常有用，例如比如下面这个常见的情况：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_13>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_13><span class=hljs-function>Span&lt;<span class=hljs-built_in>byte</span>&gt; <span class=hljs-title>Read</span>(<span class=hljs-params>Span&lt;<span class=hljs-built_in>byte</span>&gt; buffer, <span class=hljs-keyword>out</span> <span class=hljs-built_in>int</span> read</span>)</span>
+{
+    <span class=hljs-comment>// .. </span>
+}
+
+<span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>Use</span>()</span>
+{
+    <span class=hljs-keyword>var</span> buffer = <span class=hljs-keyword>new</span> <span class=hljs-built_in>byte</span>[<span class=hljs-number>256</span>];
+
+    <span class=hljs-comment>// 如果不修改 out 的引用逃逸安全范围，则这会报错，因为编译器需要考虑 read 是可以被作为 ref 字段返回的情况</span>
+    <span class=hljs-comment>// 如果修改 out 的引用逃逸安全范围，则就没有问题了，因为编译器不需要考虑 read 是可以被作为 ref 字段返回的情况</span>
+    <span class=hljs-built_in>int</span> read;
+    <span class=hljs-keyword>return</span> Read(buffer, <span class=hljs-keyword>out</span> read);
+}
+</code></pre>
+<p>下面给出一些更多的例子：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_14>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_14><span class=hljs-function><span class=hljs-title>Span</span>&lt;<span class=hljs-title>int</span>&gt; <span class=hljs-title>CreateWithoutCapture</span>(<span class=hljs-params>scoped <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> <span class=hljs-keyword>value</span></span>)</span>
+{
+    <span class=hljs-comment>// 错误，因为 value 的引用逃逸安全范围是当前方法</span>
+    <span class=hljs-keyword>return</span> <span class=hljs-keyword>new</span> Span&lt;<span class=hljs-built_in>int</span>&gt;(<span class=hljs-keyword>ref</span> <span class=hljs-keyword>value</span>);
+}
+
+<span class=hljs-function><span class=hljs-title>Span</span>&lt;<span class=hljs-title>int</span>&gt; <span class=hljs-title>CreateAndCapture</span>(<span class=hljs-params><span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> <span class=hljs-keyword>value</span></span>)</span>
+{
+    <span class=hljs-comment>// 没问题，因为 value 的逃逸安全范围被限制为 value 的引用逃逸安全范围，这个范围是调用方法</span>
+    <span class=hljs-keyword>return</span> <span class=hljs-keyword>new</span> Span&lt;<span class=hljs-built_in>int</span>&gt;(<span class=hljs-keyword>ref</span> <span class=hljs-keyword>value</span>)
+}
+
+<span class=hljs-function>Span&lt;<span class=hljs-built_in>int</span>&gt; <span class=hljs-title>ComplexScopedRefExample</span>(<span class=hljs-params>scoped <span class=hljs-keyword>ref</span> Span&lt;<span class=hljs-built_in>int</span>&gt; span</span>)</span>
+{
+    <span class=hljs-comment>// 没问题，因为 span 的逃逸安全范围是调用方法</span>
+    <span class=hljs-keyword>return</span> span;
+
+    <span class=hljs-comment>// 没问题，因为 refLocal 的引用逃逸安全范围是当前方法、逃逸安全范围是调用方法</span>
+    <span class=hljs-comment>// 在 ComplexScopedRefExample 的调用中它被传递给了一个 scoped ref 参数，</span>
+    <span class=hljs-comment>// 意味着编译器在计算生命周期时不需要考虑引用逃逸安全范围，只需要考虑逃逸安全范围</span>
+    <span class=hljs-comment>// 因此它返回的值的安全逃逸范围为调用方法</span>
+    Span&lt;<span class=hljs-built_in>int</span>&gt; local = <span class=hljs-literal>default</span>;
+    <span class=hljs-keyword>ref</span> Span&lt;<span class=hljs-built_in>int</span>&gt; refLocal = <span class=hljs-keyword>ref</span> local;
+    <span class=hljs-keyword>return</span> ComplexScopedRefExample(<span class=hljs-keyword>ref</span> refLocal);
+
+    <span class=hljs-comment>// 错误，因为 stackLocal 的引用逃逸安全范围、逃逸安全范围都是当前方法</span>
+    <span class=hljs-comment>// 在 ComplexScopedRefExample 的调用中它被传递给了一个 scoped ref 参数，</span>
+    <span class=hljs-comment>// 意味着编译器在计算生命周期时不需要考虑引用逃逸安全范围，只需要考虑逃逸安全范围</span>
+    <span class=hljs-comment>// 因此它返回的值的安全逃逸范围为当前方法</span>
+    Span&lt;<span class=hljs-built_in>int</span>&gt; stackLocal = <span class=hljs-keyword>stackalloc</span> <span class=hljs-built_in>int</span>[<span class=hljs-number>42</span>];
+    <span class=hljs-keyword>return</span> ComplexScopedRefExample(<span class=hljs-keyword>ref</span> stackLocal);
+}
+</code></pre>
+<h3 id=3243517440>unscoped<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#3243517440 class=esa-anchor>#</a></h3>
+<p>上述的设计中，仍然有个问题没有被解决：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_15>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_15><span class=hljs-keyword>struct</span> S
+{
+    <span class=hljs-built_in>int</span> _field;
+
+    <span class=hljs-comment>// 错误，因为 this 的引用逃逸安全范围是当前方法</span>
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> Prop =&gt; <span class=hljs-keyword>ref</span> _field;
+}
+</code></pre>
+<p>因此引入一个 <code>unscoped</code>，允许扩展逃逸范围到调用方法上，于是，上面的方法可以改写为：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_16>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_16><span class=hljs-keyword>struct</span> S
+{
+    <span class=hljs-keyword>private</span> <span class=hljs-built_in>int</span> _field;
+
+    <span class=hljs-comment>// 没问题，引用逃逸安全范围被扩展到了调用方法</span>
+    <span class=hljs-keyword>public</span> unscoped <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> Prop =&gt; <span class=hljs-keyword>ref</span> _field;
+}
+</code></pre>
+<p>这个 <code>unscoped</code> 也可以直接放到 <code>struct</code> 上：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_17>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_17>unscoped <span class=hljs-keyword>struct</span> S
+{
+    <span class=hljs-keyword>private</span> <span class=hljs-built_in>int</span> _field;
+    <span class=hljs-keyword>public</span> unscoped <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> Prop =&gt; <span class=hljs-keyword>ref</span> _field;
+}
+</code></pre>
+<p>同理，嵌套的 <code>struct</code> 也没有问题：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_18>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_18>unscoped <span class=hljs-keyword>struct</span> Child
+{
+    <span class=hljs-built_in>int</span> _value;
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> Value =&gt; <span class=hljs-keyword>ref</span> _value;
+}
+
+unscoped <span class=hljs-keyword>struct</span> Container
+{
+    Child _child;
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> Value =&gt; <span class=hljs-keyword>ref</span> _child.Value;
+}
+</code></pre>
+<p>此外，如果需要恢复以前的 <code>out</code> 逃逸范围的话，也可以在 <code>out</code> 参数上指定 <code>unscoped</code>：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_19>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_19><span class=hljs-function><span class=hljs-keyword>ref</span> <span class=hljs-built_in>int</span> <span class=hljs-title>Foo</span>(<span class=hljs-params>unscoped <span class=hljs-keyword>out</span> <span class=hljs-built_in>int</span> r</span>)</span>
+{
+    r = <span class=hljs-number>42</span>;
+    <span class=hljs-keyword>return</span> <span class=hljs-keyword>ref</span> r;
+}
+</code></pre>
+<p>不过有关 <code>unscoped</code> 的设计还属于初步阶段，不会在 C# 11 中就提供。</p>
+<h2 id=3757072853>ref struct 约束<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#3757072853 class=esa-anchor>#</a></h2>
+<p>从 C# 11 开始，<code>ref struct</code> 可以作为泛型约束了，因此可以编写如下方法了：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_20>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_20><span class=hljs-function><span class=hljs-keyword>void</span> <span class=hljs-title>Foo</span>&lt;<span class=hljs-title>T</span>&gt;(<span class=hljs-params>T v</span>) <span class=hljs-keyword>where</span> T : <span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span></span>
+{
+    <span class=hljs-comment>// ...</span>
+}
+</code></pre>
+<p>因此，<code>Span&lt;T&gt;</code> 的功能也被扩展，可以声明 <code>Span&lt;Span&lt;T&gt;&gt;</code> 了，比如用在 <code>byte</code> 或者 <code>char</code> 上，就可以用来做高性能的字符串处理了。</p>
+<p>但是这个其实是一种反模式，因为 <code>ref struct</code> 作为约束不应该理解为只能接受 <code>ref struct</code> 类型，而应该是作为“可以为 <code>ref struct</code> 的类型”来表达，因此 C# 语言团队也考虑将语法更换为：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_21>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_21><span class=hljs-function><span class=hljs-keyword>void</span> <span class=hljs-title>Foo</span>&lt;<span class=hljs-title>T</span>&gt;(<span class=hljs-params>T v</span>) allow T : <span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span></span>
+{
+    <span class=hljs-comment>// ...</span>
+}
+</code></pre>
+<h2 id=958869848>反射<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#958869848 class=esa-anchor>#</a></h2>
+<p>有了上面那么多东西，反射自然也是要支持的。因此，反射 API 也加入了 <code>ref struct</code> 相关的支持。</p>
+<h2 id=1010869442>实际用例<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#1010869442 class=esa-anchor>#</a></h2>
+<p>有了以上基础设施之后，我们就可以使用安全代码来造一些高性能轮子了。</p>
+<h3 id=25712927>栈上定长列表<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#25712927 class=esa-anchor>#</a></h3>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_22>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_22><span class=hljs-keyword>struct</span> FrugalList&lt;T&gt;
+{
+    <span class=hljs-keyword>private</span> T _item0;
+    <span class=hljs-keyword>private</span> T _item1;
+    <span class=hljs-keyword>private</span> T _item2;
+
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>readonly</span> <span class=hljs-built_in>int</span> Count = <span class=hljs-number>3</span>;
+
+    <span class=hljs-keyword>public</span> unscoped <span class=hljs-keyword>ref</span> T <span class=hljs-keyword>this</span>[<span class=hljs-built_in>int</span> index] =&gt; index <span class=hljs-keyword>switch</span>
+    {
+        <span class=hljs-number>0</span> =&gt; <span class=hljs-keyword>ref</span> _item1,
+        <span class=hljs-number>1</span> =&gt; <span class=hljs-keyword>ref</span> _item2,
+        <span class=hljs-number>2</span> =&gt; <span class=hljs-keyword>ref</span> _item3,
+        _ =&gt; <span class=hljs-keyword>throw</span> <span class=hljs-keyword>new</span> OutOfRangeException(<span class=hljs-string>"Out of range."</span>)
+    };
+}
+</code></pre>
+<h3 id=3260961130>栈上链表<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#3260961130 class=esa-anchor>#</a></h3>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_23>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_23><span class=hljs-keyword>ref</span> <span class=hljs-keyword>struct</span> StackLinkedListNode&lt;T&gt;
+{
+    <span class=hljs-keyword>private</span> T _value;
+    <span class=hljs-keyword>private</span> <span class=hljs-keyword>ref</span> StackLinkedListNode&lt;T&gt; _next;
+
+    <span class=hljs-keyword>public</span> T Value =&gt; _value;
+    <span class=hljs-keyword>public</span> <span class=hljs-built_in>bool</span> HasNext =&gt; !Unsafe.IsNullRef(<span class=hljs-keyword>ref</span> _next);
+    <span class=hljs-keyword>public</span> <span class=hljs-keyword>ref</span> StackLinkedListNode&lt;T&gt; Next =&gt; HasNext ? <span class=hljs-keyword>ref</span> _next : <span class=hljs-keyword>throw</span> <span class=hljs-keyword>new</span> InvalidOperationException(<span class=hljs-string>"No next node."</span>);
+
+    <span class=hljs-function><span class=hljs-keyword>public</span> <span class=hljs-title>StackLinkedListNode</span>(<span class=hljs-params>T <span class=hljs-keyword>value</span></span>)</span>
+    {
+        <span class=hljs-keyword>this</span> = <span class=hljs-literal>default</span>;
+        _value = <span class=hljs-keyword>value</span>;
+    }
+
+    <span class=hljs-function><span class=hljs-keyword>public</span> <span class=hljs-title>StackLinkedListNode</span>(<span class=hljs-params>T <span class=hljs-keyword>value</span>, <span class=hljs-keyword>ref</span> StackLinkedListNode&lt;T&gt; next</span>)</span>
+    {
+        _value = <span class=hljs-keyword>value</span>;
+        _next = <span class=hljs-keyword>ref</span> next;
+    }
+}
+</code></pre>
+<p>除了这两个例子之外，其他的比如解析器和序列化器等等，例如 <code>Utf8JsonReader</code>、<code>Utf8JsonWriter</code> 都可以用到这些东西。</p>
+<h2 id=842252718>未来计划<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#842252718 class=esa-anchor>#</a></h2>
+<h3 id=1603191358>高级生命周期<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#1603191358 class=esa-anchor>#</a></h3>
+<p>上面的生命周期设计虽然能满足绝大多数使用，但是还是不够灵活，因此未来有可能在此基础上扩展，引入高级生命周期标注。例如：</p>
+<pre class=highlighter-hljs highlighted=true><div data-tips=复制代码 class=esa-clipboard-button data-clipboard-target=#copy_target_24>Copy</div><code class="language-csharp highlighter-hljs hljs" id=copy_target_24><span class=hljs-function><span class=hljs-keyword>void</span> <span class=hljs-title>M</span>(<span class=hljs-params>scoped&lt;<span class=hljs-string>'a&gt; ref MyStruct s, scoped&lt;'</span>b&gt; Span&lt;<span class=hljs-built_in>int</span>&gt; span</span>) <span class=hljs-keyword>where</span> 'b &gt;</span>= <span class=hljs-string>'a
+{
+    s.Span = span;
+}
+</span></code></pre>
+<p>上面的方法给参数 <code>s</code> 和 <code>span</code> 分别声明了两个生命周期 <code>'a</code> 和 <code>'b</code>，并约束 <code>'b</code> 的生命周期不小于 <code>'a</code>，因此在这个方法里，<code>span</code> 可以安全地被赋值给 <code>s.Span</code>。</p>
+<p>这个虽然不会被包含在 C# 11 中，但是如果以后开发者对相关的需求增长，是有可能被后续加入到 C# 中的。</p>
+<h2 id=2020167520>总结<button class="cnblogs-toc-button sf-hidden" title=显示目录导航 aria-expanded=false></button><a href=#2020167520 class=esa-anchor>#</a></h2>
+<p>以上就是 C# 11（或之后）对 <code>ref</code> 和 <code>struct</code> 的改进了。有了这些基础设施，开发者们将能轻松使用安全的方式来编写没有任何堆内存开销的高性能代码。尽管这些改进只能直接让小部分非常关注性能的开发者收益，但是这些改进带来的将是后续基础库代码质量和性能的整体提升。</p>
+<p>如果你担心这会让语言的复杂度上升，那也大可不必，因为这些东西大多数人并不会用到，只会影响到小部分的开发者。因此对于大多数人而言，只需要写着原样的代码，享受其他基础库作者利用上述设施编写好的东西即可。</p>
+</div>
+<div class=clear></div>
+<div id=blog_post_info_block role=contentinfo>
+<div id=EntryTag>
+ 标签: 
+ <a href=https://www.cnblogs.com/hez2010/tag/.NET/>.NET</a>, <a href=https://www.cnblogs.com/hez2010/tag/.NET%20Core/>.NET Core</a>, <a href=https://www.cnblogs.com/hez2010/tag/C%23/>C#</a></div>
+ <div id=blog_post_info>
+<div id=green_channel class=sf-hidden>
+ 
+ 
+ 
+ 
+ 
+</div>
+<div id=author_profile class=sf-hidden>
+ 
+ 
+ 
+ 
+</div>
+<div id=div_digg>
+ <div class=diggit>
+ <span class=diggnum id=digg_count>33</span>
+ </div>
+ <div class=buryit>
+ <span class=burynum id=bury_count>2</span>
+ </div>
+ <div class=clear></div>
+ <div class=diggword id=digg_tips>
+ </div>
+</div>
+</div>
+ <div class=clear></div>
+ <div id=post_next_prev>
+ <a href=https://www.cnblogs.com/hez2010/p/a-complete-guide-for-pattern-matching-in-csharp.html class=p_n_p_prefix>« </a> 上一篇： <a href=https://www.cnblogs.com/hez2010/p/a-complete-guide-for-pattern-matching-in-csharp.html data-featured-image title="发布于 2022-03-04 11:03">C# 模式匹配完全指南</a>
+ <br>
+ <a href=https://www.cnblogs.com/hez2010/p/a-brand-new-look-at-msbuild-1.html class=p_n_p_prefix>» </a> 下一篇： <a href=https://www.cnblogs.com/hez2010/p/a-brand-new-look-at-msbuild-1.html data-featured-image title="发布于 2022-05-19 18:11">重新认识 MSBuild - 1</a>
+</div>
+</div>
+ </div>
+ <div class=postDesc>posted @ 
+<span id=post-date>2022-04-21 14:30</span>&nbsp;
+<a href=https://www.cnblogs.com/hez2010/>hez2010</a>&nbsp;
+阅读(<span id=post_view_count>2741</span>)&nbsp;
+评论(<span id=post_comment_count>16</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=16174003" rel=nofollow>编辑</a>&nbsp;
+<a>收藏</a>&nbsp;
+<a>举报</a></div>
+ </div>
+ 
+ 
+ </div>
+</div>
+<a id=!comments></a>
+<div id=blog-comments-placeholder>
+<div id=comment_pager_top>
+ 
+</div>
+<br>
+<div class=feedback_area_title>评论列表
+<div id=comment_sort class=comment-sort title=切换评论排序>
+ <svg xmlns=http://www.w3.org/2000/svg viewBox="0 0 20 20" fill=currentColor>
+ <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z"></path>
+ </svg>
+ <span class="comment-sort-label sf-hidden">时间升序</span>
+</div></div>
+<div class=feedbackNoItems>
+ <div class=feedbackNoItems></div>
+</div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047815 class=layer>#1楼</a>
+<a name=5047815 id=comment_anchor_5047815></a>
+ 
+<span class=comment_date>2022-04-21 14:34</span>
+ 
+ <a id=a_comment_author_5047815 href=https://www.cnblogs.com/InCerry/ target=_blank>InCerry</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/InCerry/><img src="data:image/png;base64,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"></a></div><div id=comment_body_5047815 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>好文 支持 支持</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(2)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047815_avatar style=display:none>
+ https://pic.cnblogs.com/face/997046/20180730152032.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047817 class=layer>#2楼</a>
+<a name=5047817 id=comment_anchor_5047817></a>
+ 
+<span class=comment_date>2022-04-21 14:35</span>
+ 
+ <a id=a_comment_author_5047817 href=https://www.cnblogs.com/azhi98/ target=_blank>一块大瓜皮</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/azhi98/><img src="data:image/png;base64,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"></a></div><div id=comment_body_5047817 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>C# 宇宙第一 紧跟大佬脚步 支持 支持</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047817_avatar style=display:none>
+ https://pic.cnblogs.com/face/1080940/20191128000958.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047820 class=layer>#3楼</a>
+<a name=5047820 id=comment_anchor_5047820></a>
+ 
+<span class=comment_date>2022-04-21 14:36</span>
+ 
+ <a id=a_comment_author_5047820 href=https://www.cnblogs.com/spatxos/ target=_blank>spatxos</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/spatxos/><img src=data:image/png;base64,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></a></div><div id=comment_body_5047820 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>好文 支持 支持</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047820_avatar style=display:none>
+ https://pic.cnblogs.com/face/789895/20150930113934.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047821 class=layer>#4楼</a>
+<a name=5047821 id=comment_anchor_5047821></a>
+ 
+<span class=comment_date>2022-04-21 14:36</span>
+ 
+ <a id=a_comment_author_5047821 href=https://www.cnblogs.com/ms27946/ target=_blank>沉睡的木木夕</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/ms27946/><img src="data:image/png;base64,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"></a></div><div id=comment_body_5047821 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>赞</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047821_avatar style=display:none>
+ https://pic.cnblogs.com/face/777295/20160519140825.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047870 class=layer>#5楼</a>
+<a name=5047870 id=comment_anchor_5047870></a>
+ 
+<span class=comment_date>2022-04-21 15:49</span>
+ 
+ <a id=a_comment_author_5047870 href=https://www.cnblogs.com/wangkiml/ target=_blank>Ruy2022</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/wangkiml/><img src="data:image/png;base64,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"></a></div><div id=comment_body_5047870 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>我还在C#6.0上， 哎，得赶紧跟上</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(1)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047870_avatar style=display:none>
+ https://pic.cnblogs.com/face/431565/20220315135349.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047874 class=layer>#6楼</a>
+<a name=5047874 id=comment_anchor_5047874></a>
+ 
+<span class=comment_date>2022-04-21 15:54</span>
+ 
+ <a id=a_comment_author_5047874 href=https://www.cnblogs.com/tangyanzhi1111/ target=_blank>江湖评谈</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/tangyanzhi1111/><img src=data:,></a></div><div id=comment_body_5047874 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>公司还在用.net2.0 咋整</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ 
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047877 class=layer>#7楼</a>
+<a name=5047877 id=comment_anchor_5047877></a>
+ 
+<span class=comment_date>2022-04-21 15:56</span>
+ 
+ <a id=a_comment_author_5047877 href=https://www.cnblogs.com/skyeasy/ target=_blank>天悠</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/skyeasy/><img src=data:image/png;base64,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></a></div><div id=comment_body_5047877 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>水平低没看懂，还是点个赞吧</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(1)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047877_avatar style=display:none>
+ https://pic.cnblogs.com/face/1533419/20200314092433.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047888 class=layer>#8楼</a>
+<a name=5047888 id=comment_anchor_5047888></a>
+ 
+<span class=comment_date>2022-04-21 16:15</span>
+ 
+ <a id=a_comment_author_5047888 href=https://www.cnblogs.com/duixue/ target=_blank>暖暖De幸福</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/duixue/><img src=data:,></a></div><div id=comment_body_5047888 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>有些特性一直 没用上，点个推荐吧</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ 
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047896 class=layer>#9楼</a>
+<a name=5047896 id=comment_anchor_5047896></a>
+ 
+<span class=comment_date>2022-04-21 16:27</span>
+ 
+ <a id=a_comment_author_5047896 href=https://www.cnblogs.com/BFMC/ target=_blank>CoolDog;</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/BFMC/><img src="data:image/png;base64,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"></a></div><div id=comment_body_5047896 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>好鸭</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047896_avatar style=display:none>
+ https://pic.cnblogs.com/face/1266469/20201103145247.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047898 class=layer>#10楼</a>
+<a name=5047898 id=comment_anchor_5047898></a>
+ 
+<span class=comment_date>2022-04-21 16:28</span>
+ 
+ <a id=a_comment_author_5047898 href=https://www.cnblogs.com/sqdhtl/ target=_blank>受气de灰太狼</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/sqdhtl/><img src=data:image/png;base64,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></a></div><div id=comment_body_5047898 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>感觉底层操作的功能越来越多了。<br>
+readonly ref 和 C++ 的const &amp; 是不是类似？<br>
+最后的生命周期不就是rust 的吗？</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(1)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047898_avatar style=display:none>
+ https://pic.cnblogs.com/face/1050171/20170103194306.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5047912 class=layer>#11楼</a>
+<a name=5047912 id=comment_anchor_5047912></a>
+[<span class=louzhu>楼主</span>] 
+<span class=comment_date>2022-04-21 16:49</span>
+ 
+ <a id=a_comment_author_5047912 href=https://www.cnblogs.com/hez2010/ target=_blank>hez2010</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/hez2010/><img src="data:image/png;base64,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"></a></div><div id=comment_body_5047912 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p><a href=#5047898 title=查看所回复的评论>@</a>受气de灰太狼</p>
+<blockquote>
+<p>感觉底层操作的功能越来越多了。<br>
+readonly ref 和 C++ 的const &amp; 是不是类似？<br>
+最后的生命周期不就是rust 的吗？</p>
+</blockquote>
+<hr>
+<p>是的。</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5047912_avatar style=display:none>
+ https://pic.cnblogs.com/face/1590449/20200215122615.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5048108 class=layer>#12楼</a>
+<a name=5048108 id=comment_anchor_5048108></a>
+ 
+<span class=comment_date>2022-04-22 06:05</span>
+ 
+ <a id=a_comment_author_5048108 href=https://www.cnblogs.com/sevencatwang/ target=_blank>首席装逼官</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/sevencatwang/><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAABwvSURBVGhDPXr3d5vnmSXGsWU1i2LvHQR7A0CCAEgCrKgkwQICBAn23gvYKUoUKZGiitUlq1erWrIsObbjSeyZ2XgmjmPH2UwmGXvqOTOzO2ffn/IH3L0ftGd/eM8HEO0p97n3Pt+hTKNI+FGbkiQK5YlCk5IoCpMThTo5jidWqBKjhTouUmhiw0VxQpRQpiSI6PAQEbr/HRG4Z7fYv3uniA8JEorIMJESGSoSQ4NEbPA7IikiSGQlRIqsuAghjwwSieEBIj54r0gK388TKCL27xYhe3eKYJ7APW+L4D07RVjAbv8J2cvv3fW22PPWT8Tet94Ue998i4/fFLt2vCkSIsPF0QPr4tXTF+L0xoqYbGv4UVaQnPhnnSIRRSmvjyY5EQVJ8VAlxUCVGAO9Ih62vGSY8lORwdeiIyMQFhSE8P3vQJ0aj4bSArSbS9BSpkGDLg/VfJ8xJxllOXIYs5OgTYuGJjXKf9Wlx0GjiEZmXAiSwgMQsW8Xgve87T8JYQFICAlELE9Y4B4E7N6BfTt2Yu9bO7B351t4Z/fbCNizGyUqFa4fXcOl+TEst9X+WUqAlU9AoZyHAaqTEqBKiENeQgwK+XeHLguTTcVoKi9EfEwMIkNDEREYiJLcNMx2u7A9O4STvj6s9zdjyWvHZEM5es1atBlUaNSmo6YgBbU8dTw2ZTJsqmRU5MSjJC0GubEhSI8KhjwiCPLIQKRHhyIlKhwJkSGIDd+P4H1MZNcunp0Mntd3diM8OAADRi1uOetwvsEqZOrkBKFJTmLwTICVL2ACaiaQzwRK05PRbVLh3Yl61JaqEBsVhSQmUaLMxvr0IG4cX8OVI4s45evF0aFmHOqqwaK7CjP1BozadBg0FaKnPB8dxjx0luWhi6eDp92Qi7biHDRpMmDJT2Zn4lGanYySzEQ+JgIUCchNikJKTDAigvYhdN9ehAcGIDjgHSYQhBZlDj5orMX77nrBDsSJ19CRkkh8nURiHJRMQILPUE0BLvsaUaXJhUJ6T04GZnq8ePzeWdzcXsPZpRFsjrRgjcGvtFZjpaUK801lmKgrxkRtKYYtWgyxI0NMZphnyFyE/qoCDFbzsUmDESbqKVOiQZuNVmMhmoqVaKvQol6vhJ4JpbArsaGBiAsPQVTQfoTwqJLi8GikG58tzTGBpPjXCfghlODHv5rYVybEQp/CBKwqnBqrgS4vA6qcHJgNWpw8MIebJ9dxenEIW+OtONRdh0VPNeabK/zBzzhKMVlXwgT0GKvRY5xnokaLyRodxu16jDCpcZ4JezEWmqtxoM2OGaeJUK3GtNOCWbcVCx47avW5UKbEIi02EvLYMCTHhCMihHCLicSjrXV8ffeOkGnkyUKbKkeRIplDnMREXp/irFSYCvMwykpu9Jmhz8+CvcKIHpcD59YXcP7gJLYmvFjrb8KK14ZFVzWhY8RMQwmvpZhyFGNKujaUYpqPZ+v0mK3na3w8XcNjL4WP719k0mtd9dga9fjPMXbz2Igbm0NutFRpUZwthzotEfkkjBzOZEJUJJI5Jx9dvoS/f/mZkJXl5YrqAiUqVXkoy8uCMTcDlepcOMqL0VBZgoHGCky2VKLeZMDMUCd8A16cWpnE8ZleHJYGt70Wsy4TfBzeKVbe12TgYwbdyPc3GDHLM9dgwHxjKY/Bn8QsE/NxThYby3DAXY2DHTU4OtiE7RGSwlgLjo8zkTEPBhxlsBRlo7ooFxZdPkpV6ciUx0EeFYFXJ47jj0+eC5mtVC8aKkpRX1YMe4kGtmINg9ehq8mKQY8DS6NdmB30YqyzGevzQ3zejiMM/mC/E4ttNWx7JUYdRozWEDJ1pX74SBWXkpl2lPiD9p8mJsDk5njmm5gUr4vOcp4KwqgSax02bDKJreFmBs8ODLux1FGLocYqdNaR2Rqr4TLpiYQMZCTG4sMDy/ju9BkhG+hoFH2eOrTWVKKxQo96ns4GE1an+nBmYwXXzxzDsRUffP0tWBxug6+PVe9zYp64nWysxAQ7NMXqT7LK06zobGM5q87HrLSUyByDX2gu8wc8xy4sMvhlzsmSdNwM3p+YEQdIAOs9ddgYaCR8nLw2YIXQmm61Y4oQHfNY0VVjhN2ghjI1CY8mxvCrtVUhO316TRzfXoJv3Is2RzkxbmPAM7h74SweX7uGp++9ixNkmsmuRkzxjHK4xl0WTBE2081mzLgtmPNIg1fJIS7z0+iiFDBh5OP8zDJoKfA5BjrH+Vh2EjbN5VglLA96qnCojczlqcAqEzjYbsV6Xz1PHQ522gnPOkzwN0bZoWHOSjdZzVlVBIMyAw8mRvBXRw4L2YtPPhQvP32GG7fPY3tzEee3DuL5zWt4df8enrx3Bo9OH8D2dCeGWmsw5q3FqMuK0YZqVl5ijGosULxWumqx0m5hRSux7KrACiu7JFWcAb+uPGHDjizyrDQacYjBH/aaGDxPuxmrTOIQP7/WYcVhMppEyUseM8bryzHEQR9lUfoIxx4WpNWqg6NUjacLPvz8zHEh+5vvvxW/+acf8PO/+yWePXuCp7ev4qPbV/Do0incOraAm2uDWGVVuptMGCC99dVXYIyPp/l4jm1daq/BQrsN8y3V8DG4ecJHqvISuzDvNPrhM8/nPrLQHGl0paEYqy4j1r1VDNiEzb5abA/W40hPLdbYgZVWM5aoJRIBjNQa0WXTotNWhG6bno/1cFM7Oi2l+Nn2Jj65dFrIvvnhB/EP//1/8Os//SN++vELPLx8DLdOHcDF9WlcWOnH+ZlWLHDAWu0GDDZbMEkI+docWBtqxcEBN5a7nX4ojdYaMMwfkAZ5wVmJVTer67US2yZ/ArP+5Ih1dmnVU8nXCBnpEEabvXU4zgE+3MnKsxBzTNzHQowQMl6Tml6rEB3UDSmBZorgsMOEL86dwvMzh4Ts23/5V/GH//pvfPW77/Ho3kVcWh/DicU+HJ1qx/akB+9OurDMlnbYjZiS8N7uwMHhdoy21cNZXQprsRqmglyYC7JQq6NFoGcatBZj0kHYELs+DvYczwyfSxZjlqw1w0Efk5irrgxDtmIMMLBJtxmzLXYckDSFkPERdmMUw26zhkkUos0iHQ0T0GCy2Y4vL5zCg2NU4m//6Qfx9//rf+PLr7/C9QuHKE5uUmQDFtnS9aFGnJ1rx4GeevTUlPGDJqz0u8kIdeTnfLpOBVQpMVDEhiIxMsjvXQoUMTCrUuEuzaEHykU3vZDkiQZYuTZ6oAZ9FizqdBjoVrUZFM8snowkGOhiTbQrvaTM1a46agtV3UWWayhDF6vvZRfaaEOaKgtZUA++vn0bH5xY5gz87Zfi9//xn/iCCVw+tYgjQw4c6LJjjqywRTG5ujzIYa3kF5MuPTWYaqujV2ElirPRrEtHPQ1ZRW4i/UkEFHSUiqj9UMsjUZYRizp1Ct+TBrc2FU2FCtjpRHWZsVDEBIE7Al3ofij53uKMeFiUCjTQ4LnoYmcobksc6DlXuR9+o7XFaGcRWol/h1GJi4sH8Ot793H3wJCQffzBDfH9jz/iSw7x9bOreHfahY3+Og6nlcxgg69KTR8jKTIFi9TZYaFWFKbDnJ0AE48llxY5X44KPlYnhCI1fC8yogPop0JRziRqlUmoY+DWnDiUcydQJ4chIyaAbjcExsw4OApS4dJlwFuahZ7KPAwRKuO1OixwkBc5HxINT5OSu/l3Z4UKbrMBr85fwP2VcZzudQjZ02tHxN/+5lf47JMnuLY5gfM+D44ygRXS2woZxCsPhVefjaGmcnTTiDm0mSjPjIeBP67PiINKHg0VXat0lInhKGASyrggqOODYUiNRC2Dr1MloTozGsVJISjg36XkCuXhKM9icgUZaNSko4m7g3RcmlT0VuTQjhe89lVMYIr022ctogYUorfGgOO0HkuV+ZivVArZnRMz4su//hwf3D2H02ONODPagE0mIHHyMtmgny33arNY/Wr02kpgVabAwM0ql3hPDQtEUlgI9u3ajZD9ASigKdRxkzOmRMOQEglzVizay3LQV62Ck4FVZUTztQjokiOQHR2M2GB+PjKSi0wYlyfuGamxsBKObsKum0kMW9QcegMTKEaPVYvGchX6KpUYNeSgPSsOloCfCNmV9WHxC38CF3Cs24ITvXa8O0xjNeDAodZKDBTI0coKTbSYMUD726jNIBS4GnJwDbTbZnU2ksMl7Iei3liEqiw5ajiQEjRsufEYrlZjgRDor8pHQ0ESZyEVBnkUV9R0KKJDEPD2WyjNSvc/zwjdh9zI/bBwY2slpAar8ymEr8Wwz66DuyIfPcYstKkS0KtMRHtSiJBdWhsQX3z1BT559QRnfDRqbVU4SoXcaK3CVhcNXXEmHMT3NEVrjPTXz0p0k8q8XD4cbH91JmchJxHWvBSYCIkaZSo8pfmEjpwBp2CarV+Vqmgll5ekEedqJpEJG1nIrkyDme9v5jLTUaokYxXBTefZUpSJfiY+UVNITaF/ajZimDuFhyzmzk9ET2EyfExkICteyK5tz4ivvv8Of/3Nr/Hw9lkcG3dhmh8e5xp4kP5jokqJpvwkTLeQFcjRU84qjPlFixxdWeCvaAODbVSlwVWYjTbSp5MQqCXuu4zEKb3/IXcZLYQB4+zCIL+vj1ToISybC6TPMGG1Av0luZhkhyWbvUT6XJI8lasMy/ysZPhGyESuwjTYot6BKzUMkyXpGMpPFrK7V7bE13/6E7758V/wi1+SiS6sY9ZpwFBJFqZIXdJpIZOM03Eudzmw2GrjtsUE6ElGLdx7q4vQV1GITtJbFzm/szwXXkM22qkBEzWlWKaX2XCXY4OdPcBOLNChzrCaoxSogQo1BsrVGGFXfPy+VXL/RocZ6x0WqrIN651Wmr4Kuls9V1uupdSSLsJSSmCM1DyoThGy58/viN/+67/jm3/+Z/zqj3/Esw/vYY0zMG3VwEfWGWDbWlUKKiaxyOAnuGRIq+AIRWWUu6605w6Qagcp+YNm7rqmIgzwDNHDrHBuVmgHjpIOT9LzHGkzY9NrYWcrscClZo6JzDCROXqdZRq1Q+T8dUJ3k8q/PUgykVwpbYePQyxBd4ZealRPys2KwRSvE5VqIfvko/fFd7//n/j6j3/C3/3h93j16hG2Z9oo/8VYpmscrlKhlYI0aC9hFfToKJfuKuSgp0LpV9chLufDvI5S5keoll2EkLsonR3S0uvYGFgJO1CF4z12rEkulc/nWZglWosVeqMVPl/h7ixdl7kESV1Yo6E70sUOsBOLRMMUjWAHKbS7hMFnx6JPnYxpfToWXBYhuznmFY82ZvHixWN88sXnePzgMo7STkxKWxX5V1rE+xhUP+HSWpZP5U2BU5tGrGf7bcJQdQFG6NHHCKWhShVxTfWl0M1zSd+gU13m92xQUc/QnqxSS0bLlegvluCpwSKheKDOiCXOyXIt7baUBBM4RKu9SAqfdei5P7PTEgMRkl5VIibKszFC+AyzA0cnOoVsNVchDltKcPbUYdy48R4uby9jmS5SUsQeEyFh05EKySDEamNJDu1BMho0CrSQnaR7PL0cygF2aYg47ib2vbQYs1TtJdqBGf7wAoM6zGE80W0ju5mxRlsyzvf20RONUVnnrXos8DcWJcjRya55Xu8J0k2AcasaY4yjj16opSQbw8XpWLSwYNSUFbras0uDQrZWrBQXFkZx49oVXLl4GecOzhA+RgqJEi5W3kXx6GSFO0mbjaV59DNyqqecXUhHKwe9nV/cbcxBr3TDipV1UyfqyRbVWQmw5SVSwNKo5K9hJb0+TpiNSN9ZmIEustUghW6chfJJs0DKXZT2aJ5xztOQSYUBvr+Tr3WRHBaYzAIZco4DfYwzsjHczJWyu1l8+tFH+OLLb/D04Utc3lrz76h9hIezKAu2gnRYeJqK8+EuU6GG8KhRy+HQyCn9pEB9JrwlmegyZKGfTOQknaooRlkRgciLC0FubCBUvKoSwpEfGQxddCBnigxiyIO3SAFPoRxdxWkkiyyMVORhjH5olF0dM78mhl4G3SklQwr2VeVhls8P0mhuDnAB6rUL2a3jm+Kbb3/Ab7//Nzx/+imunj3tt899zLiN1XWwUnZNJuqK8+Cu1KCe1bQxABt53sEfb2Q73ZwJqQOj1Rr+kB6t3BFsTKQqT47S9FjoFdGoK6JGGBmQUYVZs87PPj2lmWjOJy1SWVu1CrTpaSH4t/6KXNIz9YId6LdrmIQGLZw96UbCHDVi1WvG0d4aHOq00szdeyF+99v/wve/+3c8ffIxrl64gZPL8xgg1roo593Ef3OVDlZ9HlyVRWik5bVTgKw0adKNWgdnwqPL5CxQDzhLnUzAf6ea6uosyoCLkHIUsNIsQAeXnQFTCXFdwiqTbsloniI56vPjKISEGwvSSpz3sHi9rHiPSennf29ZLruejAFqUT8pXLrzcdAj3casFLInDz4WX335B/z2u3/Dsw8+xuXzN3Ht3HUs9begtzIXs61WOO2VcFor0MmtrKE4198BC6nVokxGrTqJ1iEXHg55E2HhItSadZwd2gWXMh0e+qK2fAW6mEyfgWJnYGHKSIllBZyrfA69pMgpcFCg6tmJ5qIUWmsSRDmpmh0Y5FyMcZFq4XdL9r2NczgtDTtXzxV3mZDdvn5fvHz2c3z1P36Pj19+iovnL+PW9Q9w8fgprA64MNvvgsNejdHeNvRxma9nJc1MwKRKgZUWo55Vc5JRzHSpldwNqrO5XSXROseFwxAdDmNUGCpjw1HB51WJkbCmxKKJy0uzLouEkEa/RC/EBBqp9o3qRDTrU2jk0v0JDBIFEn1bjdSN8T6auUIUcQGSuitpznx9MXXg2j3x8P5zvPzwc/z01We4dvUqE3iMR3c/oq24gKmRHtSYq3BoeQE9rhpSaS6shJCZ6mxVsv3SpsVTwt1AGR+OzNAAqGiz9aFBMIeFoS48HDW82plMU0YCSsKDoOGAF8aE0npzX+B3tOpIBhxoaQbaCNs2YyZZkDNl06C1ogAymQzRURFYmhhCm60cFna0l3oyW6sVsutX7oq7tx7j/u3H+Oj5J3j86AXu3fkAD+58iId3H2N+dgqOGivOnT6LqcFu1HGwa6X7+tx7LexCDSnVzE6Us71G7gmVtNrOnDR6lhyMqFSYKirErEaDJV0Rlow6+Og4Rw1qtJPh6tnJZhJAFwNuJxO1U2nbSd2drH6/RKHcB3rrzUiIjH6dRHgEji0vYsplxTS3ttUWQujGlXvi0fuv8OThp3j25Gd4eP8FO/AQ/Dvu3riL9UOraHY6cO3KbZw6toUGik8t7a6d1GqV5oD2tio3gdtVHG11ArcvBRy0yDXZybBzWbenc064vLtyOAuciW4K3QhpcoT2o5XQkxhMwryHCXiLM9BBMeziMtPDXaCNzDbkasLBmQUE7wvwJyGPj8eFrQ1cmO/FqtsgZI/uvxQfv/wlE/gp7t18jGuXbuH65dv+c/HMOWwf3UB7mxNXLt3Eh2Sp3tZamIlbu0SvvJrzklHG9VLaf81MwpodjwruvvqkMGgSgqFNCoeeK2Qpd+EKeQTquKV1cgcepqb0ciClBJxFEhUTQrTInWXcDZhAO5mogYTQVG7AkdkFDHcN+hOQjlZdgBvHD2KlqUTI7t99Jp49+ZRVf98f5Hvnr+P6pdu4cv4qNg+v4eTRoxjobcf21nH84i9/g6sXr6C9rtw/tFZ1GtkolQt9EqoYuLQDNORxsLngOAkvD6HWRt/fS5Ya5wCOs+qDdLeSH5rgLjFOiu7i3uEmdUrBt7MTXsLJQ7PopG0xqSiaJbTdziZcPHYeeo32/yfhtNtwY3tDyN67eE3cv/MEd1j9G1eZBHXg8rmrOHfqHJYX5nFkbRW+6VFsHtnGZz/9FZ49eIpiVTbKSI82qrJNWjJoE+rI9y5SokdHwaIueKkXTgpgo5oqria2tTk0cFr46Ht8di3m6ZEWuCtMcVEZpOpKlW/jluXmVfou6eaBNGclmXJ47VacPHwcqwtriI2Oxht/IcPbb7yBmdExITt/6oy4ee0O7nKI37/7DLdvPMClc1ewvbmNhRkfA99idx7h5bMvCbF7GGhv8Vcggcu4VZuHGgZby2rVENsueqIWVrSVR6LJ6qxEVGYmEl5cOXOS6YnoXilgUwx+in5ntqkMk9wLhuyF8HJwm+lwLVT2cnbRQyvTRvdblEKmKtVgfngCZ7YvoaK0HGHBQXjrJ28gNOAdITuxuSUunTmPa5dv4O6th2SjZ7h78xmuX3nAjjzAnRvPiP2fQ3rP/OQA8rMU/gQUCYmo1muhy01BGXfbCsLJxqpZuSJKsKribBQlR6FUEccZIUuRoWryFIQIXSutRDttuHS/s6WMAigxG81hOa2HISseDZyR9kruyDRueiZQKI9Gl6MRZ45dhLvejUyFAiGBAdjxkzeEjDgXJ44ewcnjx8k09/Hs8V/iw2efs+r3SJ2XcO/WB4TVVQz3dmCSNBoWHPh6kJRKFOVmIzU6FAXpSSgg0+i51GupB9r0eBQpYlBAntdSuLRMoiIrmXOjoAgqYKNDdbBjViZcRZzr+HmNItbvnRo51B5qQTttRif3i4rMBJrCMHisdrx79CwGOgegUxYgOS4ee3buFLJjRzbF+bMM9M5z6sBfMeCH2NxYJ/4XyEj3cPvqHcxOjGO4uxMjPR1S1njzjb+AyWBEQVYWMqKCUcwAcuSxyE6JQS6rlc3KK1Oikc/H6VTgjNgwaFPjoaVGFCiiUMwhN+SlQMuE86jaGiZZlUtzyMSaKGot/y+BDlp6E5PKpoNtrjbh5PopjPaPo0Jbgtz0LIQFhXCpv/tSfPaz7/DRh19wcM9iad6HmYkJPr5CzD/Csm8Grc4GzI6Posvjwhus/q4dO1BTZYIyLQ3ysP3QsXq5tMtpcRFIiYlAYmQIkqJCkcgTHxaMxPBQyCP5ekwkMvieVFqLVCpxVhzplRRskbpC1nKQEJq4I7i4Z3il1ZVqbOI85ETvR2NlFbYPHcfE4BSqSsugzVezCwlC9rPPvxUfv/gCWxtHWOkxf/BbR07i/q1HOLyygk5PM1qaHFiem0a91eKHz95du2CvNEOZnob4oL2sYAzUCRFsdSgyooOQEhWE+FDprl0wkmgpEsP4PDgAsUH7kEirIQ8LQF4CPRLp15xPJee81HFu6sk+Tu66bolOKWKSkJmZQEF8KFwWC46ubGJqeAbVxgqUanTIS88UsvfvPPnzqWPHGPwoZqcnsH5wk0P8GKe3j2O8rxcd7mb0d3px5MAiHFbz6wR2MoEKKyyGMsQG7oEqmYMmwYaLS35cMJeYYCYS7P8/iNTIQP9JCeehB0qL4qLD4PWEU0V2IiwMvoazUUc/JVXfw8WmnftABxcbFxclU14CdPIo9DQ4sXVoG9MjM6g12WDUFkOnLvizbG1l5ce5yVExOToslheWxJWLt8U5UqtvfFR0tbiFt6lB9HV4xeL0hKgzmwQTEG/v2CEMGoNw2RtEQvB+kR0bIlRJkUKZGC7y40NFblyIyIkL9v89PSpIpEUGCibhP+nRwXw9VGjlUaIyN0mYeCw8VlWScGhThMeQLdrLc4S3IkfU61JFVX680CniRb/bK44c2BKjfWOMwy6qDOVCry788f8COVlV9rcfdpkAAAAASUVORK5CYII="></a></div><div id=comment_body_5048108 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>感觉回到了c++</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5048108_avatar style=display:none>
+ https://pic.cnblogs.com/face/1015065/20160825192557.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5048122 class=layer>#13楼</a>
+<a name=5048122 id=comment_anchor_5048122></a>
+ 
+<span class=comment_date>2022-04-22 08:52</span>
+ 
+ <a id=a_comment_author_5048122 href=https://www.cnblogs.com/waitaminute/ target=_blank>蓝色格子</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/waitaminute/><img src=data:,></a></div><div id=comment_body_5048122 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>栈上的内存是有大小限制的，一般是1M，这么大量用栈上内存，不会导致内存不够吗？未来会不会还是会用堆内存，只是有些堆需要垃圾回收，有些不需要，把Rust的优点吸收到c#来。</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(1)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ 
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5048183 class=layer>#14楼</a>
+<a name=5048183 id=comment_anchor_5048183></a>
+ 
+<span class=comment_date>2022-04-22 10:25</span>
+ 
+ <a id=a_comment_author_5048183 href=https://www.cnblogs.com/yyww/ target=_blank>yywww</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/yyww/><img src=data:,></a></div><div id=comment_body_5048183 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p><a href=#5047898 title=查看所回复的评论>@</a>受气de灰太狼</p>
+<blockquote>
+<p>感觉底层操作的功能越来越多了。<br>
+readonly ref 和 C++ 的const &amp; 是不是类似？<br>
+最后的生命周期不就是rust 的吗？</p>
+</blockquote>
+<hr>
+<p>所以吧, C#什么都可以干，看你用来干什么</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(1)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ 
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5048194 class=layer>#15楼</a>
+<a name=5048194 id=comment_anchor_5048194></a>
+ 
+<span class=comment_date>2022-04-22 10:41</span>
+ 
+ <a id=a_comment_author_5048194 href=https://www.cnblogs.com/kklldog/ target=_blank>Agile.Zhou</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/kklldog/><img src=data:image/png;base64,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></a></div><div id=comment_body_5048194 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>hez出品，必属精品</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5048194_avatar style=display:none>
+ https://pic.cnblogs.com/face/36200/20201214235938.png
+ </span>
+ </div>
+ </div>
+ <div class=feedbackItem>
+ <div class=feedbackListSubtitle>
+ <div class=feedbackManage>
+ &nbsp;&nbsp;
+<span class=comment_actions>
+ <a>
+ 回复
+ </a>
+ <a>
+ 引用
+ </a>
+ 
+ 
+</span>
+ </div>
+ 
+<a href=#5049182 class=layer>#16楼</a>
+<a name=5049182 id=comment_anchor_5049182></a>
+ <span id=comment-maxId style=display:none>5049182</span>
+ <span id=comment-maxDate style=display:none>2022/4/24 下午7:22:46</span>
+ 
+<span class=comment_date>2022-04-24 19:22</span>
+ 
+ <a id=a_comment_author_5049182 href=https://www.cnblogs.com/tky753/ target=_blank>tky753</a>
+ </div>
+ <div class=feedbackCon>
+ 
+<div class=esa-comment-avatar><a target=_blank href=https://www.cnblogs.com/tky753/><img src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAADWpJREFUaIHFmvtzW9dxxz977sWDIAGSAAm+XxL9kK14LFuOLdmOnSa1O47j6SRpOskP7S9t/4T+Nf2lk3bqTJtJmozj1n34EctR7FhyJNuyHpRIixRJECBBAiQIXJyz/eECIEiKpmQ77nIO5hL3nj27e/bsfncv5Mxbr14ZGRntF3yrKIiHtQFnzr5BeiBNKhPHYhEBRFGnhGRokkrrElHwFBBBFRZvrTA6NIGHcm32Mt3pXnp6ekBh5dYtVAKCmsfE2D1UtzfJry4gUme4f4LhwfswEsVTg3MBqooCDsX3fW9xcSnnj45N9I9P3tMTCiSAUKtW+fgf/4H7eyZIJodxrg6ehFNVAUHbpW4jAZw2LhRKtsjCmsfWRpHVzTydo124hAWUsq6SW1xCnIcfU2q1gMWleTaKmwz9yXEmph5kdm6GWDxKdvDovrWi0ZT6kVjSgo8qKA4RwYlg1RFogKVOQIB1ioprSAbIzg4YbX0bKijhfyKQnern/HsXscE2Dz9ynGRPnJpuIqKkx/pYWM4R9+Hq7AUq1YBMegg26wSizNz6hNff+Q+S8U6eefIlBrIDgAU1iAgS8azfkqfx6eqW3797lsxgmlRPN84Joh4GhzYfVtkxcWvfZIeP7vCMxSP0D/bQnUrS3ZvCOosgOHXEOzsYmRgmt7AAMSGZ6mJkYgQiBT6Z/YC5pYuYWJm5xZtcuTHBYPY5FLOzAIpBXfiFEFo/sLz22q8ZHh8gM9BL3YX3wyMg4QidiKYaIavwj8YSTYc0CuNjI6TTvTgVwDRmeji1jExkSfUlyY4M89CjD9Ob7cWK5ebCDHVdozcDvVkoVed47w9vsLAwj0hzVYNpGVVDrUwE1AtwpgJiEbEgtk3rw0lVWwMgFovh+z5oOw/FCVhgZGyUodFhjOfhAKcOMXX8iANToS8b59bSJ7z+1s/Jr11vyBJ6gGm6hYjgVDlz9m2SmQ660h2o2jCs3IXwn6lY+7WEe+iAaCKBH41iVXGiZLK9dCXjrOQKlDcsQgfr62skkkppa4HcylzIRBQf9QFBHbz1mzc5c/51ph8ZIdmfwtl6Q1Nvx1fuQMgDAtQ+EvUAsI0gYDCoOsbGsoxku5m9PsNybhUlQqq3Gx/DpSvniJo02f4pUMF4WADeeud/OXPufzh2YpK+gR6ctXcmxZdFbQdfBbxolMmjR0h2p8jlCiQSnfSmu1ENEOMakwxG6zV+89abvHf+HY4/NkXPYAyr1VZU+f8g1fB8eNEIU9NHUTWsFtYwBjqTHvnCDfKFecRYjLWW1/77FYYne+nJdlDX0G0ERYWd8ccWWti3nkXwYgkGx45giVAqb9Od7uFm7hozsx8iCP57587SmfaJJaUhfDNB6R9d6H1KtF03s4pVYWh8FNU6uVvzgGI8v5VUzS9f/RkDo5309CdxX7XEd0SK1YCxqXF6+/rJ5YqUNqoY8REBMzrVT082EcZ/do/mgbo9251xp3fuTuy2IY7A1hkcHUWNT6FQbCQzxTzw6H2k0l1Y58LYLDtIQTS8NoQZdRfzNn9tLqUaYiljpAGHPr8S7fwFgyBE4jHS/f1YB+XyFkYFE/Ejbal5t5ACeDWLWrcbMhMq1xxgEPEwxieXy3P9+qdsbm5jjP+5FbgdicDY6ATqPFYLG3heFD+R6MAYbwcCt08Aqutl/EQc0xHbdc+0Pa8qLC2tUKlUKJVK1Go1qtsB4+PjdHbFcM5xGIkIIrILgjSpBd0UIlGf8ckh8oVFbty4inHi4TzBeg5l90JqHdubW0hg8RrWDqGzQz2HOhDnMKqUN4rkVpYYGx/i648/QiQSZW52gXJ5GxGP258LxRgPYyKsFdaZnZlls1TCkx2IHroQrUImkDr3fO0o84uznP3tWfxmzG0/uO0U1AJwipEwzbcsptARTxL1PCrVLaanpzlqBMVhnWXqyARzs/NsbVbo7Ow40Or5fJ5yqcJmaZvK1hbblYCxcY9UV4J6U+E2vZ0IkY5Ooh1xMIJph8T7FiDc1nK5TK1W3allFMQZ0qksw9kp4tGOXbNQEHFMHRmhry/TquL2kqpSKpVYWlqivz/DY489SjLVRSGfZ7tava1MDsWZOpmBFMXyEr4CqqaBC/co4AnJ7hSF5TyxZBfRaBzXKGwU2KqUQC01W2ue5ladAAqqjQDhQOqNkNVWSyNMTIwzPj7RcJMawyNZNjbWqdVqRGIxRLVpk5YKVh33PjTBf119B18lRJthyNxtKWegq6ebjUKJ7Y0tOhKdGN+jDjijrJaXKZYJVW/E5WaE2uHjQFyjFmiTpP1StFXJCUIq2R3umobFkdsVAQVVg5cQ/ES0zRx7DpgCdVGsJ8RTXawXi1TKm6hIi2Fo3cNAXyi4kRieF8P3YxgTQdXse7LJKcwl+++3P9NU0G8tslcOgbqAMdCb7aNa2WKrVCaSTKBRL9zaBkMROTBlqYBnotycW2A1X8DzPSYmJ+jqTmJdbZeed5T2pC3qIPihXzb9f0cLUYjaEJXWTZ1EqpPVpRV8Y0gOZNCoaa67u9JiN/wwXpSVuTzzb15i62aOasTiHigy/dQJ4j0J1NZbyPegbCFt9g1DqwVNAAZ/t+l3Og3NiU3q7O3G1uqs5gtEuzrojKSw6g7ESk1+y3NLzL9+ngcrXdw7foLNSJ0L12a55s4x+Y0TJLs7sFpjpw1wOy7t1B7whds72m3I+Yae/j56073Ut2uYwOId4v9Olfd/+z7JsvK1RJr0dkB/FU72TbL80SxzV+cwxsN6tgGP74CalZuR8JCLEUS8MObvPchtgMrhsL7SM9iHw1HMF6gHQauJdTsSEbIjw1QjynptE+c7VBy5zRLJTJZUdzfOucPDQJsc1jgQobC4SkekE395PsewnyXSYcJw18Zu76FyAupBd1+atVyeaq1GLBb5DAXgxKkTXAvgdx8uM2g6qEqdBT9g4ukTDB0dxroagveZJezeboYnPh+e+4D+5Bhepi/59yNjI4lkbxcWy4FhUZqdA0GMEO9K4Eeih0ZRzyiZ0WFy9SqXNgssdTomnzrO4H0jiNYbhz5smN0RqRCROHOfLJKQ7i3/2NRxNvJlujIdRJP+gWm//UAr4Iy0ktZBawsh2FPfcd+po9z7xDTOM3gKnq01IqGANtuFhwdSg2HlVoHuzjQTg1OY7333+8xenmd1sUDEhIwE3SVwU5j2osYo+57ZSwpYaXSyjY/xPTwREMEKWAkr7xDGHMzMw+KpxaDEvSgX3r1INj3CU09/AxONdnL/9HFK+SpByRHRKKKmASv2SPMFSduMfDfsVOqAI4pP/maeVCzN1Pg0IJhYrJMf/eVfk4pmuPLBDEE5wBPvcPN+pRTBJ0Hu03VufLTAUyef4fTjT1GrW4wTRzQa5wd//ld0mSzXP5qhslEMoUKjE21UPzPEfhm0t0xtIVpxGImytFDk+sdLnD75HE+e/lY4Jyx8QsE6Ojr58Q//hoT0cfG9j6msreN54aslJzsgucH2S+o9tJE2c2uoiZM6KhanjuX5AtcvzfHM6W9z+olnW0BQICxomhSLxfjxD/+OodS9XHl/lmvnZ6gUK/jiI21vZL6KpqNnPHwbZenqMjPnZ/nmE89x6rGnG8XSznNmLxSLxuL86Pt/Szo6xcLFda68O8v1C1eorG9gBMR8cbfZ2b0dxwzdUfEEfGsofrrOtfdnWPh4hW+deoHTJ5+97cJya2EuPzQ8lsHtvu+sxdYD/vnln3D1xh9IDyXoH+8mPdRLpKOT9ndkd00SvgiUxhsWX8LiCVuntFgk/2mR/FKRjfUaL33nLzh9+tl9nQoRYWVlJS+Lt+byg0MNBRrMm10vgMAql65e4Jev/AsVm+PYw0fIDA8hkehdy90UwdfQRUQNGij55QLr6yVqlRrFpU2qG8Lzz/8Zj3/9SUQijeLm9goc2HlyDowRZmav8sp//pwjx4YZmniQmlRx4t218OGqgFMq5S3KqxsEW4ZKKaCQK1IpW7CO57/9Ak+e/mZYCHl+o9A5OFT4u7tySvNYGAOXZy7zs1/9E6PTvWSnMgRigcgXeHfgEA+KqyXefuUsEZekpyfLd154iccfO4WtO3zfC7vPzZPSrMAOUmBvQSMNS12+dpF/+9W/MnbPACNH0liCxjs6OYzngSQqiFEGRgaZnD7CaOZenv/T79KfGcIgeE2v1GYiONxQpn17RARrlStXL/GLf3+ZqWNZRo5mqPtV1Gir/fd5A6kgOKdoxPL4sydZLs3z+tuvsbm5EW687sZEt2sz7lOghRgacjkN+OlPf8LwRB9DkxmsCXCy2wvl8w4NdwEViCknnjzGp7nL/Pq1X7C2utqyy92E6ZYCCtSd5cbsNfyoI94dwRkXCq7+vupzV9q/wwFg1GDUYF0d59c5eeohzl34HWfOnkGMuesc43u+5zX92tUtL7/8MkeOjTI42U+NACMGpO33EF8UO+w0dhCBaMyQHUhRLOYpFovhL1nukDzP8/ylpeWcGF9VjK1UtllbXWN9M87Kqgn9VQQnuoP/P6MGPpS09QEiCI6IE+5/YJo3Xj0HLsKLL75IEASHsvJ9z1teXl75P3qDOJrQ+/HVAAAAAElFTkSuQmCC></a></div><div id=comment_body_5049182 data-format-type=Markdown class="blog_comment_body cnblogs-markdown">
+ <p>吓得我都不敢用struct了，不过本来就很少用。</p>
+</div>
+ <div class=comment_vote>
+ <span class=comment_error style=color:red></span>
+ <a class=comment_digg>
+ 支持(0)
+ </a>
+ <a class=comment_burry>
+ 反对(0)
+ </a>
+ </div>
+ <span id=comment_5049182_avatar style=display:none>
+ https://pic.cnblogs.com/face/967735/20210328143300.png
+ </span>
+ </div>
+ </div>
+<div id=comment_pager_bottom>
+ 
+</div>
+</div>
+<div id=comment_form class=commentform>
+ <a name=commentform></a>
+ <div id=divCommentShow></div>
+ <div id=comment_nav><span id=span_refresh_tips></span><a id=lnk_RefreshComments runat=server clientidmode=Static>刷新评论</a><a href=#>刷新页面</a><a href=#top>返回顶部</a></div>
+ <div id=comment_form_container style=visibility:visible>
+<div id=commentform_title>发表评论</div>
+<span id=tip_comment style=color:Red></span>
+<div class="commentbox_main comment_textarea">
+ <div class=commentbox_title>
+ <div class=commentbox_title_left>
+ <span id=btn_edit_comment class="commentbox_tab active" title=编辑评论>编辑</span>
+ <span id=btn_preview_comment class=commentbox_tab title="Markdown 预览">预览</span>
+ </div>
+ <div class=commentbox_title_right>
+ <span id=ubb_bold class=comment_icon alt=粗体 title="添加粗体(Ctrl + B)">
+ <svg class=comment_svg viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+ <g fill-rule=evenodd>
+ <path d="m13.221 19c1.4414 0 2.5793-0.27451 3.3759-0.82353 0.92931-0.66667 1.4034-1.7059 1.4034-3.1176 0-0.94118-0.22759-1.7059-0.66379-2.2549-0.45517-0.56863-1.119-0.94118-2.0103-1.1176 0.68276-0.27451 1.1948-0.64706 1.5552-1.1569 0.36034-0.54902 0.55-1.2157 0.55-2 0-1.0588-0.36034-1.902-1.0621-2.5294-0.75862-0.66667-1.8207-1-3.1672-1h-6.2017v14h6.2207zm-0.82196-8h-3.3987v-4h3.4367c0.91139 0 1.557 0.15686 1.9747 0.47059 0.37975 0.29412 0.58861 0.78431 0.58861 1.451 0 0.72549-0.20886 1.2549-0.58861 1.5882-0.39873 0.31373-1.0633 0.4902-2.0127 0.4902zm0.52612 6h-3.9249v-4h3.9855c1.052 0 1.8208 0.16216 2.3064 0.48649 0.46532 0.32432 0.70809 0.84685 0.70809 1.5856 0 0.72072-0.3237 1.2252-0.9711 1.5495-0.50578 0.25225-1.2139 0.37838-2.104 0.37838z" fill-rule=nonzero stroke-width=.35></path>
+ </g>
+ </svg>
+ </span>
+ <span id=ubb_url class=comment_icon title="添加链接(Ctrl + K)" alt=链接>
+ <svg class="comment_svg comment_svg_stroke" viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+ <g fill-rule=evenodd>
+ <g transform="translate(4 4)" fill-rule=nonzero stroke-width=.4>
+ <path d="m6.304 9.696c-0.288-0.288-0.512-0.608-0.704-0.992-0.16-0.32-0.032-0.704 0.288-0.864 0.32-0.16 0.704-0.032 0.864 0.288 0.128 0.224 0.256 0.448 0.448 0.64 0.928 0.928 2.432 0.928 3.36 0l3.36-3.328c0.928-0.928 0.928-2.432 0-3.36s-2.432-0.928-3.36 0l-2.272 2.272c-0.256 0.256-0.64 0.256-0.896 0-0.256-0.256-0.256-0.64 0-0.896l2.272-2.272c1.44-1.44 3.744-1.44 5.184 0 1.44 1.44 1.44 3.744 0 5.184l-3.36 3.296c-0.704 0.704-1.632 1.088-2.592 1.088-0.928 0-1.856-0.352-2.592-1.056z"></path>
+ <path d="m3.776 15.808c-0.992 0-1.888-0.384-2.592-1.056-1.44-1.44-1.44-3.744 0-5.184l3.328-3.328c1.44-1.44 3.744-1.44 5.184 0 0.288 0.288 0.544 0.64 0.736 1.024 0.16 0.32 0 0.704-0.32 0.864-0.32 0.16-0.704 0-0.864-0.32-0.128-0.256-0.288-0.48-0.48-0.672-0.928-0.928-2.432-0.928-3.36 0l-3.296 3.328c-0.928 0.928-0.928 2.432 0 3.36 0.448 0.448 1.056 0.704 1.664 0.704 0.608 0 1.248-0.256 1.664-0.704l2.112-2.112c0.256-0.256 0.64-0.256 0.896 0s0.256 0.64 0 0.896l-2.112 2.112c-0.672 0.704-1.568 1.088-2.56 1.088z"></path>
+ </g>
+ </g>
+ </svg>
+ </span>
+ <span id=ubb_code class=comment_icon title="添加代码(Ctrl + `)" alt=代码>
+ <svg class="comment_svg comment_svg_stroke" viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+ <g fill-rule=evenodd>
+ <g transform="translate(16 6)" stroke-linecap=round stroke-width=2>
+ <line x1=.5 x2=4.5 y1=.7 y2=6.3></line>
+ <line transform="translate(2.5 9.1) scale(1 -1) translate(-2.5 -9.1)" x1=.5 x2=4.5 y1=6.3 y2=11.9></line>
+ </g>
+ <g transform="translate(3 6.1)" stroke-linecap=round stroke-width=2>
+ <line transform="translate(2.5 3.5) scale(-1 1) translate(-2.5 -3.5)" x1=.5 x2=4.5 y1=.7 y2=6.3></line>
+ <line transform="translate(2.5 9.1) scale(-1) translate(-2.5 -9.1)" x1=.5 x2=4.5 y1=6.3 y2=11.9></line>
+ </g>
+ <path transform="translate(12 12.5) scale(1 -1) translate(-12 -12.5)" d="m10.778 7.1249c0.50008-0.11366 0.9978 0.16911 1.1643 0.64128l0.032406 0.11223 2 8.8c0.1224 0.53855-0.21496 1.0744-0.75351 1.1968-0.50008 0.11366-0.9978-0.16911-1.1643-0.64128l-0.032406-0.11223-2-8.8c-0.1224-0.53855 0.21496-1.0744 0.75351-1.1968z" fill-rule=nonzero stroke-width=.25></path>
+ </g>
+ </svg>
+ </span>
+ <span id=ubb_quote class=comment_icon title="添加引用(Ctrl + Q)" alt=引用>
+ <svg class=comment_svg viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+ <g fill-rule=evenodd>
+ <g transform="translate(5 4)" fill-rule=nonzero stroke-width=.25>
+ <path d="m5.0013 15v-5.2702h-2.8008c-0.13413-3.3762 1.2004-6.2143 4.0009-8.5135l-1.2-1.2163c-3.335 2.2996-5.0013 5.8119-5.0013 10.54v4.4595h5.0013-1.285e-5zm8.7987 0v-5.2702h-2.8008c-0.13453-3.3762 1.2-6.2143 4.0009-8.5135l-1.2-1.2163c-3.335 2.2996-5.0013 5.8119-5.0013 10.54v4.4595h5.0013-1.28e-5z"></path>
+ </g>
+ </g>
+ </svg>
+ </span>
+ <span id=ubb_img class=comment_icon alt=图片 title="上传图片(Ctrl + I)">
+ <svg class=comment_svg viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+ <g fill-rule=evenodd>
+ <g transform="translate(3 3.8)" fill-rule=nonzero>
+ <path d="m14.1 0.58235h-11.2c-1.32 0-2.4 1.0482-2.4 2.3294v10.871c0 1.2812 1.08 2.3294 2.4 2.3294h11.2c1.32 0 2.4-1.0482 2.4-2.3294v-10.871c0-1.2812-1.08-2.3294-2.4-2.3294zm0.7 13.569-3.63-3.4165 1.33-1.2909c0.21-0.20382 0.59-0.20382 0.8 0l1.6 1.5529v2.7856c0 0.13588-0.04 0.26206-0.1 0.36882zm-11.9-12.016h11.2c0.44 0 0.8 0.34941 0.8 0.77647v5.8915l-0.47-0.45618c-0.84-0.825-2.22-0.825-3.07 0l-1.35 1.3103-2.39-2.2421c-0.85-0.825-2.22-0.825-3.05-0.019412l-2.48 2.2615v-6.7456c0.01-0.42706 0.37-0.77647 0.81-0.77647zm-0.8 11.647v-1.9897l3.6-3.2806c0.21-0.20382 0.58-0.21353 0.81 0.0097059l6.43 6.0371h-10.04c-0.44 0-0.8-0.33971-0.8-0.77647z"></path>
+ <ellipse cx=10.5 cy=6.4059 rx=1 ry=1></ellipse>
+ </g>
+ </g>
+ </svg>
+ </span>
+ </div>
+ </div>
+ <div style=display:none>
+ 
+ 
+ 
+ 
+ 
+ 
+ </div>
+ <textarea id=tbCommentBody placeholder="支持 Markdown"></textarea>
+ <div id=tbCommentBodyPreview class=feedbackCon style=display:none>
+ 
+ </div>
+ <div class=commentbox_footer>
+ <span>&nbsp;</span>
+ <span href=javascript:void(0) id=ubb_auto_completion class=comment_option>
+ <svg style=display:none id=comment_auto_completion_on viewBox="0 0 1080 1080" xmlns=http://www.w3.org/2000/svg fill-rule=evenodd clip-rule=evenodd stroke-linejoin=round stroke-miterlimit=2><path d="M406.724 908.504c-89.02 0-157.885-32.319-206.594-96.957-49.549-64.639-73.903-155.795-73.903-274.299 0-116.017 24.354-206.345 73.903-270.155 48.71-63.81 117.574-95.3 206.594-95.3h19.316l-7.559 72.925h-3.359c-65.505 0-115.054 25.69-150.326 77.069-35.272 50.55-52.908 122.647-52.908 215.461 0 94.472 17.636 168.226 52.908 220.434 35.272 51.379 84.82 77.897 150.326 77.897h3.36l7.558 72.925h-19.316zm266.548 0c89.02 0 157.885-32.319 206.594-96.957 49.55-64.639 73.904-155.795 73.904-274.299 0-116.017-24.355-206.345-73.904-270.155-48.709-63.81-117.573-95.3-206.594-95.3h-19.315l7.558 72.925h3.36c65.505 0 115.054 25.69 150.326 77.069 35.272 50.55 52.908 122.647 52.908 215.461 0 94.472-17.636 168.226-52.908 220.434-35.272 51.379-84.821 77.897-150.327 77.897h-3.359l-7.558 72.925h19.315zm-94.068-65.897c0 31.514.854 54.433 1.708 68.758 1.709 14.325 3.417 25.784 6.835 34.38 2.563 8.594 6.834 14.324 12.814 20.054 5.126 5.73 14.523 11.46 27.337 17.189v34.38H451.914v-34.38c17.086-7.162 29.046-15.757 35.026-24.352 5.126-10.027 9.398-22.92 11.106-38.676 1.709-17.19 2.563-42.974 2.563-77.353V238.109c0-32.947-.854-55.866-1.709-71.623-1.708-14.325-4.271-25.784-6.834-32.947-3.417-8.595-7.689-15.757-12.814-20.054-5.126-5.73-14.523-10.027-27.338-17.19V61.916h175.984v34.38c-11.96 5.73-21.357 11.459-26.483 15.756-5.125 5.73-9.397 11.46-12.814 20.055-3.417 7.162-5.98 18.622-6.834 34.379-1.709 15.757-2.563 38.676-2.563 71.623v604.498z" fill-rule=nonzero></path></svg>
+ <svg id=comment_auto_completion_off viewBox="0 0 1080 1080" xmlns=http://www.w3.org/2000/svg fill-rule=evenodd clip-rule=evenodd stroke-linejoin=round stroke-miterlimit=2><path d="M242.96 223.172l59.627 58.009c-14.277 10.773-26.874 24.032-37.791 40.606-35.272 50.55-52.908 122.647-52.908 215.461 0 94.472 17.636 168.226 52.908 220.434 35.272 51.379 84.82 77.897 150.326 77.897h3.36l7.558 72.925h-19.316c-89.02 0-157.885-32.319-206.594-96.957-49.549-64.639-73.903-155.795-73.903-274.299 0-116.017 24.354-206.345 73.903-270.155 12.597-16.574 26.874-31.49 42.83-43.921zm36.952-23.204c36.112-19.06 78.943-28.175 126.812-28.175h19.316l-7.559 72.925h-3.359c-27.714 0-52.908 4.144-74.743 14.088l-60.467-58.838zM805.123 770.94l60.466 58.01c-47.869 53.036-111.695 79.554-192.317 79.554h-19.315l7.558-72.925h3.36c59.626 0 105.816-21.546 140.248-64.638zm23.515-37.29c26.034-49.723 39.47-115.19 39.47-196.402 0-92.814-17.635-164.91-52.907-215.461-35.272-51.38-84.821-77.069-150.327-77.069h-3.359l-7.558-72.925h19.315c89.02 0 157.885 31.49 206.594 95.3 49.55 63.81 73.904 154.138 73.904 270.155 0 108.56-20.996 194.744-62.146 257.725l-62.986-61.324zM500.609 474.465l78.595 75.92v292.222c0 31.514.854 54.433 1.708 68.758 1.709 14.325 3.417 25.784 6.835 34.38 2.563 8.594 6.834 14.324 12.814 20.054 5.126 5.73 14.523 11.46 27.337 17.189v34.38H451.914v-34.38c17.086-7.162 29.046-15.757 35.026-24.352 5.126-10.027 9.398-22.92 11.106-38.676 1.709-17.19 2.563-42.974 2.563-77.353V474.465zm0-60.164V238.11c0-32.947-.854-55.866-1.709-71.623-1.708-14.325-4.271-25.784-6.834-32.947-3.417-8.595-7.689-15.757-12.814-20.054-5.126-5.73-14.523-10.027-27.338-17.19v-34.38h175.984v34.38c-11.96 5.73-21.357 11.459-26.483 15.756-5.125 5.73-9.397 11.46-12.814 20.055-3.417 7.162-5.98 18.622-6.834 34.379-1.709 15.757-2.563 38.676-2.563 71.623v253.545l-78.595-77.353z"></path><path d="M153.103 132.024l805.45 783.706-44.277 45.505-805.45-783.706z"></path></svg>
+ <span class=inline_middle>自动补全</span>
+ </span>
+ </div>
+</div>
+<p id=commentbox_opt>
+ <input id=btn_comment_submit type=button class=comment_btn title="提交评论(Ctrl + Enter)" value=提交评论>
+ <span id=span_comment_canceledit style=display:none></span>
+ <a>退出</a>
+ <a id=commentbox_opt_sub title=订阅后有新评论时会邮件通知您>订阅评论</a>
+ <a href=https://www.cnblogs.com/a14907/ target=_blank>我的博客</a>
+</p>
+<div id=tip_comment2 style=color:Red class=sf-hidden></div>
+<p>[Ctrl+Enter快捷键提交]</p>
+</div>
+ <div class=ad_text_commentbox id=ad_text_under_commentbox></div> 
+ <div id=cnblogs_ch></div>
+ <div id=opt_under_post></div>
+ <div id=cnblogs_c1 class=under-post-card style=display:none>
+ 
+ </div>
+ <div id=under_post_card1><div class=under-post-card>
+<b>编辑推荐：</b>
+<br>
+· <a href=https://www.cnblogs.com/hong-fithing/p/16391399.html target=_blank>从工程师到技术 leader 思维升级</a>
+ <br>
+· <a href=https://www.cnblogs.com/coco1s/p/16489468.html target=_blank>超酷炫的转场动画？CSS 轻松拿下！</a>
+ <br>
+· <a href=https://www.cnblogs.com/stoneFang/p/16480628.html target=_blank>可落地的DDD(7)-战术设计上的一些误区</a>
+ <br>
+· <a href=https://www.cnblogs.com/chanshuyi/p/how-to-build-the-stable-system.html target=_blank>系统总出故障怎么办，或许你该学学稳定性建设！</a>
+ <br>
+· <a href=https://www.cnblogs.com/huangxincheng/p/16476232.html target=_blank>记一次 .NET 某电厂 Web 系统 内存泄漏分析</a>
+ <br>
+</div></div>
+ <div id=under_post_card2><div class="itnews under-post-card">
+ <b>最新新闻</b>：
+ <br>
+ · <a href=https://news.cnblogs.com/n/725009/ target=_blank>iPhone 14部分机型或取消SIM卡槽：用户可获得更优秀体验</a>
+ <br>
+ · <a href=https://news.cnblogs.com/n/725008/ target=_blank>数据显示：Hulu成为迪士尼增长最快的美国流媒体服务 超过Disney +</a>
+ <br>
+ · <a href=https://news.cnblogs.com/n/725007/ target=_blank>盘点美国科技行业大裁员和冻结招聘潮：苹果、微软、谷歌、亚马逊...</a>
+ <br>
+ · <a href=https://news.cnblogs.com/n/725006/ target=_blank>动视暴雪员工又建了一个工会 要求提高薪酬</a>
+ <br>
+ · <a href=https://news.cnblogs.com/n/725005/ target=_blank>谷歌将允许在Google Play应用使用第三方计费系统 服务费降至12%</a>
+ <br>
+ » <a href=https://news.cnblogs.com/ title="IT 新闻" target=_blank>更多新闻...</a>
+</div></div>
+ <div id=HistoryToday class=under-post-card></div>
+ 
+</div>
+ </div>
+ </div>
+ <div id=sideBar class=sf-hidden>
+ <div id=sideBarMain class=sf-hidden>
+ <div id=sidebar_news class="newsItem sf-hidden">
+<div id=blog-news class=sf-hidden>
+ 
+ <div id=profile_block class=sf-hidden>
+ 昵称：
+ 
+ 
+ 园龄：
+ 
+ 
+ 粉丝：
+ 
+ 
+ 关注：
+ 
+ 
+ 
+ </div>
+</div>
+</div>
+ 
+ <div id=leftcontentcontainer class=sf-hidden>
+ 
+ 
+ </div> 
+ </div>
+ </div>
+ <div class=clear></div>
+ </div>
+ <div class=clear></div>
+ <div id=footer>
+ 
+Copyright © 2022 hez2010
+<br><span id=poweredby>Powered by .NET 6 on Kubernetes</span>
+ <span class=esa-copyright>&amp; Theme <a href=https://github.com/esofar/cnblogs-theme-silence target=_blank>Silence v2.0.2</a></span></div>
+</div>
+ 
+ 
+<iframe style=visibility:hidden;display:none></iframe>
+<a href=https://github.com/hez2010 class=github-corner title="Fork me on GitHub" target=_self>
+ <svg width=60 height=60 viewBox="0 0 250 250" style=color:#fff;z-index:999;position:fixed;top:0;border:0;left:0;transform:scale(-1,1) aria-hidden=true>
+ <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+ <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill=currentColor style="transform-origin:130px 106px" class=octo-arm></path>
+ <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill=currentColor class=octo-body></path>
+ </svg>
+ </a><div class=esa-catalog>
+ <div class=esa-catalog-contents style=display:block>
+ <div class=esa-catalog-title>CONTENTS</div>
+ <a class=esa-catalog-close>✕</a>
+ <ul><li class=li_h2 title=前言>
+ <i class=475597200></i><a class=esa-anchor-link><span class=level1>1. </span>前言</a>
+ <li class=li_h2 title=背景>
+ <i class=1252585470></i><a class=esa-anchor-link><span class=level1>2. </span>背景</a>
+ <li class=li_h2 title="ref 字段">
+ <i class=3129703418></i><a class=esa-anchor-link><span class=level1>3. </span>ref 字段</a>
+ <li class=li_h2 title=生命周期>
+ <i class=4189180711></i><a class=esa-anchor-link><span class=level1>4. </span>生命周期</a>
+ <li class=li_h3 title=scoped>
+ <i class=2097428496></i><a class=esa-anchor-link><span class=level2>4.1. </span>scoped</a>
+ <li class=li_h3 title=unscoped>
+ <i class=3243517440></i><a class=esa-anchor-link><span class=level2>4.2. </span>unscoped</a>
+ <li class=li_h2 title="ref struct 约束">
+ <i class=3757072853></i><a class=esa-anchor-link><span class=level1>5. </span>ref struct 约束</a>
+ <li class=li_h2 title=反射>
+ <i class=958869848></i><a class=esa-anchor-link><span class=level1>6. </span>反射</a>
+ <li class=li_h2 title=实际用例>
+ <i class=1010869442></i><a class=esa-anchor-link><span class=level1>7. </span>实际用例</a>
+ <li class=li_h3 title=栈上定长列表>
+ <i class=25712927></i><a class=esa-anchor-link><span class=level2>7.1. </span>栈上定长列表</a>
+ <li class=li_h3 title=栈上链表>
+ <i class=3260961130></i><a class=esa-anchor-link><span class=level2>7.2. </span>栈上链表</a>
+ <li class=li_h2 title=未来计划>
+ <i class=842252718></i><a class=esa-anchor-link><span class=level1>8. </span>未来计划</a>
+ <li class=li_h3 title=高级生命周期>
+ <i class=1603191358></i><a class=esa-anchor-link><span class=level2>8.1. </span>高级生命周期</a>
+ <li class=li_h2 title=总结>
+ <i class=2020167520></i><a class=esa-anchor-link><span class=level1>9. </span>总结</a>
+ </ul></div>
+ </div><div class=esa-toolbar>
+ <button class="esa-toolbar-gotop sf-hidden" data-tips=返回顶部></button>
+ <button class=esa-toolbar-contents data-tips=阅读目录></button>
+ <button class=esa-toolbar-follow data-tips=关注博主></button>
+ </div><div id=lightboxOverlay tabindex=-1 class=lightboxOverlay style=display:none></div><div id=lightbox tabindex=-1 class=lightbox style=display:none></div>
