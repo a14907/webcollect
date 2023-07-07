@@ -1,0 +1,1174 @@
+<!DOCTYPE html> <html class="hasSidebar hasPageActions hasBreadcrumb conceptual has-default-focus theme-light" lang=en-us dir=ltr data-css-variable-support=true data-authenticated=false data-auth-status-determined=true data-target=docs x-ms-format-detection=none style><!--
+ Page saved with SingleFile 
+ url: https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior 
+ saved date: Fri Jul 07 2023 14:28:48 GMT+0800 (中国标准时间)
+--><meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1.0">
+<meta property=og:title content="Common NuGet configurations">
+<meta property=og:type content=website>
+<meta property=og:url content=https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior>
+<meta property=og:description content="NuGet.Config files control NuGet's behavior, and can be modified with nuget config command.">
+<meta property=og:image content=https://learn.microsoft.com/en-us/media/logos/logo-ms-social.png>
+<meta property=og:image:alt content="Microsoft Logo">
+<meta name=twitter:card content=summary>
+<meta name=twitter:site content=@MicrosoftLearn>
+<meta name=color-scheme content="light dark">
+<meta name=author content=JonDouglas>
+<meta name=breadcrumb_path content=../_breadcrumb/toc.json>
+<meta name=depot_name content=MSDN.Nuget_concept>
+<meta name=description content="NuGet.Config files control NuGet's behavior, and can be modified with nuget config command.">
+<meta name=document_id content=370d9d91-9f35-79aa-3ace-7b77436e988f>
+<meta name=document_version_independent_id content=3da4591a-3d3d-c07a-6672-97964de13b14>
+<meta name=gitcommit content=https://github.com/NuGet/docs.microsoft.com-nuget/blob/116b34fd95b4113dddae75b8d705887cd3ba0fd0/docs/consume-packages/configuring-nuget-behavior.md>
+<meta name=locale content=en-us>
+<meta name=ms.author content=jodou>
+<meta name=ms.date content=01/10/2022>
+<meta name=ms.reviewer content=anangaur>
+<meta name=ms.reviewer content=jodou>
+<meta name=ms.reviewer content=chgill>
+<meta name=ms.reviewer content=jiacjian>
+<meta name=ms.service content=nuget>
+<meta name=ms.topic content=conceptual>
+<meta name=ms.workload content=dotnet>
+<meta name=ms.workload content=dotnetcore>
+<meta name=ms.workload content=aspnet>
+<meta name=original_content_git_url content=https://github.com/NuGet/docs.microsoft.com-nuget/blob/live/docs/consume-packages/configuring-nuget-behavior.md>
+<meta name=page_type content=conceptual>
+<meta name=pdf_url_template content=https://learn.microsoft.com/pdfstore/en-us/MSDN.Nuget_concept/{branchName}{pdfName}>
+<meta name=ROBOTS content=INDEX,FOLLOW>
+<meta name=schema content=Conceptual>
+<meta name=site_name content=Docs>
+<meta name=toc_rel content=../toc.json>
+<meta name=updated_at content="2023-04-17 07:21 PM">
+<meta name=word_count content=2064>
+<meta name=persistent_id content=69ee4b69-9daa-6793-41bc-0b7e762e9c57>
+<meta name=cmProducts content=https://authoring-docs-microsoft.poolparty.biz/devrel/bcbcbad5-4208-4783-8035-8481272c98b8 data-source=generated>
+<meta name=cmProducts content=https://authoring-docs-microsoft.poolparty.biz/devrel/4628cbd9-6f47-4ae1-b371-d34636609eaf data-source=generated>
+<meta name=scope content=NuGet>
+<meta name=github_feedback_content_git_url content=https://github.com/NuGet/docs.microsoft.com-nuget/blob/main/docs/consume-packages/configuring-nuget-behavior.md>
+<link href=https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior rel=canonical>
+<title>Common NuGet configurations | Microsoft Learn</title>
+<style>@keyframes blink{0%{}50%{background-color:#0000}to{}}.input,.button{min-height:2.25em;-webkit-appearance:none;appearance:none;box-shadow:none;vertical-align:top;border:1px solid #0000;border-radius:.125rem;justify-content:flex-start;align-items:center;padding-block:calc(.375em - 1px);padding-inline:calc(.625em - 1px);font-size:1rem;line-height:1.5;display:inline-flex;position:relative}.checkbox-toggle-wrapper input[type=checkbox]:focus-visible+label.switch,.checkbox-button input[type=checkbox]:focus-visible~.checkbox-button-label,.star-rating-control input:focus-visible+label,.tree-item:not(.is-leaf):focus-visible>.tree-expander,.autocomplete-suggestion:hover,.autocomplete-suggestion.is-active-descendant,.toggle input[type=checkbox]:focus-visible+label,.radio input:focus-visible,.radio input.is-focused,.textarea:focus-visible,.select select:focus-visible,.input:focus-visible,.checkbox input[type=checkbox]:focus-visible+.checkbox-check,:where(.is-focused),.has-default-focus :focus-visible,.default-focus :focus-visible{outline-color:inherit;outline-offset:.25rem;outline-width:.125rem;outline-style:dashed}.link-button{outline-color:inherit;-webkit-appearance:none;appearance:none;background-color:#0000}.pagination-previous:not(:hover),.pagination-next:not(:hover),.pagination-link:not(:hover),.pagination-ellipsis:not(:hover),.modal-card-foot.is-sticky:not(:hover),.link-button:not(:hover),.button-reset:not(:hover),.notification .notification-dismiss:not(:hover),.banner .banner-dismiss:not(:hover),.pagination-previous:not(.focus-visible),.pagination-next:not(.focus-visible),.pagination-link:not(.focus-visible),.pagination-ellipsis:not(.focus-visible),.modal-card-foot.is-sticky:not(.focus-visible),.link-button:not(.focus-visible),.button-reset:not(.focus-visible),.notification .notification-dismiss:not(.focus-visible),.banner .banner-dismiss:not(.focus-visible),.pagination-previous:not(:focus-visible),.pagination-next:not(:focus-visible),.pagination-link:not(:focus-visible),.pagination-ellipsis:not(:focus-visible),.modal-card-foot.is-sticky:not(:focus-visible),.link-button:not(:focus-visible),.button-reset:not(:focus-visible),.notification .notification-dismiss:not(:focus-visible),.banner .banner-dismiss:not(:focus-visible){background-color:#0000}.line-clamp-3,.line-clamp-1{-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden}.level:not(:last-child),.title:not(:last-child),.subtitle:not(:last-child),.progress:not(:last-child),.box:not(:last-child),.tabs:not(:last-child){margin-bottom:1.5rem}.nav-bar-button,.button{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}.nav-bar-button.has-external-link-indicator[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.private-link-indicator:after,span.private-link-indicator:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:not([class]):not(.button):not(.nav-bar-button).redirect:after,.content a[class=""]:not(.button):not(.nav-bar-button).redirect:after,.content a:focus-visible:not(.button):not(.nav-bar-button).redirect:after,.content a:not([class]):not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a[class=""]:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:focus-visible:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after{content:"";-webkit-mask-position:50%;mask-position:50%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;background-color:currentColor!important}.nav-bar-button.has-external-link-indicator[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.has-external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:not([class]):not(.button):not(.nav-bar-button).redirect:after,.content a[class=""]:not(.button):not(.nav-bar-button).redirect:after,.content a:focus-visible:not(.button):not(.nav-bar-button).redirect:after,.content a:not([class]):not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a[class=""]:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:focus-visible:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after{-webkit-mask-image:url(data:image/svg+xml,%3Csvg\ xmlns=\'http://www.w3.org/2000/svg\'\ viewBox=\'0\ 0\ 2048\ 2048\'\ %3E%3Cpath\ d=\'M1792\ 256v640h-128V475l-851\ 850-90-90\ 850-851h-421V256h640zm-512\ 1007h128v529H256V640h529v128H384v896h896v-401z\'\ /%3E%3C/svg%3E);mask-image:url(data:image/svg+xml,%3Csvg\ xmlns=\'http://www.w3.org/2000/svg\'\ viewBox=\'0\ 0\ 2048\ 2048\'\ %3E%3Cpath\ d=\'M1792\ 256v640h-128V475l-851\ 850-90-90\ 850-851h-421V256h640zm-512\ 1007h128v529H256V640h529v128H384v896h896v-401z\'\ /%3E%3C/svg%3E)}a.private-link-indicator:after,span.private-link-indicator:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:not([class]):not(.button):not(.nav-bar-button).redirect:after,.content a[class=""]:not(.button):not(.nav-bar-button).redirect:after,.content a:focus-visible:not(.button):not(.nav-bar-button).redirect:after,.content a:not([class]):not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a[class=""]:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:focus-visible:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after{-webkit-clip-path:inset(.3125em 0) padding-box;clip-path:inset(.3125em 0) padding-box;margin:0 .125rem;padding:0 .375em;-webkit-mask-size:.75em 1.5em;mask-size:.75em 1.5em}@supports (-webkit-touch-callout:none){a.private-link-indicator:after,span.private-link-indicator:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:not([class]):not(.button):not(.nav-bar-button).redirect:after,.content a[class=""]:not(.button):not(.nav-bar-button).redirect:after,.content a:focus-visible:not(.button):not(.nav-bar-button).redirect:after,.content a:not([class]):not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a[class=""]:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:focus-visible:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after{-webkit-clip-path:inset(.25em 0)!important;clip-path:inset(.25em 0)!important}}@media (forced-colors:active){a.private-link-indicator:after,span.private-link-indicator:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.external-link-indicator:not(.button):not(.nav-bar-button).redirect:after,a.has-external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,a.external-link-indicator:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:not([class]):not(.button):not(.nav-bar-button).redirect:after,.content a[class=""]:not(.button):not(.nav-bar-button).redirect:after,.content a:focus-visible:not(.button):not(.nav-bar-button).redirect:after,.content a:not([class]):not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a[class=""]:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after,.content a:focus-visible:not(.button):not(.nav-bar-button):not(.redirect)[href*="//"]:not([href*="learn.microsoft.com"]):not([href*="docs.microsoft.com"]):not([href*="docs.azure.cn"]):not([href*="rd.microsoft.com"]):not([href*="developer.microsoft.com"]):not([href*=localhost\:]):not([href*=learn-microsoft-com\.local]):not([href*=developer-microsoft-com\.local]):not([href*=rd-microsoft-com\.local]):not([href*=docs-azure-cn\.local]):after{forced-color-adjust:none;background-color:LinkText!important}}html{-webkit-text-size-adjust:100%;line-height:1.15}main{display:block}hr{overflow:visible}a{background-color:#0000}code{font-size:1em}button,input{font-family:inherit;font-size:100%;line-height:1.15}button,input{overflow:visible}button{text-transform:none}button,[type=button],[type=submit]{-webkit-appearance:button}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html,body,p,ol,ul,li,hr,h1,h2,h3{margin:0;padding:0}ul{list-style:none}button,input{margin:0}*,:before,:after{box-sizing:inherit}table{border-spacing:0}:root,.theme-light{--theme-text:#161616;--theme-text-subtle:#505050;--theme-text-invert:#fff;--theme-text-glow-high-contrast:#171717;--theme-box-shadow-light:#0000001c;--theme-box-shadow-medium:#00000021;--theme-box-shadow-heavy:#0000002e;--theme-box-shadow-extra-heavy:#00000038;--theme-overlay:#000000b3;--theme-overlay-invert:#fff;--theme-body-background:#fff;--theme-body-background-accent:#e8e6df;--theme-body-background-medium:#f2f2f2;--theme-alternate-background:#171717;--theme-alternate-background-medium:#2f2f2f;--theme-card-background:#fff;--theme-border:#e6e6e6;--theme-border-accent:#e8e6df;--theme-border-white-high-contrast:#fff0;--theme-border-yellow-high-contrast:#0000;--theme-table-header:#e6e6e6;--theme-table-row:#f2f2f2;--theme-table-row-header:#fafafa;--theme-table-border-dark:#d2d2d2;--theme-hover-base:#2f2f2f;--theme-hover-invert:#fafafa;--theme-code-header:#e6e6e6;--theme-code-block:#f2f2f2;--theme-control-border:#757575;--theme-inline-code:#e6e6e6;--theme-code-highlight-background:#fff4ce;--theme-visited:#624991;--theme-score-low-off:#a800004d;--theme-score-low:#b62626;--theme-score-medium-off:#ffbb004d;--theme-score-medium:#ffb900;--theme-score-high-off:#489d484d;--theme-score-high:#2a8b2a;--theme-hyperlink:#0065b3;--theme-primary-base:#0078d4;--theme-primary-background:#d7eaf8;--theme-primary-background-glow-high-contrast:#d7eaf8;--theme-primary-dark:#004173;--theme-primary-hover:#0065b3;--theme-primary-active:#00579a;--theme-primary-box-shadow:#0065b34d;--theme-primary-invert:#fff;--theme-secondary-base:#a2a2a2;--theme-secondary-background:#e6e6e6;--theme-secondary-background-glow-high-contrast:#e6e6e6;--theme-secondary-dark:#2f2f2f;--theme-secondary-hover:#d2d2d2;--theme-secondary-active:#d2d2d2;--theme-secondary-box-shadow:#0000004d;--theme-secondary-invert:#000;--theme-tertiary-base:#243a5e;--theme-tertiary-background:#061329;--theme-tertiary-background-glow-high-contrast:#061329;--theme-tertiary-dark:#a4b2c9;--theme-tertiary-hover:#14294c;--theme-tertiary-active:#70819f;--theme-tertiary-box-shadow:#26173f4d;--theme-tertiary-invert:#fff;--theme-success-base:#107c10;--theme-success-background:#dff6dd;--theme-success-background-glow-high-contrast:#dff6dd;--theme-success-dark:#054b16;--theme-success-hover:#0b6413;--theme-success-active:#054b16;--theme-success-box-shadow:#489d484d;--theme-success-invert:#fff;--theme-info-base:#8661c5;--theme-info-background:#efd9fd;--theme-info-background-glow-high-contrast:#efd9fd;--theme-info-dark:#3b2e58;--theme-info-hover:#8661c5;--theme-info-active:#624991;--theme-info-box-shadow:#2018434d;--theme-info-invert:#fff;--theme-warning-base:#ffb900;--theme-warning-background:#fff4ce;--theme-warning-background-glow-high-contrast:#fff4ce;--theme-warning-dark:#6a4b16;--theme-warning-hover:#d19501;--theme-warning-active:#966802;--theme-warning-box-shadow:#ffbb004d;--theme-warning-invert:#000;--theme-danger-base:#a80000;--theme-danger-background:#fde7e9;--theme-danger-background-glow-high-contrast:#fde7e9;--theme-danger-dark:#470001;--theme-danger-hover:#870000;--theme-danger-active:#630001;--theme-danger-box-shadow:#a800004d;--theme-danger-invert:#fff;--theme-facepile-red:#a80000;--theme-facepile-teal:#328e9f;--theme-facepile-blue:#0078d4;--theme-gradient-text-purple:#702573;--theme-gradient-text-blue:#00579a;--theme-gradient-vivid-start:#b84dc6;--theme-gradient-vivid-end:#0078d4}.theme-light{outline-color:var(--theme-text);background-color:var(--theme-body-background);color:var(--theme-text)}.theme-light{color-scheme:light}html,body{-webkit-font-smoothing:antialiased;text-rendering:optimizelegibility;font-family:Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:400}pre{-moz-osx-font-smoothing:auto;-webkit-font-smoothing:auto;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace!important}code{direction:ltr;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace}a>code{font-family:Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}@keyframes spinAround{0%{transform:rotate(0)}to{transform:rotate(359deg)}}@keyframes boop{0%{transform:scale(1)}50%{transform:scale(1.1)}to{transform:scale(1)}}@keyframes slide-up-fade-out{to{opacity:0;transform:translateY(-100%)}}@keyframes fade-out{to{opacity:0}}.has-default-focus :focus-visible.has-inner-focus,.has-default-focus :focus-visible.inner-focus,.default-focus :focus-visible.has-inner-focus,.default-focus :focus-visible.inner-focus{outline-offset:-.125rem;outline-color:currentColor}:where(.is-focused).has-inner-focus,:where(.is-focused).inner-focus{outline-offset:-.125rem;outline-color:currentColor}details,details>*{box-sizing:border-box!important}:where(html *),:where(html a),:where(html li){outline-color:inherit}:where(a){color:var(--theme-hyperlink);cursor:pointer;word-wrap:break-word;text-decoration:none}:where(a:hover){color:var(--theme-primary-hover);text-decoration:underline}:where(a:visited){color:var(--theme-visited)}.border-top{border-block-start:1px solid var(--theme-border)!important}.border-bottom-none{border-block-end:0!important}.border-left{border-inline-start:1px solid var(--theme-border)!important}@media screen and (min-width:768px),print{.border-bottom-tablet{border-block-end:1px solid var(--theme-border)!important}}.border-radius{border-radius:.25rem!important}.color-text-subtle{color:var(--theme-text-subtle)!important}.fill-current-color{forced-color-adjust:auto;fill:currentColor!important}.background-color-body{outline-color:var(--theme-text)!important;background-color:var(--theme-body-background)!important}.display-block{display:block!important}.display-flex{display:flex!important}.display-none{display:none!important}@media screen and (min-width:768px),print{.display-inline-flex-tablet{display:inline-flex!important}.display-none-tablet{display:none!important}}@media screen and (min-width:1088px){.display-block-desktop{display:block!important}}.justify-content-flex-start{justify-content:flex-start!important}.justify-content-flex-end{justify-content:flex-end!important}.justify-content-center{justify-content:center!important}.justify-content-space-between{justify-content:space-between!important}.align-items-center{align-items:center!important}.align-items-stretch{align-items:stretch!important}.flex-direction-column{flex-direction:column!important}.flex-wrap-wrap{flex-wrap:wrap!important}.flex-shrink-0{flex-shrink:0!important}.flex-shrink-1{flex-shrink:1!important}.flex-grow-1{flex-grow:1!important}@media screen and (min-width:768px),print{.justify-content-flex-start-tablet{justify-content:flex-start!important}}.line-clamp-1{-webkit-line-clamp:1!important}.line-clamp-3{-webkit-line-clamp:3!important}.list-style-none{list-style:none!important}.position-fixed{position:fixed!important}.position-absolute{position:absolute!important}.position-relative{position:relative!important}.position-sticky{position:sticky!important}.top-0{inset-block-start:0}.right-0{inset-inline-end:0}.bottom-0{inset-block-end:0}.left-0{inset-inline-start:0}.margin-left-auto{margin-inline-start:auto!important}.margin-none{margin:0!important}.margin-inline-xs{margin-inline:1rem!important}.margin-block-xxs{margin-block:.5rem!important}.margin-block-xs{margin-block:1rem!important}.margin-top-xxs{margin-block-start:.5rem!important}.margin-top-xs{margin-block-start:1rem!important}.margin-top-sm{margin-block-start:1.5rem!important}.margin-top-md{margin-block-start:2rem!important}.margin-bottom-xxs{margin-block-end:.5rem!important}.margin-bottom-xs{margin-block-end:1rem!important}.margin-bottom-sm{margin-block-end:1.5rem!important}.margin-bottom-none{margin-block-end:0!important}.margin-left-xs{margin-inline-start:1rem!important}.margin-right-xxs{margin-inline-end:.5rem!important}.margin-right-sm{margin-inline-end:1.5rem!important}.padding-xxs{padding:.5rem!important}.padding-xs{padding:1rem!important}.padding-none{padding:0!important}.padding-inline-xs{padding-inline:1rem!important}.padding-inline-none{padding-inline:0!important}.padding-block-xxs{padding-block:.5rem!important}.padding-bottom-sm{padding-block-end:1.5rem!important}.padding-left-xxs{padding-inline-start:.5rem!important}@media screen and (min-width:768px),print{.margin-top-sm-tablet{margin-block-start:1.5rem!important}.margin-left-none-tablet{margin-inline-start:0!important}.margin-right-md-tablet{margin-inline-end:2rem!important}.padding-none-tablet{padding:0!important}}@media screen and (min-width:1088px){.margin-top-sm-desktop{margin-block-start:1.5rem!important}.margin-right-lg-desktop{margin-inline-end:3rem!important}.padding-right-lg-desktop{padding-inline-end:3rem!important}}.font-size-lg{font-size:1.125rem!important}.font-size-md{font-size:1rem!important}.font-size-sm{font-size:.875rem!important}.font-weight-semibold{font-weight:600!important}.text-decoration-none{text-decoration:none!important}.width-full{width:100%!important}.visually-hidden,::part(visually-hidden){clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;width:1px;word-wrap:normal;border:0;margin:-1px;padding:0;position:absolute;overflow:hidden}.button{border-width:1px;border-color:var(--theme-text-subtle);background-color:var(--theme-body-background);color:var(--theme-text);text-align:center;cursor:pointer;border-radius:.125rem;justify-content:center;padding-block:calc(.375em - 1px);padding-inline:.75em;font-weight:600;text-decoration:none}.button .icon{font-size:.875em}.button .icon:only-child{margin:0}.button .icon:first-child:not(:only-child){margin-inline-end:.375em}.button .icon:last-child:not(:only-child){margin-inline-start:.375em}.button:hover,.button.is-hovered{border-color:var(--theme-hover-base);background-color:var(--theme-hover-invert);color:var(--theme-text)}.button:visited{color:var(--theme-text)}.button.button-sm{font-size:.875rem}.button.button-block{width:100%;display:flex}.button.button-primary:hover,.button.button-primary.is-hovered{background-color:var(--theme-primary-background);color:var(--theme-primary-dark)}.button.button-clear{background-color:#0000;border-color:#0000}.button.button-clear,.button.button-clear:visited{color:currentColor}.button.button-clear.is-hovered,.button.button-clear:hover,.button.button-clear:active{background-color:#8e8e8e0d}.button.button-clear.button-primary{color:var(--theme-primary-base)}.button.button-clear.button-primary:hover,.button.button-clear.button-primary.is-hovered{background-color:var(--theme-primary-background);color:var(--theme-primary-dark)}.breadcrumbs.breadcrumbs-initial-slash .breadcrumbs-item:first-child:before,.breadcrumbs.breadcrumbs-initial-slash .breadcrumbs-item[hidden]+.breadcrumbs-item:before,.breadcrumbs .breadcrumbs-item:not(.breadcrumbs-item-slashless):after{color:var(--theme-text-subtle);content:"​/";display:inline-block}.breadcrumbs{font-size:.875rem}.breadcrumbs .breadcrumbs-item{padding-block:.375em;display:inline-block}.breadcrumbs .breadcrumbs-item:not(.breadcrumbs-item-slashless):after{margin-inline:.25em}.buttons{flex-wrap:wrap;justify-content:flex-start;align-items:center;display:flex}.buttons .button{margin-block-end:.5rem;margin-inline-end:.5rem}.buttons .button:only-child,.buttons .button.is-fullwidth,.buttons .button.is-full-width,.buttons .button.is-full-width-mobile,.buttons .button.is-fullwidth-mobile{margin-inline-end:0}.buttons:last-child{margin-block-end:-.5rem}.buttons:not(:last-child){margin-block-end:1rem}.input{width:100%;max-width:100%;border-color:var(--theme-control-border);background-color:var(--theme-body-background);color:var(--theme-text)!important}.input::placeholder{color:var(--theme-text-subtle)}.input:hover{border-color:var(--theme-primary-base)}.input:focus-visible{border-color:var(--theme-primary-base);outline-offset:0;box-shadow:0 0 0 .125rem var(--theme-primary-base);outline-style:solid;outline-color:#0000}.input.input-sm{font-size:.875rem}.required-indicator:after,::part(required-indicator):after{color:var(--theme-danger-base);content:"*";vertical-align:top}.icon{justify-content:center;align-items:center;display:inline-flex}.icon{width:1em;height:1em}.link-button{color:var(--theme-hyperlink);cursor:pointer;border:none;padding:0;display:inline-block}.link-button:active,.link-button.is-active{text-decoration:underline!important}.link-button.is-focused,.link-button:hover,.link-button.is-hovered,.link-button:focus-visible{color:var(--theme-primary-hover);text-decoration:underline!important}.link-button:visited{color:var(--theme-visited)}.popover{display:inline-block;position:relative}.popover summary{list-style:none}.popover summary::-webkit-details-marker{display:none}.popover .popover-content{width:224px;border:1px solid var(--theme-border);background-color:var(--theme-body-background);box-shadow:0 6.4px 14.4px 0 var(--theme-box-shadow-medium),0 1.2px 3.6px 0 var(--theme-box-shadow-light);z-index:1060;border-radius:.25rem;margin-block-start:.5rem;padding:1rem;position:absolute}.popover.popover-right .popover-content{inset-inline-end:0}.table{width:100%;border-collapse:collapse;table-layout:auto;font-size:.875rem}.table:not(.table-simple){border:1px solid var(--theme-table-border-dark)}.table th,.table td{word-wrap:break-word;border-block-start:1px solid var(--theme-table-border-dark);vertical-align:top;line-height:1.5;display:table-cell}.table th:not([align]){text-align:left}.table.table-sm th,.table.table-sm td{padding:.5rem}.has-text-primary{color:var(--theme-hyperlink)!important}.has-text-success-invert{color:var(--theme-success-invert)!important}.has-background-success{outline-color:var(--theme-success-invert);background-color:var(--theme-success-base)!important}.has-body-background{background-color:var(--theme-body-background)!important}.has-outline-color-text{outline-color:var(--theme-text)!important}:root,.theme-light{--theme-body-background-learn:#e8e6df;--theme-text-gradient-purple:#702573;--theme-text-gradient-blue:#00579a;--theme-body-background-learn-dark:#e3e1db;--theme-border-block-start-learn-dark:1px solid #bcbcbc}@media (forced-colors:active){.fill-link-text-forced-colors{fill:LinkText!important}}@media screen and (max-width:767px),screen and (-webkit-min-device-pixel-ratio:1.25) and (max-width:767.9px),screen and (min-resolution:120dpi) and (max-width:767.9px){.is-hidden-mobile{display:none!important}}.visually-hidden,.is-visually-hidden,.visually-hidden-until-focused:not(:focus){clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;width:1px;word-wrap:normal;border:0;margin:-1px;padding:0;position:absolute;overflow:hidden}.is-full-height{height:100%}.is-vertically-scrollable{-webkit-overflow-scrolling:touch;overflow-x:hidden;overflow-y:auto}.has-line-height-reset{line-height:1.3!important}.expanded-indicator{transition:transform .15s}.has-overflow-hidden{overflow:hidden!important}.table-of-contents{min-height:4.5em}.has-text-centered{text-align:center!important}.margin-left-negative-xxs{margin-inline-start:-.5rem!important}h1,h2,h3{font-weight:600}.docon{font-family:docons;font-size:inherit;speak:none;font-variant:normal;text-transform:none;text-align:center;direction:ltr;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-style:normal;font-weight:400;line-height:16px;display:inline-block}@font-face{font-family:docons;src:url(data:font/woff2;base64,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)format("woff2");font-weight:400;font-style:normal}@keyframes dots{0%,20%{opacity:0;animation-timing-function:ease-out;left:0}25%,75%{opacity:1}35%{animation-timing-function:linear;left:45%}65%{animation-timing-function:ease-in;left:55%}to,80%{opacity:0;left:100%}}@keyframes orbit{0%{opacity:1;animation-timing-function:ease-out;transform:rotate(225deg)}7%{animation-timing-function:linear;transform:rotate(345deg)}30%{animation-timing-function:ease-in-out;transform:rotate(455deg)}39%{animation-timing-function:linear;transform:rotate(690deg)}70%{opacity:1;animation-timing-function:ease-out;transform:rotate(815deg)}75%{animation-timing-function:ease-out;transform:rotate(945deg)}to,76%{opacity:0;transform:rotate(945deg)}}@keyframes slideUp{0%{transform:translateY(100%)}70%{transform:translateY(-10%)}to{transform:translateY(0)}}@keyframes slideDown{0%{transform:translateY(-100%)}to{transform:translateY(0)}}@keyframes slideUpOutFadeOut{to{opacity:0;transform:translateY(-100%)}}@keyframes fadeOut{to{opacity:0}}@keyframes slideLeft{to{transform:translate(-100%)}}@keyframes slideRight{to{transform:translate(100%)}}@keyframes scaleIn{0%{transform:scale(0)}30%{transform:scale(0)}75%{transform:scale(1.2)}to{transform:scale(1)}}@keyframes fadeInSpin{0%,50%{opacity:0;right:0;transform:rotate(180deg)}to{opacity:1;right:105%;transform:rotate(0)}}@keyframes shake{0%{transform:translate(-10px)}20%{transform:translate(10px)}50%{transform:translate(-10px)}70%{transform:translate(10px)}to{transform:translate(0)}}@keyframes pulse{0%{background-color:#a5a5a51a}50%{background-color:#a5a5a54d}to{background-color:#a5a5a51a}}html *,html a,html li{outline-color:inherit}td:not([align]),th:not([align]){text-align:left}[hidden]{display:none!important}.codeHeader{box-sizing:content-box;background-color:var(--theme-code-header);color:var(--theme-text);border:1px solid var(--theme-border);min-height:30px;border-bottom:0;flex-direction:row;margin-top:16px;font-size:.8rem;display:flex}.codeHeader>.language{flex-grow:1;padding:2px 16px}.codeHeader>.action{border:.125rem solid var(--theme-border);color:var(--theme-text);cursor:pointer;background-color:#0000;border-left-width:1px;align-items:center;padding:2px 10px;line-height:normal;display:flex}.codeHeader>.action:hover{background-color:var(--theme-code-block)}.codeHeader>.action:focus-visible{z-index:3}.codeHeader>.action .successful-copy-alert.is-transparent{opacity:0;transition:opacity .5s ease-in-out}.codeHeader+pre{margin-top:0}.content :not(.codeHeader)+pre>code{margin-top:-16px}.content :not(.codeHeader)+pre>code:before{height:31px;box-sizing:border-box;content:" ";color:var(--theme-text);background-color:var(--theme-code-header);border-bottom:1px solid var(--theme-border);margin:-16px -16px 16px;padding:5px 16px;font-size:.8rem;font-weight:400;line-height:160%;display:block}a{color:var(--theme-hyperlink);cursor:pointer;word-wrap:break-word;text-decoration:none}a:hover{color:var(--theme-primary-hover);text-decoration:underline}a:visited{color:var(--theme-visited)}a,li{outline:0}button{color:var(--theme-text);background-color:var(--theme-body-background);cursor:pointer}:not(a):not(pre)>code{background-color:var(--theme-inline-code);font-smooth:auto;word-wrap:break-word;border-radius:3px;padding:.1em .2em;font-size:85%}pre{border:.125rem solid var(--theme-border);background-color:var(--theme-code-block);white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;tab-size:4;-webkit-hyphens:none;hyphens:none;-webkit-overflow-scrolling:touch;margin:1rem 0 0;padding:1rem;font-size:.875rem;line-height:1.3571;overflow:auto}pre>code{border:0;padding:0;line-height:1.3571;display:block;position:relative}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}input::-ms-clear{display:none}hr{height:0;border-style:solid;border-width:1px 0 0;border-color:var(--theme-border)}strong{font-weight:600}html{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:100%;box-sizing:border-box;min-height:100vh;font-size:16px;overflow-x:hidden;overflow-y:scroll}html *,html :before,html :after{box-sizing:inherit}body{background-color:var(--theme-body-background);color:var(--theme-text);min-height:100vh;flex-direction:column;flex:100%;line-height:160%;display:flex}.mainContainer .right-container{padding-top:1.5rem}.content h1:first-of-type{margin-top:-10px;margin-bottom:0}.content h2{margin-bottom:12px;line-height:1.3}.content h1{word-wrap:break-word;word-break:break-word;margin-top:0;margin-bottom:12px;font-size:clamp(1.875rem,22.1053px + 1.64474vw,2.5rem);line-height:1.3}.content h2{margin-top:32px;font-size:clamp(1.59375rem,18.7895px + 1.39803vw,2.125rem)}.content h3{margin-top:30px;margin-bottom:18px;font-size:clamp(1.3125rem,15.4737px + 1.15132vw,1.75rem)}.content p{word-wrap:break-word;margin-top:1rem;margin-bottom:0}.content ul,.content ol{margin:16px 0 16px 38px}.content ul>li,.content ol>li{list-style:disc}.content ol>li{list-style-type:decimal}.content table{margin-top:1rem}.docon-more:before{content:""}.docon-link:before{content:""}.docon-search:before{content:""}.docon-check-mark:before{content:""}.docon-print:before{content:""}.docon-world:before{content:""}.docon-lightbulb:before{content:""}.docon-book-art64:before{content:""}.docon-circle-addition:before{content:""}.docon-dictionary-download:before{content:""}.docon-filter-settings:before{content:""}.docon-brand-linkedin:before{content:"＀"}.docon-status-info-outline:before{content:"）"}.docon-sun:before{content:"０"}.docon-locale-globe:before{content:"１"}.docon-status-warning-outline:before{content:"２"}.docon-brand-facebook:before{content:"４"}.docon-brand-github:before{content:"６"}.docon-status-error-outline:before{content:"７"}.docon-brand-twitter:before{content:"＜"}.docon-edit-copy:before{content:"＝"}.docon-editor-list-bullet:before{content:"＞"}.docon-mail-message-fill:before{content:"Ｇ"}.docon-chevron-down-light:before{content:"Ｓ"}.docon-chevron-right-light:before{content:"Ｔ"}.docon-more-vertical:before{content:"ｹ"}.docon-edit-outline:before{content:"ﾀ"}.docon-like:before{content:"ﾂ"}.hljs-comment{color:green}.hljs-name,.hljs-tag{color:#0101fd}.hljs-attr{color:#0451a5}.hljs-string{color:#a31515}.hljs-meta{color:#006881}.alert{background-color:var(--theme-body-background-medium);outline-color:var(--theme-text);color:var(--theme-text);word-wrap:break-word;word-break:break-word;border:1px solid var(--theme-border-white-high-contrast);border-radius:.375rem;margin-top:1rem;padding:1rem;font-size:1rem;transition:height .5s ease-in,opacity .5s ease-in;display:block;position:relative}.alert>:first-child{margin-top:0}.alert>*{max-width:100%}.alert.is-primary{background-color:var(--theme-primary-background);border:1px solid var(--theme-primary-background-glow-high-contrast)}.alert.is-primary .alert-title{color:var(--theme-primary-dark)}.alert.is-success{background-color:var(--theme-success-background);border:1px solid var(--theme-success-background-glow-high-contrast)}.alert.is-success .alert-title{color:var(--theme-success-dark)}.alert.is-info{background-color:var(--theme-info-background);border:1px solid var(--theme-info-background-glow-high-contrast)}.alert.is-info .alert-title{color:var(--theme-info-dark)}.alert.is-warning{background-color:var(--theme-warning-background);border:1px solid var(--theme-warning-background-glow-high-contrast)}.alert.is-warning .alert-title{color:var(--theme-warning-dark)}.alert .alert-title,.alert a:not(.button){color:currentColor;font-weight:600}.autocomplete{display:inline-block;position:relative}.autocomplete-input{padding-inline-end:26px}.metadata{color:var(--theme-text-subtle);font-size:.875rem}.metadata.page-metadata{flex-wrap:wrap;list-style:none;display:flex;margin:0!important;padding:.125rem 0 0!important}.metadata.page-metadata>li{flex-basis:auto;align-items:center;list-style:none;display:flex}.metadata.page-metadata>li:not(:last-of-type):not(:only-of-type):after{content:"•";padding-left:5px;padding-right:5px}.metadata.page-metadata>li:first-of-type,.metadata.page-metadata>li:only-of-type{margin-left:0}@media screen and (max-width:767px),screen and (-webkit-min-device-pixel-ratio:1.25) and (max-width:767.9px),screen and (min-resolution:120dpi) and (max-width:767.9px){.metadata.page-metadata>li:last-of-type{margin-left:0}}.footer-layout{background-color:var(--theme-body-background-learn);flex-direction:column;padding:3rem 1rem;display:flex}@media screen and (min-width:1088px){.footer-layout{flex-flow:wrap;justify-content:space-between}}.footer-layout .links{flex-wrap:wrap;margin-top:1rem;margin-bottom:0;font-size:.875rem;display:flex}@media screen and (min-width:1088px){.footer-layout .links{margin-top:0}}.footer-layout .links>li{margin:.25rem 1.5rem 0 0;display:inline-block}.footer-layout .links>li:last-child{margin-right:0}.footer-layout .links>li a{color:var(--theme-text)}.footer-layout .links>li a:hover,.footer-layout .links>li a:active{color:var(--theme-text-subtle)}.locale-selector-link:hover{text-decoration:none}.locale-selector-link:hover .local-selector-link-text{text-decoration:underline}.tree{font-size:.875rem;position:relative}ul.tree,.tree ul{margin-bottom:0;list-style-type:none}.tree-item.is-leaf{color:var(--theme-text)!important}.tree-item.is-expanded>.tree-group{display:block}.tree-group{margin-left:1rem}.tree-item.is-leaf,.tree-expander{padding-top:2px;padding-bottom:2px;padding-left:1rem;display:block}.tree-item:not(.is-leaf){outline:none!important}.tree-expander,.tree-item.is-leaf{outline-offset:-.125rem!important}.tree-expander{cursor:pointer;-webkit-user-select:none;user-select:none;position:relative}.tree-expander-indicator{color:var(--theme-text-subtle);font-size:.55rem;font-weight:600;transition:transform .15s ease-in-out;display:inline-block;position:absolute;top:7px;left:3px;transform:rotate(0)}.tree-item.is-expanded>.tree-expander>.tree-expander-indicator{transform:rotate(90deg)}.tree-item.is-selected{background-color:var(--theme-body-background-medium);font-weight:600;color:var(--theme-text-glow-high-contrast)!important}.nav-bar{height:54px;min-height:54px;box-sizing:border-box;width:100%;justify-content:space-between;align-items:stretch;padding-left:0;padding-right:0;display:flex;position:relative}@media screen and (min-width:768px),print{.nav-bar{padding-inline:16px;padding-left:16px}}@media screen and (min-width:1800px),print{.nav-bar{padding-left:calc(50% - 884px);padding-right:calc(50% - 884px)}}.nav-bar>.nav-bar-brand{padding-left:1.125em}.nav-bar>.nav-bar-brand>.nav-bar-button{padding-left:0!important}@media screen and (min-width:768px),print{.nav-bar>.nav-bar-brand{padding-left:0!important}}.nav-bar-nav{align-items:stretch;display:none}@media screen and (min-width:768px),print{.nav-bar-nav{display:flex}}.nav-bar-nav-list{align-items:stretch;display:flex}.nav-bar-item{flex-shrink:0;align-items:center;display:flex}.nav-bar-item.is-category{margin:0 .5rem}.nav-bar-item.is-category>.is-title{padding-left:.5rem}.nav-bar-item.is-category:before{content:"";height:1.5rem;border-left:2px solid var(--theme-text-subtle);margin-left:.5rem;margin-right:1rem;display:inline-block}.nav-bar-search{flex-grow:1;flex-shrink:1;align-items:center;margin-right:0;padding-left:.25rem;display:flex}@media screen and (min-width:768px),print{.nav-bar-search{flex-grow:0;flex-shrink:0;padding:0}}@media screen and (min-width:1088px){.nav-bar-search{margin-right:.25rem}}.nav-bar-search .nav-bar-search-form{padding-left:.25rem;display:flex}@media screen and (min-width:768px),print{.nav-bar-search .nav-bar-search-form{padding-left:0}}.nav-bar-button{min-width:54px;color:var(--theme-text);white-space:nowrap;cursor:pointer;background-color:#0000;border:none;flex-grow:0;flex-shrink:0;justify-content:center;align-self:stretch;align-items:center;padding:0 .5rem;font-size:.875rem;line-height:normal;display:flex;outline-offset:-.125rem!important;text-decoration:none!important}.nav-bar-button:active,.nav-bar-button.is-active,.nav-bar-button:hover,.nav-bar-button:focus-visible{color:var(--theme-text)}.nav-bar-button:active.has-hover-underline:not([aria-expanded=true])>:first-child,.nav-bar-button.is-active.has-hover-underline:not([aria-expanded=true])>:first-child,.nav-bar-button:hover.has-hover-underline:not([aria-expanded=true])>:first-child,.nav-bar-button:focus-visible.has-hover-underline:not([aria-expanded=true])>:first-child{position:relative}.nav-bar-button:active.has-hover-underline:not([aria-expanded=true])>:first-child:after,.nav-bar-button.is-active.has-hover-underline:not([aria-expanded=true])>:first-child:after,.nav-bar-button:hover.has-hover-underline:not([aria-expanded=true])>:first-child:after,.nav-bar-button:focus-visible.has-hover-underline:not([aria-expanded=true])>:first-child:after{content:"";border-bottom:2px solid var(--theme-text);display:block;position:absolute;bottom:-.125rem;left:0;right:0}.nav-bar-button:visited{color:var(--theme-text)}.nav-bar-button.is-title{word-break:break-word;background-color:var(--theme-body-background);padding:0;font-size:1rem;line-height:normal}@media screen and (min-width:768px),print{.nav-bar-button.is-title{margin:0;padding:0 .5rem;font-size:1.125rem;font-weight:600;line-height:1.125}}.nav-bar-brand{display:flex}.nav-bar-spacer{flex-grow:1;flex-shrink:1;display:none}@media screen and (min-width:768px),print{.nav-bar-spacer{display:block}}.nav-bar-logo{width:108px;height:23px}.nav-bar-profile{flex-shrink:0;align-items:center;padding-left:.25rem;font-size:.875rem;display:none}@media screen and (min-width:768px),print{.nav-bar-profile{display:flex}}.nav-bar-profile .docs-sign-in{color:var(--theme-primary-base);height:2.25em;border:1px solid #0000;border-radius:2px;align-self:center;padding:calc(.375em - 1px) .75em;line-height:1.5;position:relative}.nav-bar-profile .docs-sign-in:hover{background-color:var(--theme-body-background-medium)}.dropdown{position:relative}.control{text-align:left;font-size:1rem;position:relative}.control.has-icons-left .input:focus-visible~.icon,.control.has-icons-left .select:focus-visible~.icon,.control.has-icons-right .input:focus-visible~.icon,.control.has-icons-right .select:focus-visible~.icon{color:var(--theme-secondary-base)}.control.has-icons-left .input.input-sm~.icon{font-size:.875rem}.control.has-icons-left .icon{color:var(--theme-secondary-background);width:2.25em;height:2.25em;pointer-events:none;z-index:4;position:absolute;top:0}.control.has-icons-left .input{padding-inline-start:2.25em}.control.has-icons-left .icon.is-left{inset-inline-start:0}.heading-wrapper{position:relative}.heading-wrapper:not(:hover) .anchor-link:not(:focus-visible){clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;width:1px;word-wrap:normal;opacity:0;border:0;margin:-1px;padding:0;position:absolute;overflow:hidden}.heading-wrapper .anchor-link{width:.75rem;font-size:1rem;transition:opacity .1s linear;position:absolute;inset-inline-start:-.9375rem;transform:translateY(-50%) scale(.75)}@media screen and (min-width:768px),print{.heading-wrapper .anchor-link{width:1.5rem;inset-inline-start:-1.875rem;transform:translateY(-50%) scale(1)}}.heading-wrapper .anchor-link:hover{text-decoration:none}.heading-wrapper h2,.heading-wrapper h3{margin-inline-start:-.9375rem;padding-inline-start:.9375rem;line-height:1.3}@media screen and (min-width:768px),print{.heading-wrapper h2,.heading-wrapper h3{margin-inline-start:-1.875rem;padding-inline-start:1.875rem}}[data-heading-level=h2] .anchor-link{inset-block-start:1.38125rem}[data-heading-level=h3] .anchor-link{inset-block-start:1.1375rem}.hr{color:var(--theme-text-subtle);margin:1.5rem 0}@supports ((-moz-appearance:none)){.meter.is-binary{background-image:linear-gradient(90deg,var(--theme-secondary-base) var(--optimum-percent),var(--theme-success-base) var(--optimum-percent),var(--theme-success-base) 100%)}}@keyframes moveIndeterminate{0%{background-position:200%0}to{background-position:-200%0}}.title{word-break:break-word}.title{font-weight:600;line-height:1.125}.title.is-3{font-size:1.75rem}.title.is-6{font-size:1.125rem}.uhf-container:not(.has-padding){max-width:calc(100% - 32px);width:calc(100% - 32px);margin-left:auto;margin-right:auto}@media screen and (min-width:1800px),print{.uhf-container:not(.has-padding){max-width:1768px;width:1768px;margin-left:auto;margin-right:auto}}.has-padding.uhf-container{box-sizing:border-box;width:100%;margin-left:0;margin-right:0}@media screen and (max-width:767px){.has-padding.uhf-container>*{padding-left:16px;padding-right:16px}}@media screen and (min-width:768px),print{.has-padding.uhf-container{padding-left:16px;padding-right:16px}}@media screen and (min-width:1800px),print{.has-padding.uhf-container{padding-left:calc(50% - 884px);padding-right:calc(50% - 884px)}}.stretched-link:before{z-index:1;content:"";position:absolute;inset:0}#affixed-left-container{z-index:1}.header-holder{flex-shrink:0}.mainContainer{flex-grow:1;flex-shrink:1}.mainContainer .primary-holder,.mainContainer .left-container{padding-top:1.5rem}.columns>.column{flex:1 1 0;display:block}.columns>.column:not(.has-uhf-padding){padding:.75rem}.columns.has-large-gaps>.column{padding:1.5rem}@media screen and (min-width:768px),print{.column.is-full{width:100%;flex:none}.column.is-two-thirds-tablet{width:66.6666%;flex:none}.column.is-one-third-tablet{width:33.3333%;flex:none}}@media screen and (min-width:1088px){.column.is-three-quarters-desktop{width:75%;flex:none}.column.is-one-quarter-desktop{width:25%;flex:none}.column.is-4-desktop{width:33.3333%;flex:none}.column.is-8-desktop{width:66.6667%;flex:none}}.columns:last-child{margin-bottom:-.75rem}.columns:not(:last-child){margin-bottom:.75rem}.columns.has-large-gaps{margin-top:-1.5rem;margin-left:-1.5rem;margin-right:-1.5rem}.columns.has-large-gaps:last-child{margin-bottom:-1.5rem}.columns.has-large-gaps:not(:last-child){margin-bottom:0}@media screen and (max-width:767px),screen and (-webkit-min-device-pixel-ratio:1.25) and (max-width:767.9px),screen and (min-resolution:120dpi) and (max-width:767.9px){.columns.is-gapless-mobile{margin-top:0;margin-left:0;margin-right:0}.columns.is-gapless-mobile>.column:not(.has-uhf-padding){margin:0;padding:0!important}.columns.is-gapless-mobile:not(:last-child){margin-bottom:1.5rem}.columns.is-gapless-mobile:last-child{margin-bottom:0}}@media screen and (min-width:768px),print{.columns:not(.is-desktop){display:flex}}@supports (display:grid){.grid{grid-column-gap:1rem;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));row-gap:1rem;margin:0;padding:0;display:grid}.grid>.grid-item{align-content:stretch;align-items:stretch;display:flex}.grid>.grid-item>*{width:100%;height:100%}.grid>.grid-item.is-decorative:last-child:nth-child(2n){display:none!important}@media only screen and (min-width:628px) and (max-width:949px){.grid>.grid-item.is-decorative:last-child:nth-child(2n){display:flex!important}}.grid.is-horizontal{grid-template-columns:none;gap:.5rem 0}.grid.is-2.is-mobile{grid-template-columns:1fr 1fr!important}@media screen and (min-width:768px),print{.grid.is-2{grid-template-columns:repeat(2,1fr)}}@media screen and (min-width:1088px){.grid.is-2-desktop{grid-template-columns:repeat(2,1fr)}}@media screen and (min-width:768px),print{.grid.is-3{grid-template-columns:repeat(auto-fit,minmax(25%,1fr))}}@media screen and (min-width:1088px){.grid.is-3.is-5-items{flex-wrap:wrap;place-content:center;display:flex}.grid.is-3.is-5-items .grid-item{flex:0 calc(33.3333% - .666667rem)}.grid.is-3-desktop{grid-template-columns:repeat(auto-fit,minmax(25%,1fr))}}@media screen and (min-width:768px),print{.grid.is-4{grid-template-columns:repeat(auto-fit,minmax(20%,1fr))}}@media screen and (min-width:1088px){.grid.is-4.is-7-items{flex-wrap:wrap;place-content:center;display:flex}.grid.is-4.is-7-items .grid-item{flex:0 calc(25% - .75rem)}}.grid:not(.is-horizontal):not(.is-2):not(.single-item-stretch)>.grid-item:only-child{max-width:308px}@media screen and (min-width:768px) and (max-width:1087px),screen and (-webkit-min-device-pixel-ratio:1.25) and (min-width:768px) and (max-width:1087.9px),screen and (min-resolution:120dpi) and (min-width:768px) and (max-width:1087.9px){.grid.has-min-width-170-tablet-only{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}}.grid.is-fibonacci{grid-template-columns:1fr}@media screen and (min-width:768px),print{.grid.is-fibonacci{grid-template-columns:repeat(2,1fr)}}@media screen and (min-width:1088px){.grid.is-fibonacci{grid-template-columns:repeat(4,1fr)}}.is-small{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}.is-center{place-items:center}}.content-header{border-bottom:1px solid var(--theme-border);margin:0}@media screen and (max-width:767px),screen and (-webkit-min-device-pixel-ratio:1.25) and (max-width:767.9px),screen and (min-resolution:120dpi) and (max-width:767.9px){.content-header{padding:0}}@media screen and (min-width:768px),print{.content-header{justify-content:space-between;align-items:center;margin:0;display:flex}}.doc-outline h3:not(.right-rail-card-heading):last-child,.doc-outline h2:not(.right-rail-card-heading):last-child{display:none}.doc-outline ol{margin:10px 0 0;list-style-type:none}.doc-outline ol li{list-style:none}.doc-outline li{margin:4px 0;padding:2px 0 2px 7px;font-size:.875rem;line-height:1.3}.doc-outline a:visited{color:var(--theme-primary-base)}#main{position:relative}.skip-to-main-link{z-index:1070!important}#headerAreaHolder{border-bottom:1px solid var(--theme-border);line-height:normal}</style>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"name":"Learn","position":1,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/"},{"name":"NuGet","position":2,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/nuget"},{"name":"Consume packages","position":3,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/nuget/consume-packages/overview-and-workflow"}]}</script><style data-id=immersive-translate-input-injected-css>@keyframes immersiveTranslateShadowRolling{0%{box-shadow:0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0)}12%{box-shadow:100px 0 var(--loading-color),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0)}25%{box-shadow:110px 0 var(--loading-color),100px 0 var(--loading-color),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0)}36%{box-shadow:120px 0 var(--loading-color),110px 0 var(--loading-color),100px 0 var(--loading-color),0px 0 rgba(255,255,255,0)}50%{box-shadow:130px 0 var(--loading-color),120px 0 var(--loading-color),110px 0 var(--loading-color),100px 0 var(--loading-color)}62%{box-shadow:200px 0 rgba(255,255,255,0),130px 0 var(--loading-color),120px 0 var(--loading-color),110px 0 var(--loading-color)}75%{box-shadow:200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),130px 0 var(--loading-color),120px 0 var(--loading-color)}87%{box-shadow:200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),130px 0 var(--loading-color)}100%{box-shadow:200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0)}}</style><link type=image/x-icon rel="shortcut icon" href="data:image/x-icon;base64,AAABAAYAgIAQAAAAAABoKAAAZgAAAEhIEAAAAAAA6A0AAM4oAAAwMBAAAAAAAGgGAAC2NgAAICAQAAAAAADoAgAAHj0AABgYEAAAAAAA6AEAAAZAAAAQEBAAAAAAACgBAADuQQAAKAAAAIAAAAAAAQAAAQAEAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A76QAAAC5/wAAun8AIlDyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIgAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAAAARERERERERERERERERERERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQAAAEREREREREREREREREREREREREREREREREREREREREVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUAAABERERERERERERERERERERERERERERERERERERERERAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAKAAAAEgAAACQAAAAAQAEAAAAAACADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A76QAAAC5/wAAun8AIlDyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIgAAMzMzMzMzMzMzMzMzMzMzMzMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAARERERERERERERERERERERERVVVVVVVVVVVVVVVVVVVVVVQAAREREREREREREREREREREREQAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAD///////////8AAAD///////////8AAAD///////////8AAAD///////////8AAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAAAoAAAAMAAAAGAAAAABAAQAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wDvpAAAALn/AAC6fwAiUPIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMyIiIiIiIiIiIiIiIAMzMzMzMzMzMzMzMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERFVVVVVVVVVVVVVVUARERERERERERERERAAAAYAAAAAAAAABgAAAAAAAAAGAAAAAAAAAAYAAAAAAAAABgAAA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"><style>.sf-hidden{display:none!important}</style><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body lang=en-us dir=ltr>
+ <div class="header-holder has-default-focus">
+ <a href=#main class="skip-to-main-link has-outline-color-text visually-hidden-until-focused position-fixed has-inner-focus focus-visible top-0 left-0 right-0 padding-xs has-text-centered has-body-background" tabindex=1>Skip to main content</a>
+ <div hidden id=cookie-consent-holder data-test-id=cookie-consent-container class=sf-hidden></div>
+ <div id=unsupported-browser style="background-color:white;color:black;padding:16px;border-bottom:1px solid grey" hidden class=sf-hidden>
+ 
+ </div>
+ 
+ <div id=headerAreaHolder data-bi-name=header>
+<header role=banner itemscope itemtype=http://schema.org/Organization translate=no> <div class=nav-bar data-test-id=primary-nav-bar data-bi-name=L1-header> <div class="nav-bar-brand display-flex align-items-center padding-none margin-left-xs margin-left-none-tablet margin-right-xxs">
+ 
+ <a class="nav-bar-button padding-inline-none" itemprop=url href=https://www.microsoft.com/ aria-label=Microsoft data-bi-name=microsoft-logo-link>
+ <div class=nav-bar-logo role=presentation aria-hidden=true itemprop=logo itemscope>
+ 
+ <svg xmlns=http://www.w3.org/2000/svg width=108 height=23 viewBox="72 72 337 74" preserveAspectRatio="xMidYMin slice">
+ <g data-name=MS-symbol>
+ <clippath>
+ <path transform="matrix(1 0 0 -1 0 216)" d="M0 216h482V0H0z"></path>
+ </clippath>
+ <g clip-path=url(#a)>
+ <path d="M394.942 104.59h-10.858v25.003h-7.38V104.59h-5.182v-5.965h5.182v-4.308c0-3.254 1.06-5.92 3.178-7.998 2.12-2.079 4.835-3.118 8.15-3.118.882 0 1.666.045 2.35.135a9.37 9.37 0 011.806.407v6.296c-.24-.14-.663-.31-1.265-.512-.603-.2-1.296-.3-2.078-.3-1.528 0-2.702.476-3.526 1.43-.824.954-1.235 2.365-1.235 4.232v3.736h10.858v-6.959l7.321-2.229v9.188h7.381v5.965h-7.38v14.49c0 1.91.345 3.254 1.038 4.037.693.783 1.782 1.175 3.27 1.175.42 0 .927-.1 1.52-.3a7.178 7.178 0 001.552-.724v6.025c-.463.261-1.23.502-2.305.723a15.742 15.742 0 01-3.178.331c-3.073 0-5.378-.817-6.914-2.455-1.537-1.637-2.305-4.102-2.305-7.396zm-48.407 9.73c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.45-2.545-6.04-2.545-2.67 0-4.745.888-6.22 2.666-1.477 1.777-2.215 4.313-2.215 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.892-2.993 6.91-4.489 12.05-4.489 4.841 0 8.621 1.441 11.343 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.447 9.018-4.338 11.99-2.892 2.973-6.829 4.458-11.81 4.458-4.8 0-8.61-1.41-11.432-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-16.417-7.802c0 1.045.331 1.863.994 2.456.662.592 2.128 1.34 4.398 2.243 2.912 1.166 4.956 2.476 6.131 3.932 1.175 1.456 1.762 3.22 1.762 5.287 0 2.912-1.12 5.252-3.359 7.02-2.24 1.767-5.267 2.65-9.083 2.65-1.285 0-2.706-.155-4.263-.467-1.556-.31-2.877-.707-3.96-1.19v-7.169a17.945 17.945 0 004.277 2.198c1.526.543 2.911.814 4.157.814 1.647 0 2.862-.23 3.645-.693.784-.46 1.175-1.235 1.175-2.319 0-1.005-.406-1.853-1.22-2.546-.813-.693-2.355-1.492-4.624-2.395-2.69-1.125-4.599-2.39-5.724-3.796-1.125-1.406-1.687-3.193-1.687-5.362 0-2.792 1.11-5.086 3.33-6.884 2.217-1.797 5.095-2.696 8.63-2.696 1.084 0 2.3.12 3.645.361 1.346.242 2.47.553 3.374.934v6.93c-.964-.644-2.089-1.195-3.374-1.658-1.286-.462-2.56-.693-3.826-.693-1.386 0-2.465.271-3.238.813-.774.543-1.16 1.286-1.16 2.23m-35.066 7.562c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.449-2.545-6.039-2.545-2.672 0-4.745.888-6.222 2.666-1.476 1.777-2.214 4.313-2.214 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.893-2.993 6.91-4.489 12.051-4.489 4.84 0 8.621 1.441 11.342 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.446 9.018-4.338 11.99-2.892 2.973-6.828 4.458-11.809 4.458-4.8 0-8.61-1.41-11.433-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-3.136-16.448c.582 0 1.105.041 1.567.121.462.08.853.18 1.175.301v7.38c-.382-.28-.939-.546-1.672-.798-.733-.25-1.622-.376-2.666-.376-1.788 0-3.299.753-4.534 2.26-1.235 1.505-1.853 3.825-1.853 6.958v15.635h-7.29V98.624h7.29v4.88h.12c.663-1.687 1.667-3.007 3.013-3.96 1.346-.954 2.962-1.432 4.85-1.432m-27.956 26.18c1.084 0 2.28-.25 3.585-.754a15.06 15.06 0 003.615-1.988v6.778c-1.165.663-2.485 1.165-3.962 1.506-1.475.342-3.098.512-4.865.512-4.559 0-8.265-1.44-11.116-4.323-2.852-2.88-4.278-6.562-4.278-11.04 0-4.98 1.456-9.083 4.37-12.307 2.91-3.224 7.037-4.835 12.38-4.835 1.366 0 2.746.176 4.143.527 1.395.352 2.504.758 3.328 1.22v6.99c-1.125-.824-2.274-1.462-3.45-1.914a9.966 9.966 0 00-3.599-.678c-2.872 0-5.192.934-6.959 2.802-1.768 1.868-2.652 4.388-2.652 7.562 0 3.132.85 5.573 2.546 7.32 1.697 1.748 4.002 2.621 6.914 2.621m-22.112 5.302h-7.29V98.624h7.29zm-8.044-39.916c0-1.205.437-2.214 1.311-3.028.874-.813 1.913-1.22 3.118-1.22 1.285 0 2.35.417 3.193 1.25.844.834 1.266 1.833 1.266 2.998 0 1.185-.432 2.18-1.296 2.982-.864.804-1.918 1.205-3.163 1.205-1.246 0-2.295-.406-3.148-1.219-.854-.815-1.28-1.803-1.28-2.968m-6.274-3.284v43.2h-7.5v-33.86h-.12l-13.408 33.86h-4.97l-13.738-33.86h-.09v33.86h-6.929v-43.2h10.755l12.412 32.024h.18l13.105-32.024z" class="fill-current-color fill-link-text-forced-colors color-text-subtle"></path>
+ <path d="M106.214 106.214H71.996V71.996h34.218z" fill=#f25022></path>
+ <path d="M143.993 106.214h-34.218V71.996h34.218z" fill=#7fba00></path>
+ <path d="M106.214 143.993H71.996v-34.218h34.218z" fill=#00a4ef></path>
+ <path d="M143.993 143.993h-34.218v-34.218h34.218z" fill=#ffb900></path>
+ </g>
+ </g>
+ </svg>
+ 
+ </div>
+ </a>
+ 
+ </div> 
+ 
+ <div class="nav-bar-item is-hidden-tablet sf-hidden">
+ 
+ </div>
+ 
+ 
+ <nav class=nav-bar-nav role=navigation aria-label=Global translate=no>
+ <ul class=nav-bar-nav-list>
+ 
+ <li class="nav-bar-item is-category">
+ <a data-test-id=header-link-category class="nav-bar-button is-title has-hover-underline" itemprop=url data-bi-name=L1-category-link href=https://learn.microsoft.com/en-us/>
+ <span>Learn</span>
+ </a>
+ </li>
+ 
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-documentation class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/docs/ data-bi-name=L1-navigation-link>
+ <span>Documentation</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-training class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/training/ data-bi-name=L1-navigation-link>
+ <span>Training</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-certifications class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/certifications/ data-bi-name=L1-navigation-link>
+ <span>Certifications</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-q&amp;a class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/answers/ data-bi-name=L1-navigation-link>
+ <span>Q&amp;A</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-code-samples class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/samples/browse/ data-bi-name=L1-navigation-link>
+ <span>Code Samples</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-assessments class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/assessments/ data-bi-name=L1-navigation-link>
+ <span>Assessments</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-shows class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/shows/ data-bi-name=L1-navigation-link>
+ <span>Shows</span>
+ </a>
+ </li>
+ 
+ <li class=nav-bar-item>
+ <a data-test-id=header-link-events class="nav-bar-button has-hover-underline" href=https://learn.microsoft.com/en-us/events/ data-bi-name=L1-navigation-link>
+ <span>Events</span>
+ </a>
+ </li>
+ <li class="dropdown nav-bar-item sf-hidden" hidden>
+ 
+ 
+ </li>
+ </ul>
+ </nav>
+ 
+ <span class=nav-bar-spacer></span>
+ 
+ <div class="nav-bar-search sf-hidden" id=ax-75 hidden>
+ 
+ 
+ 
+ </div>
+ 
+ <div class=nav-bar-search>
+ 
+ 
+ <form class=nav-bar-search-form method=GET name=nav-bar-search-form role=search id=nav-bar-search-form-desktop aria-label=Search action=/en-us/search/>
+ <div class=autocomplete data-bi-name=autocomplete>
+ <div class="field-body control has-icons-left">
+ <input role=combobox maxlength=100 aria-autocomplete=list autocapitalize=off autocomplete=off autocorrect=off spellcheck=false id=site-search-input-desktop data-test-id=site-search-input-desktop class="autocomplete-input input input-sm control has-icons-left" type=search name=terms aria-expanded=false aria-owns=ax-77-listbox aria-controls=ax-77-listbox aria-activedescendant aria-label=Search aria-describedby=ms--site-search-input-desktop-description placeholder=Search pattern=.* value>
+ <span aria-hidden=true class="icon is-small is-left">
+ <span class="has-text-primary docon docon-search"></span>
+ </span>
+ <span aria-hidden=true class="autocomplete-loader loader has-text-primary sf-hidden" hidden></span>
+ <span hidden id=ms--site-search-input-desktop-description class=sf-hidden>
+ Suggestions will filter as you type
+ </span>
+ </div>
+ <ul role=listbox id=ax-77-listbox data-test-id=site-search-input-desktop-listbox class="autocomplete-suggestions is-vertically-scrollable padding-xxs sf-hidden" aria-label=Suggestions hidden>
+ 
+ 
+ </ul>
+ </div>
+ 
+ <button type=submit class=visually-hidden tabindex=-1 aria-hidden=true></button>
+ <input name=category hidden value class=sf-hidden>
+ <input name=scope hidden value=NuGet class=sf-hidden>
+ 
+ 
+ 
+ </form>
+ 
+ </div>
+ 
+ <div class="nav-bar-search sf-hidden" hidden>
+ 
+ </div>
+ 
+ 
+ <div class=nav-bar-profile>
+ 
+ <a class="docs-sign-in auth-status-determined not-authenticated" href=#> Sign in </a>
+ 
+ <div class="dropdown has-caret auth-status-determined authenticated sf-hidden">
+ 
+ 
+ </div>
+ 
+ </div>
+ 
+ </div> </header> </div>
+ <div id=content-header class="content-header uhf-container has-padding has-default-focus border-bottom-none" data-bi-name=content-header>
+ <div class="content-header-controls margin-xxs margin-inline-sm-tablet sf-hidden">
+ 
+ 
+ </div>
+ </div>
+ <div id=disclaimer-holder class="has-overflow-hidden has-default-focus">
+ 
+ </div>
+ </div>
+ <div class="mainContainer uhf-container has-default-focus" data-bi-name=body>
+ <div class="columns has-large-gaps is-gapless-mobile">
+ <div id=left-container class="left-container is-hidden-mobile column is-one-third-tablet is-one-quarter-desktop">
+ <nav id=affixed-left-container class="margin-top-sm-tablet position-sticky display-flex flex-direction-column" role=navigation aria-label=Primary style="top:24px;max-height:calc(100vh - 48px)" data-bi-name="left toc"><form action=javascript: role=search aria-label=Search class=margin-bottom-xxs><label class=visually-hidden for=ax-44>Search</label><div class="autocomplete display-block" data-bi-name=autocomplete>
+ <div class="field-body control has-icons-left">
+ <input role=combobox maxlength=100 aria-autocomplete=list autocapitalize=off autocomplete=off autocorrect=off spellcheck=false id=ax-44 data-test-id=ax-44 class="autocomplete-input input input-sm control has-icons-left width-full" type=text aria-expanded=false aria-owns=ax-45-listbox aria-controls=ax-45-listbox aria-activedescendant aria-describedby=ms--ax-44-description placeholder="Filter by title" pattern=.* value>
+ <span aria-hidden=true class="icon is-small is-left">
+ <span class="has-text-primary docon docon-filter-settings"></span>
+ </span>
+ <span aria-hidden=true class="autocomplete-loader loader has-text-primary sf-hidden" hidden></span>
+ <span hidden id=ms--ax-44-description class=sf-hidden>
+ Suggestions will filter as you type
+ </span>
+ </div>
+ <ul role=listbox id=ax-45-listbox data-test-id=ax-44-listbox class="autocomplete-suggestions is-vertically-scrollable padding-xxs sf-hidden" aria-label=Suggestions hidden>
+ 
+ 
+ </ul>
+ </div></form><ul class="tree table-of-contents is-vertically-scrollable flex-grow-1 flex-shrink-1" role=tree aria-label="Table of contents" data-bi-name=tree data-is-collapsible=true><li role=none><a aria-setsize=10 aria-level=1 aria-posinset=1 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/what-is-nuget>What is NuGet?</a><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=2 role=treeitem tabindex=-1 id=title-2-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Get started</span><li class="tree-item is-expanded" aria-setsize=10 aria-level=1 aria-posinset=3 role=treeitem tabindex=-1 id=title-3-1 aria-expanded=true><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Consume packages</span><ul class=tree-group role=group><li role=none><a aria-setsize=5 aria-level=2 aria-posinset=1 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/overview-and-workflow>Overview and workflow</a><li role=none><a aria-setsize=5 aria-level=2 aria-posinset=2 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages>Find and choose packages</a><li class=tree-item aria-setsize=5 aria-level=2 aria-posinset=3 role=treeitem tabindex=-1 id=title-3-1_3-2 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Install and manage packages</span><li class="tree-item is-expanded" aria-setsize=5 aria-level=2 aria-posinset=4 role=treeitem tabindex=-1 id=title-3-1_4-2 aria-expanded=true><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Configure NuGet</span><ul class=tree-group role=group><li class=tree-item aria-setsize=9 aria-level=3 aria-posinset=1 role=treeitem tabindex=-1 id=title-3-1_4-2_1-3 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Package restore options</span><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=2 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/package-source-mapping>Package source mapping</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=3 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/reinstalling-and-updating-packages>Reinstall and update packages</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=4 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders>Manage global packages and cache folders</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=5 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/installing-signed-packages>Manage package trust boundaries</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=6 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/consuming-packages-authenticated-feeds>Work with authenticated Feeds</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=7 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/packages-and-source-control>Work with source control systems</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=8 role=treeitem tabindex=0 class="tree-item is-leaf has-external-link-indicator is-selected" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior aria-current=page>Common NuGet configurations</a><li role=none><a aria-setsize=9 aria-level=3 aria-posinset=9 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/consume-packages/packagedownload-functionality>PackageDownload functionality</a></ul><li class=tree-item aria-setsize=5 aria-level=2 aria-posinset=5 role=treeitem tabindex=-1 id=title-3-1_5-2 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Reference packages in your project</span></ul><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=4 role=treeitem tabindex=-1 id=title-4-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Create packages</span><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=5 role=treeitem tabindex=-1 id=title-5-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Publish packages</span><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=6 role=treeitem tabindex=-1 id=title-6-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Concepts</span><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=7 role=treeitem tabindex=-1 id=title-7-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Reference</span><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=8 role=treeitem tabindex=-1 id=title-8-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Extensibility</span><li class=tree-item aria-setsize=10 aria-level=1 aria-posinset=9 role=treeitem tabindex=-1 id=title-9-1 aria-expanded=false><span data-bi-name=tree-expander class=tree-expander><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden=true></span>Resources</span><li role=none><a aria-setsize=10 aria-level=1 aria-posinset=10 role=treeitem tabindex=-1 class="tree-item is-leaf has-external-link-indicator" data-bi-name=tree-leaf href=https://learn.microsoft.com/en-us/nuget/nuget-org/overview-nuget-org>NuGet.<wbr>org</a></ul><div class="padding-xxs padding-none-tablet border-top border-bottom-tablet"><button class="button button-sm button-clear button-block inner-focus justify-content-flex-start-tablet" data-bi-name=download-pdf rel=nofollow>
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-dictionary-download"></span>
+ </span>
+ <span>Download PDF</span>
+ </button></div></nav>
+ </div>
+ 
+ <section class="primary-holder column is-two-thirds-tablet is-three-quarters-desktop">
+ 
+ <div class="columns is-gapless-mobile has-large-gaps">
+ <div id=main-column class="column is-full is-8-desktop">
+ <main id=main role=main data-bi-name=content lang=en-us dir=ltr>
+ 
+ <div id=article-header class="background-color-body margin-top-sm-tablet margin-bottom-xs display-none-print">
+ <div class="display-flex align-items-center">
+ <details id=article-header-breadcrumbs-overflow-popover class=popover data-for=article-header-breadcrumbs hidden>
+ <summary class="button button-clear button-primary button-sm inner-focus" aria-label="All breadcrumbs">
+ <span class=icon>
+ <span class="docon docon-more"></span>
+ </span>
+ </summary>
+ <div id=article-header-breadcrumbs-overflow class="popover-content padding-none">
+ <nav>
+ <ol class=list-style-none>
+ 
+ <li class=line-clamp-1>
+ <a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href=https://learn.microsoft.com/en-us/>
+ Learn
+ </a>
+ </li>
+ 
+ <li class=line-clamp-1>
+ <a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href=https://learn.microsoft.com/en-us/nuget>
+ NuGet
+ </a>
+ </li>
+ 
+ <li class=line-clamp-1>
+ <a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href=https://learn.microsoft.com/en-us/nuget/consume-packages/overview-and-workflow>
+ Consume packages
+ </a>
+ </li>
+ 
+ </ol>
+ </nav>
+ 
+ </div>
+ </details>
+ <bread-crumbs id=article-header-breadcrumbs data-test-id=article-header-breadcrumbs class="overflow-hidden flex-grow-1 margin-right-sm margin-right-md-tablet margin-right-lg-desktop margin-left-negative-xxs padding-left-xxs" style=display:block;white-space:nowrap;overflow:hidden>
+ <nav>
+ <ol class=breadcrumbs>
+ 
+ <li class=breadcrumbs-item data-bread-crumbs-collapse-target>
+ <a href=https://learn.microsoft.com/en-us/>Learn</a>
+ </li>
+ 
+ <li class=breadcrumbs-item data-bread-crumbs-collapse-target>
+ <a href=https://learn.microsoft.com/en-us/nuget>NuGet</a>
+ </li>
+ 
+ <li class=breadcrumbs-item data-bread-crumbs-collapse-target>
+ <a href=https://learn.microsoft.com/en-us/nuget/consume-packages/overview-and-workflow>Consume packages</a>
+ </li>
+ 
+ </ol>
+ </nav>
+ </bread-crumbs>
+ <div id=article-header-page-actions class="margin-left-auto display-flex flex-wrap-no-wrap align-items-stretch">
+ <a id=lang-link-tablet class="button button-primary button-clear button-sm display-none display-inline-flex-tablet sf-hidden" title="Read in English" data-bi-name=language-toggle data-read-in-link hidden href=https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior data-bi='{"cN":"language-toggle","value":"off"}'>
+ 
+ 
+ </a>
+ <button type=button class="collection button button-clear button-sm button-primary display-none display-inline-flex-tablet" data-list-type=collection data-bi-name=collection title="Add Common NuGet configurations | Microsoft Learn to a collection" data-pressed=false>
+ <span class="icon margin-none" aria-hidden=true>
+ <span class="docon docon-circle-addition"></span>
+ </span>
+ <span class="collection-status is-visually-hidden">Add</span>
+ </button>
+ 
+ <a data-contenteditbtn class="button button-clear button-sm text-decoration-none button-primary display-none display-inline-flex-tablet" aria-label=Edit title="Edit This Document" data-bi-name=edit href=https://github.com/NuGet/docs.microsoft.com-nuget/blob/main/docs/consume-packages/configuring-nuget-behavior.md data-original_content_git_url=https://github.com/NuGet/docs.microsoft.com-nuget/blob/live/docs/consume-packages/configuring-nuget-behavior.md data-original_content_git_url_template={repo}/blob/{branch}/docs/consume-packages/configuring-nuget-behavior.md data-pr_repo data-pr_branch>
+ <span class="icon margin-none" aria-hidden=true>
+ <span class="docon docon-edit-outline"></span>
+ </span>
+ </a>
+ 
+ 
+ <details class="popover popover-right" id=article-header-page-actions-overflow>
+ <summary class="justify-content-flex-start button button-clear button-sm button-primary" aria-label="More actions">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-more-vertical"></span>
+ </span>
+ </summary>
+ <div class="popover-content padding-none">
+ <button data-page-action-item=overflow-mobile type=button class="justify-content-flex-start button-block button-sm has-inner-focus button button-clear display-none-tablet" data-bi-name=contents-expand data-contents-button data-popover-close>
+ <span class=icon>
+ <span class="docon docon-editor-list-bullet" aria-hidden=true></span>
+ </span>
+ <span class=contents-expand-title>Table of contents</span>
+ </button>
+ <a id=lang-link-overflow class="justify-content-flex-start button-sm has-inner-focus button button-clear button-block display-none-tablet" title="Read in English" data-bi-name=language-toggle data-page-action-item=overflow-mobile data-check-hidden=true data-read-in-link hidden href=https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior data-bi='{"cN":"language-toggle","value":"off"}'>
+ <span class=icon aria-hidden=true data-read-in-link-icon>
+ <span class="docon docon-locale-globe"></span>
+ </span>
+ <span data-read-in-link-text>Read in English</span>
+ </a>
+ <button type=button class="collection justify-content-flex-start button button-clear button-sm has-inner-focus button-block display-none-tablet" data-list-type=collection data-bi-name=collection title="Add Common NuGet configurations | Microsoft Learn to a collection" data-page-action-item=overflow-mobile data-check-hidden=true data-popover-close data-pressed=false>
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-circle-addition"></span>
+ </span>
+ <span class=collection-status>Add</span>
+ </button>
+ <a data-contenteditbtn class="button button-clear button-block button-sm has-inner-focus justify-content-flex-start text-decoration-none display-none-tablet" aria-label=Edit title="Edit This Document" data-bi-name=edit href=https://github.com/NuGet/docs.microsoft.com-nuget/blob/main/docs/consume-packages/configuring-nuget-behavior.md data-original_content_git_url=https://github.com/NuGet/docs.microsoft.com-nuget/blob/live/docs/consume-packages/configuring-nuget-behavior.md data-original_content_git_url_template={repo}/blob/{branch}/docs/consume-packages/configuring-nuget-behavior.md data-pr_repo data-pr_branch>
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-edit-outline"></span>
+ </span>
+ <span>Edit</span>
+ </a>
+ <button class="button button-block button-clear button-sm justify-content-flex-start has-inner-focus" title=Print type=button aria-label=Print data-bi-name=print data-page-action-item=overflow-all data-popover-close data-print-page data-check-hidden=true>
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-print"></span>
+ </span>
+ <span>Print</span>
+ </button>
+ <div aria-hidden=true class="margin-none border-top" data-page-action-item=overflow-all></div>
+ 
+ <a class="button button-clear button-sm has-inner-focus button-block text-decoration-none justify-content-flex-start share-twitter" data-bi-name=twitter data-page-action-item=overflow-all href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior%3FWT.mc_id%3Dtwitter&amp;text=Common%20NuGet%20configurations%20%7C%20Microsoft%20Learn&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior%3FWT.mc_id%3Dtwitter">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-brand-twitter"></span>
+ </span>
+ <span>Twitter</span>
+ </a>
+ <a class="button button-clear button-sm has-inner-focus button-block text-decoration-none justify-content-flex-start share-linkedin" data-bi-name=linkedin data-page-action-item=overflow-all href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior%3FWT.mc_id%3Dlinkedin">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-brand-linkedin"></span>
+ </span>
+ <span>LinkedIn</span>
+ </a>
+ <a class="button button-clear button-sm button-block has-inner-focus text-decoration-none justify-content-flex-start share-facebook" data-bi-name=facebook data-page-action-item=overflow-all href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior%3FWT.mc_id%3Dfacebook">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-brand-facebook"></span>
+ </span>
+ <span>Facebook</span>
+ </a>
+ <a class="button button-clear button-sm button-block has-inner-focus text-decoration-none justify-content-flex-start share-email" data-bi-name=email data-page-action-item=overflow-all href="mailto:?subject=%5BShared%20Article%5D%20Common%20NuGet%20configurations%20%7C%20Microsoft%20Learn&amp;body=Common%20NuGet%20configurations%20%7C%20Microsoft%20Learn%0A%0Ahttps%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior%3FWT.mc_id%3Demail">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-mail-message-fill"></span>
+ </span>
+ <span>Email</span>
+ </a>
+ 
+ </div>
+ </details>
+ 
+ </div>
+ </div>
+ </div>
+ 
+ <div>
+ <button type=button class="border contents-button button button-clear button-sm is-hidden-tablet has-inner-focus sf-hidden" data-bi-name=contents-expand data-contents-button hidden>
+ 
+ 
+ </button>
+ </div>
+ 
+ <div class=content>
+ <h1 id=common-nuget-configurations>Common NuGet configurations</h1>
+ <div class="display-flex justify-content-space-between align-items-center flex-wrap-wrap page-metadata-container">
+ <div class=margin-right-xxs>
+ <ul class="metadata page-metadata" data-bi-name="page info" lang=en-us dir=ltr>
+ <li>
+Article </li>
+ <li class=visibility-hidden-visual-diff>
+ <time data-article-date aria-label="Article review date" datetime=2023-04-17T19:21:00.000Z data-article-date-source=calculated>04/18/2023</time>
+ </li>
+ <li class="contributors-holder display-none-print">
+ <button aria-label="View all contributors" class="contributors-button link-button" data-bi-name=contributors title="View all contributors">
+ 15 contributors
+ </button>
+ </li>
+ </ul>
+ </div>
+<div id=user-feedback class="margin-block-xxs display-none-print" data-hide-on-archived>
+ <button id=user-feedback-button data-test-id=conceptual-feedback-button class="button button-sm button-clear button-primary" type=button data-bi-name=user-feedback-button data-user-feedback-button>
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-like"></span>
+ </span>
+ <span>Feedback</span>
+ </button>
+</div>
+ </div>
+ <div id=ms--content-well-notifications data-bi-name=content-well-notification></div>
+ <nav id=center-doc-outline class="doc-outline display-none-print margin-bottom-sm" data-bi-name="intopic toc" role=navigation aria-label="In this article">
+ <h2 id=ms--in-this-article class="title is-6 margin-block-xs">In this article</h2>
+ <ol id=content-well-in-this-article-list class="border-left padding-left-xxs" aria-live=polite aria-relevant=additions>
+ 
+ <li>
+ <a href=#config-file-locations-and-uses>Config file locations and uses</a>
+ </li>
+ 
+ <li>
+ <a href=#changing-config-settings>Changing config settings</a>
+ </li>
+ 
+ <li>
+ <a href=#how-settings-are-applied>How settings are applied</a>
+ </li>
+ 
+ <li>
+ <a href=#additional-user-wide-configuration>Additional user wide configuration</a>
+ </li>
+ 
+ <li>
+ <a href=#nuget-defaults-file>NuGet defaults file</a>
+ </li>
+ 
+ </ol>
+ </nav>
+ 
+ <p>NuGet's behavior is driven by the accumulated settings in one or more <code>NuGet.Config</code> (XML) files that can exist at solution- <span style=color:red;background-color:yellow>(project if no solution is used)</span>, user-, and computer-wide levels. A global <code>NuGetDefaults.Config</code> file also specifically configures package sources. Settings apply to all commands issued in the CLI, the Package Manager Console, and the Package Manager UI.</p>
+<div class=heading-wrapper data-heading-level=h2><a class="anchor-link docon docon-link" href=#config-file-locations-and-uses aria-label="Section titled: Config file locations and uses"></a><h2 id=config-file-locations-and-uses class=heading-anchor>Config file locations and uses</h2></div>
+<div class=has-inner-focus><table aria-label="Table 1" class="table table-sm">
+<thead>
+<tr>
+<th>Scope</th>
+<th><code>NuGet.Config</code> file location</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solution</td>
+<td>Current folder (aka Solution folder) or any folder up to the drive root.</td>
+<td style=color:red;background-color:yellow>In a solution folder, settings apply to all projects in subfolders. Note that if a config file is placed in a project folder, it has no effect on that project. When restoring a project on the command line, the project's directory is treated as the solution directory, which can lead to differences in behaviour when restoring the project vs solution.</td>
+</tr>
+<tr>
+<td>User</td>
+<td><strong>Windows:</strong> <code>%appdata%\NuGet\NuGet.Config</code><br><strong>Mac/Linux:</strong> <code>~/.config/NuGet/NuGet.Config</code> or <code>~/.nuget/NuGet/NuGet.Config</code> (varies by tooling) <br>Additional configs are supported on all platforms. These configs cannot be edited by the tooling. <br> <strong>Windows:</strong> <code>%appdata%\NuGet\config\*.Config</code> <br><strong>Mac/Linux:</strong> <code>~/.config/NuGet/config/*.config</code> or <code>~/.nuget/config/*.config</code></td>
+<td>Settings apply to all operations, but are overridden by any solution-level settings.</td>
+</tr>
+<tr>
+<td>Computer</td>
+<td><strong>Windows:</strong> <code>%ProgramFiles(x86)%\NuGet\Config</code><br><strong>Mac/Linux:</strong> <code>$XDG_DATA_HOME</code>. If <code>$XDG_DATA_HOME</code> is null or empty, <code>~/.local/share</code> or <code>/usr/local/share</code> will be used (varies by OS distribution)</td>
+<td>Settings apply to all operations on the computer, but are overridden by any user- or solution-level settings.</td>
+</tr>
+</tbody>
+</table></div>
+<div class="alert is-info">
+<p class=alert-title><span class="docon docon-status-error-outline" aria-hidden=true></span> Note</p>
+<p>On Mac/Linux, the user config file location varies by tooling. .NET CLI uses <code>~/.nuget/NuGet</code> folder, while Mono uses <code>~/.config/NuGet</code> folder.</p>
+</div>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#on-maclinux-the-user-level-config-file-location-varies-by-tooling aria-label="Section titled: On Mac/Linux, the user-level config file location varies by tooling"></a><h3 id=on-maclinux-the-user-level-config-file-location-varies-by-tooling class=heading-anchor>On Mac/Linux, the user-level config file location varies by tooling</h3></div>
+<p>On Mac/Linux, the user config file location varies by tooling.
+Majority of users use tools that look for the user config file under the <code>~/.nuget/NuGet</code> folder.
+These other tools look for the user config file under the <code>~/.config/NuGet</code> folder:</p>
+<ul>
+<li>Mono</li>
+<li>NuGet.exe</li>
+<li>Visual Studio 2019 for Mac (and earlier versions)</li>
+<li>Visual Studio 2022 for Mac (and later versions), only when working on classic Mono projects.</li>
+</ul>
+<p>If the tooling you use involves both locations, consider consolidating them by following these steps to allow you to work with only one user-level config file:</p>
+<ol>
+<li>Check the contents of the two user-level config files and keep the one you want under <code>~/.nuget/NuGet</code> folder.</li>
+<li>Set symbolic link from <code>~/.nuget/NuGet</code> to <code>~/.config/NuGet</code>. E.g. Run bash command: <code>ln -s ~/.nuget/NuGet ~/.config/NuGet</code>.</li>
+</ol>
+<p>Notes for earlier versions of NuGet:</p>
+<ul>
+<li>NuGet 3.3 and earlier used a <code>.nuget</code> folder for solution-wide settings. This folder is not used in NuGet 3.4+.</li>
+<li>For NuGet 2.6 to 3.x, the computer-level config file on Windows was located in <code>%ProgramData%\NuGet\Config[\{IDE}[\{Version}[\{SKU}]]]\NuGet.Config</code>, where <code>{IDE}</code> can be <code>VisualStudio</code>, <code>{Version}</code> was the Visual Studio version such as <code>14.0</code>, and <code>{SKU}</code> is either <code>Community</code>, <code>Pro</code>, or <code>Enterprise</code>. To migrate settings to NuGet 4.0+, simply copy the config file to <code>%ProgramFiles(x86)%\NuGet\Config</code>. On Linux, this previous location was <code>/etc/opt</code>, and on Mac, <code>/Library/Application Support</code>.</li>
+</ul>
+<div class=heading-wrapper data-heading-level=h2><a class="anchor-link docon docon-link" href=#changing-config-settings aria-label="Section titled: Changing config settings"></a><h2 id=changing-config-settings class=heading-anchor>Changing config settings</h2></div>
+<p>A <code>NuGet.Config</code> file is a simple XML text file containing key/value pairs as described in the <a href=https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file data-linktype=relative-path>NuGet Configuration Settings</a> topic.</p>
+<p>Settings are managed using the NuGet CLI <a href=https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-config data-linktype=relative-path>config command</a>:</p>
+<ul>
+<li>By default, changes are made to the user-level config file. (On Mac/Linux, the location of user-level config file varies by tooling)</li>
+<li>To change settings in a different file, use the <code>-configFile</code> switch. In this case files can use any filename.</li>
+<li>Keys are always case sensitive.</li>
+<li>Elevation is required to change settings in the computer-level settings file.</li>
+</ul>
+<div class="alert is-warning">
+<p class=alert-title><span class="docon docon-status-warning-outline" aria-hidden=true></span> Warning</p>
+<p>Although you can modify the file in any text editor, NuGet (v3.4.3 and later) silently ignores the entire configuration file if it contains malformed XML (mismatched tags, invalid quotation marks, etc.). This is why it's preferable to manage setting using <code>nuget config</code>.</p>
+</div>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#setting-a-value aria-label="Section titled: Setting a value"></a><h3 id=setting-a-value class=heading-anchor>Setting a value</h3></div>
+<p>Windows:</p>
+<div class=codeHeader id=code-try-0 data-bi-name=code-header><span class=language>cli</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-cli data-author-content="# Set repositoryPath in the user-level config file
+nuget config -set repositoryPath=c:\packages 
+
+# Set repositoryPath in solution-level files
+nuget config -set repositoryPath=c:\packages -configfile c:\my.Config
+nuget config -set repositoryPath=c:\packages -configfile .\myApp\NuGet.Config
+
+# Set repositoryPath in the computer-level file (requires elevation)
+nuget config -set repositoryPath=c:\packages -configfile %ProgramFiles(x86)%\NuGet\Config\NuGet.Config
+"># Set repositoryPath in the user-level config file
+nuget config -set repositoryPath=c:\packages 
+
+# Set repositoryPath in solution-level files
+nuget config -set repositoryPath=c:\packages -configfile c:\my.Config
+nuget config -set repositoryPath=c:\packages -configfile .\myApp\NuGet.Config
+
+# Set repositoryPath in the computer-level file (requires elevation)
+nuget config -set repositoryPath=c:\packages -configfile %ProgramFiles(x86)%\NuGet\Config\NuGet.Config
+</code></pre>
+<p>Mac/Linux:</p>
+<div class=codeHeader id=code-try-1 data-bi-name=code-header><span class=language>cli</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-cli data-author-content="# Set repositoryPath in the user-level config file
+nuget config -set repositoryPath=/home/packages 
+
+# Set repositoryPath in solution-level files
+nuget config -set repositoryPath=/home/projects/packages -configfile /home/my.Config
+nuget config -set repositoryPath=/home/packages -configfile home/myApp/NuGet.Config
+
+# Set repositoryPath in the computer-level file (requires elevation)
+nuget config -set repositoryPath=/home/packages -configfile $XDG_DATA_HOME/NuGet.Config
+"># Set repositoryPath in the user-level config file
+nuget config -set repositoryPath=/home/packages 
+
+# Set repositoryPath in solution-level files
+nuget config -set repositoryPath=/home/projects/packages -configfile /home/my.Config
+nuget config -set repositoryPath=/home/packages -configfile home/myApp/NuGet.Config
+
+# Set repositoryPath in the computer-level file (requires elevation)
+nuget config -set repositoryPath=/home/packages -configfile $XDG_DATA_HOME/NuGet.Config
+</code></pre>
+<div class="alert is-info">
+<p class=alert-title><span class="docon docon-status-error-outline" aria-hidden=true></span> Note</p>
+<p>In NuGet 3.4 and later you can use environment variables in any value, as in <code>repositoryPath=%PACKAGEHOME%</code> (Windows) and <code>repositoryPath=$PACKAGEHOME</code> (Mac/Linux).</p>
+</div>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#removing-a-value aria-label="Section titled: Removing a value"></a><h3 id=removing-a-value class=heading-anchor>Removing a value</h3></div>
+<p>To remove a value, specify a key with an empty value.</p>
+<div class=codeHeader id=code-try-2 data-bi-name=code-header><span class=language>cli</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-cli data-author-content="# Windows
+nuget config -set repositoryPath= -configfile c:\my.Config
+
+# Mac/Linux
+nuget config -set repositoryPath= -configfile /home/my.Config
+"># Windows
+nuget config -set repositoryPath= -configfile c:\my.Config
+
+# Mac/Linux
+nuget config -set repositoryPath= -configfile /home/my.Config
+</code></pre>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#creating-a-new-config-file aria-label="Section titled: Creating a new config file"></a><h3 id=creating-a-new-config-file class=heading-anchor>Creating a new config file</h3></div>
+<p>Copy the template below into the new file and then use <code>nuget config -configFile &lt;filename&gt;</code> to set values:</p>
+<div class=codeHeader id=code-try-3 data-bi-name=code-header><span class=language>XML</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-xml data-author-content='<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+</configuration>
+'><span><span class=hljs-meta>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>configuration</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>configuration</span>&gt;</span>
+</span></code></pre>
+<div class=heading-wrapper data-heading-level=h2><a class="anchor-link docon docon-link" href=#how-settings-are-applied aria-label="Section titled: How settings are applied"></a><h2 id=how-settings-are-applied class=heading-anchor>How settings are applied</h2></div>
+<p>Multiple <code>NuGet.Config</code> files allow you to store settings in different locations so that they apply to a single solution, or a group of solutions.
+These settings collectively apply to any NuGet operation invoked from the command line or from Visual Studio, with settings that exist "closest" to a solution or the current folder taking precedence.
+If a command line tool is used on a project file, rather than a solution file, then the project directory is used as the "solution directory", which can lead to inconsistent behaviour when there is a <code>NuGet.Config</code> file in a subdirectory of the solution file.</p>
+<p>Specifically, NuGet loads settings from the different config files in the following order:</p>
+<ol>
+<li>The <a href=#nuget-defaults-file data-linktype=self-bookmark><code>NuGetDefaults.Config</code> file</a>, which contains settings related only to package sources.</li>
+<li>The computer-level file.</li>
+<li>The user-level file.</li>
+<li>The file specified with <code>-configFile</code>.</li>
+<li>Files found in every folder in the path from the drive root to the current folder (where <code>nuget.exe</code> is invoked or the folder containing the Visual Studio solution). For example, if a command is invoked in <code>c:\A\B\C</code>, NuGet looks for and loads config files in <code>c:\</code>, then <code>c:\A</code>, then <code>c:\A\B</code>, and finally <code>c:\A\B\C</code>.</li>
+</ol>
+<p>As NuGet finds settings in these files, they are applied as follows:</p>
+<ol>
+<li>For single-item elements, NuGet replaced any previously-found value for the same key. This means that settings that are "closest" to the current folder or solution override any others found earlier. For example, the <code>defaultPushSource</code> setting in <code>NuGetDefaults.Config</code> is overridden if it exists in any other config file.</li>
+<li>For collection elements (such as <code>&lt;packageSources&gt;</code>), NuGet combines the values from all configuration files into a single collection.</li>
+<li>When <code>&lt;clear /&gt;</code> is present for a given node, NuGet ignores previously defined configuration values for that node.</li>
+</ol>
+<div class="alert is-success">
+<p class=alert-title><span class="docon docon-lightbulb" aria-hidden=true></span> Tip</p>
+<p>Add a <code>nuget.config</code> file in the root of your solution repository. This is considered a best practice as it promotes repeatability and ensures that different users have the same NuGet configuration.</p>
+</div>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#settings-walkthrough aria-label="Section titled: Settings walkthrough"></a><h3 id=settings-walkthrough class=heading-anchor>Settings walkthrough</h3></div>
+<p>Let's say you have the following folder structure on two separate drives:</p>
+<div class=codeHeader id=code-try-4 data-bi-name=code-header><span class=language></span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code data-author-content="disk_drive_1
+    User
+disk_drive_2
+    Project1
+        Source
+    Project2
+        Source
+    tmp
+">disk_drive_1
+    User
+disk_drive_2
+    Project1
+        Source
+    Project2
+        Source
+    tmp
+</code></pre>
+<p>You then have four <code>NuGet.Config</code> files in the following locations with the given content. (The computer-level file is not included in this example, but would behave similarly to the user-level file.)</p>
+<p>File A. User-level file, (<code>%appdata%\NuGet\NuGet.Config</code> on Windows, <code>~/.config/NuGet/NuGet.Config</code> on Mac/Linux):</p>
+<div class=codeHeader id=code-try-5 data-bi-name=code-header><span class=language>XML</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-xml data-author-content='<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <activePackageSource>
+        <add key="NuGet official package source" value="https://api.nuget.org/v3/index.json" />
+    </activePackageSource>
+</configuration>
+'><span><span class=hljs-meta>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>configuration</span>&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>activePackageSource</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"NuGet official package source"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://api.nuget.org/v3/index.json"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>activePackageSource</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>configuration</span>&gt;</span>
+</span></code></pre>
+<p>File B. <code>disk_drive_2/NuGet.Config</code>:</p>
+<div class=codeHeader id=code-try-6 data-bi-name=code-header><span class=language>XML</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-xml data-author-content='<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <config>
+        <add key="repositoryPath" value="disk_drive_2/tmp" />
+    </config>
+    <packageRestore>
+        <add key="enabled" value="True" />
+    </packageRestore>
+</configuration>
+'><span><span class=hljs-meta>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>configuration</span>&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>config</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"repositoryPath"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"disk_drive_2/tmp"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>config</span>&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>packageRestore</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"enabled"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"True"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>packageRestore</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>configuration</span>&gt;</span>
+</span></code></pre>
+<p>File C. <code>disk_drive_2/Project1/NuGet.Config</code>:</p>
+<div class=codeHeader id=code-try-7 data-bi-name=code-header><span class=language>XML</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-xml data-author-content='<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <config>
+        <add key="repositoryPath" value="External/Packages" />
+        <add key="defaultPushSource" value="https://MyPrivateRepo/ES/api/v2/package" />
+    </config>
+    <packageSources>
+        <clear /> <!-- ensure only the sources defined below are used -->
+        <add key="MyPrivateRepo - ES" value="https://MyPrivateRepo/ES/nuget" />
+    </packageSources>
+</configuration>
+'><span><span class=hljs-meta>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>configuration</span>&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>config</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"repositoryPath"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"External/Packages"</span> /&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"defaultPushSource"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://MyPrivateRepo/ES/api/v2/package"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>config</span>&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>packageSources</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>clear</span> /&gt;</span> <span class=hljs-comment>&lt;!-- ensure only the sources defined below are used --&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"MyPrivateRepo - ES"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://MyPrivateRepo/ES/nuget"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>packageSources</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>configuration</span>&gt;</span>
+</span></code></pre>
+<p>File D. <code>disk_drive_2/Project2/NuGet.Config</code>:</p>
+<div class=codeHeader id=code-try-8 data-bi-name=code-header><span class=language>XML</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-xml data-author-content='<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <packageSources>
+        <!-- Add this repository to the list of available repositories -->
+        <add key="MyPrivateRepo - DQ" value="https://MyPrivateRepo/DQ/nuget" />
+    </packageSources>
+</configuration>
+'><span><span class=hljs-meta>&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>configuration</span>&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>packageSources</span>&gt;</span>
+        <span class=hljs-comment>&lt;!-- Add this repository to the list of available repositories --&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"MyPrivateRepo - DQ"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://MyPrivateRepo/DQ/nuget"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>packageSources</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>configuration</span>&gt;</span>
+</span></code></pre>
+<p>NuGet then loads and applies settings as follows, depending on where it's invoked:</p>
+<ul>
+<li><p><strong>Invoked from <code>disk_drive_1/users</code></strong>: Only the default repository listed in the user-level configuration file (A) is used, because that's the only file found on <code>disk_drive_1</code>.</p>
+</li>
+<li><p><strong>Invoked from <code>disk_drive_2/</code> or <code>disk_drive_/tmp</code></strong>: The user-level file (A) is loaded first, then NuGet goes to the root of <code>disk_drive_2</code> and finds file (B). NuGet also looks for a configuration file in <code>/tmp</code> but does not find one. As a result, the default repository on <code>nuget.org</code> is used, package restore is enabled, and packages get expanded in <code>disk_drive_2/tmp</code>.</p>
+</li>
+<li><p><strong>Invoked from <code>disk_drive_2/Project1</code> or <code>disk_drive_2/Project1/Source</code></strong>: The user-level file (A) is loaded first, then NuGet loads file (B) from the root of <code>disk_drive_2</code>, followed by file (C). Settings in (C) override those in (B) and (A), so the <code>repositoryPath</code> where packages get installed is <code>disk_drive_2/Project1/External/Packages</code> instead of <code>disk_drive_2/tmp</code>. Also, because (C) clears <code>&lt;packageSources&gt;</code>, nuget.org is no longer available as a source leaving only <code>https://MyPrivateRepo/ES/nuget</code>.</p>
+</li>
+<li><p><strong>Invoked from <code>disk_drive_2/Project2</code> or <code>disk_drive_2/Project2/Source</code></strong>: The user-level file (A) is loaded first followed by file (B) and file (D). Because <code>packageSources</code> is not cleared, both <code>nuget.org</code> and <code>https://MyPrivateRepo/DQ/nuget</code> are available as sources. Packages get expanded in <code>disk_drive_2/tmp</code> as specified in (B).</p>
+</li>
+</ul>
+<div class=heading-wrapper data-heading-level=h2><a class="anchor-link docon docon-link" href=#additional-user-wide-configuration aria-label="Section titled: Additional user wide configuration"></a><h2 id=additional-user-wide-configuration class=heading-anchor>Additional user wide configuration</h2></div>
+<p>Starting with 5.7, NuGet has added support for additional user wide configuration files. This allows third-party vendors to add additional user configuration files without elevation.
+These configuration files are found in the standard user wide configuration folder within a <code>config</code> subfolder.
+All files ending with <code>.config</code> or <code>.Config</code> will be considered.
+These files cannot be edited by the standard tooling.</p>
+<div class=has-inner-focus><table aria-label="Table 2" class="table table-sm">
+<thead>
+<tr>
+<th>OS Platform</th>
+<th>Additional Configurations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%appdata%\NuGet\config\*.Config</code></td>
+</tr>
+<tr>
+<td>Mac/Linux</td>
+<td><code>~/.config/NuGet/config/*.config</code> or <code>~/.nuget/config/*.config</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class=heading-wrapper data-heading-level=h2><a class="anchor-link docon docon-link" href=#nuget-defaults-file aria-label="Section titled: NuGet defaults file"></a><h2 id=nuget-defaults-file class=heading-anchor>NuGet defaults file</h2></div>
+<p>The <code>NuGetDefaults.Config</code> file exists to specify package sources from which packages are installed and updated, and to control the default target for publishing packages with <code>nuget push</code>. Because administrators can conveniently (using Group Policy, for example) deploy consistent <code>NuGetDefaults.Config</code> files to developer and build machines, they can ensure that everyone in the organization is using the correct package sources rather than nuget.org.</p>
+<div class="alert is-primary">
+<p class=alert-title><span class="docon docon-status-info-outline" aria-hidden=true></span> Important</p>
+<p>The <code>NuGetDefaults.Config</code> file never causes a package source to be removed from a developer's NuGet configuration. That means if the developer has already used NuGet and therefore has the nuget.org package source registered, it won't be removed after the creation of a <code>NuGetDefaults.Config</code> file.</p>
+<p>Furthermore, neither <code>NuGetDefaults.Config</code> nor any other mechanism in NuGet can prevent access to package sources like nuget.org. If an organization wishes to block such access, it must use other means such as firewalls to do so.</p>
+</div>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#nugetdefaultsconfig-location aria-label="Section titled: NuGetDefaults.Config location"></a><h3 id=nugetdefaultsconfig-location class=heading-anchor><code>NuGetDefaults.Config</code> location</h3></div>
+<p>The following table describes where the <code>NuGetDefaults.Config</code> file should be stored, depending on the target OS:</p>
+<div class=has-inner-focus><table aria-label="Table 3" class="table table-sm">
+<thead>
+<tr>
+<th>OS Platform</th>
+<th><code>NuGetDefaults.Config</code> Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><strong>Visual Studio 2017 or NuGet 4.x+:</strong> <code>%ProgramFiles(x86)%\NuGet</code> <br><strong>Visual Studio 2015 and earlier or NuGet 3.x and earlier:</strong> <code>%PROGRAMDATA%\NuGet</code></td>
+</tr>
+<tr>
+<td>Mac/Linux</td>
+<td><code>$XDG_DATA_HOME</code> (typically <code>~/.local/share</code> or <code>/usr/local/share</code>, depending on OS distribution)</td>
+</tr>
+</tbody>
+</table></div>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#nugetdefaultsconfig-settings aria-label="Section titled: NuGetDefaults.Config settings"></a><h3 id=nugetdefaultsconfig-settings class=heading-anchor>NuGetDefaults.Config settings</h3></div>
+<ul>
+<li><p><code>packageSources</code>: this collection has the same meaning as <code>packageSources</code> in regular config files and specifies the default sources. NuGet uses the sources in order when installing or updating packages in projects using the <code>packages.config</code> management format. For projects using the PackageReference format, NuGet uses local sources first, then sources on network shares, then HTTP sources, regardless of the order in the configuration files. NuGet always ignores the order of sources with restore operations.</p>
+</li>
+<li><p><code>disabledPackageSources</code>: this collection also has the same meaning as in <code>NuGet.Config</code> files, where each affected source is listed by its name and a <code>true</code>/<code>false</code> value indicating whether it's disabled. This allows the source name and URL to remain in <code>packageSources</code> without having it turned on by default. Individual developers can then re-enable the source by setting the source's value to <code>false</code> in other <code>NuGet.Config</code> files without having to find the correct URL again. This is also useful to supply developers with a full list of internal source URLs for an organization while enabling only an individual team's source by default.</p>
+</li>
+<li><p><code>defaultPushSource</code>: specifies the default target for <code>nuget push</code> operations, overriding the built-in default of <code>nuget.org</code>. Administrators can deploy this setting to avoid publishing internal packages to the public <code>nuget.org</code> by accident, as developers specifically need to use <code>nuget push -Source</code> to publish to <code>nuget.org</code>.</p>
+</li>
+</ul>
+<div class=heading-wrapper data-heading-level=h3><a class="anchor-link docon docon-link" href=#example-nugetdefaultsconfig-and-application aria-label="Section titled: Example NuGetDefaults.Config and application"></a><h3 id=example-nugetdefaultsconfig-and-application class=heading-anchor>Example NuGetDefaults.Config and application</h3></div>
+<div class=codeHeader id=code-try-9 data-bi-name=code-header><span class=language>XML</span>
+ <button type=button class="action position-relative display-none-print" data-bi-name=copy>
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-edit-copy"></span>
+ </span>
+ <span>Copy</span>
+ <div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden=true>
+ <span class="icon font-size-lg">
+ <span class="docon docon-check-mark"></span>
+ </span>
+ </div>
+ </button>
+ </div><pre class=has-inner-focus><code class=lang-xml data-author-content="<?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+<configuration>
+    <!-- defaultPushSource key works like the 'defaultPushSource' key of NuGet.Config files. -->
+    <!-- This can be used by administrators to prevent accidental publishing of packages to nuget.org. -->
+    <config>
+        <add key=&quot;defaultPushSource&quot; value=&quot;https://contoso.com/packages/&quot; />
+    </config>
+
+    <!-- Default Package Sources; works like the 'packageSources' section of NuGet.Config files. -->
+    <!-- This collection cannot be deleted or modified but can be disabled/enabled by users. -->
+    <packageSources>
+        <add key=&quot;Contoso Package Source&quot; value=&quot;https://contoso.com/packages/&quot; />
+        <add key=&quot;nuget.org&quot; value=&quot;https://api.nuget.org/v3/index.json&quot; />
+    </packageSources>
+
+    <!-- Default Package Sources that are disabled by default. -->
+    <!-- Works like the 'disabledPackageSources' section of NuGet.Config files. -->
+    <!-- Sources cannot be modified or deleted either but can be enabled/disabled by users. -->
+    <disabledPackageSources>
+        <add key=&quot;nuget.org&quot; value=&quot;true&quot; />
+    </disabledPackageSources>
+</configuration>
+"><span><span class=hljs-meta>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class=hljs-tag>&lt;<span class=hljs-name>configuration</span>&gt;</span>
+    <span class=hljs-comment>&lt;!-- defaultPushSource key works like the 'defaultPushSource' key of NuGet.Config files. --&gt;</span>
+    <span class=hljs-comment>&lt;!-- This can be used by administrators to prevent accidental publishing of packages to nuget.org. --&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>config</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"defaultPushSource"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://contoso.com/packages/"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>config</span>&gt;</span>
+
+    <span class=hljs-comment>&lt;!-- Default Package Sources; works like the 'packageSources' section of NuGet.Config files. --&gt;</span>
+    <span class=hljs-comment>&lt;!-- This collection cannot be deleted or modified but can be disabled/enabled by users. --&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>packageSources</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"Contoso Package Source"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://contoso.com/packages/"</span> /&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"nuget.org"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"https://api.nuget.org/v3/index.json"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>packageSources</span>&gt;</span>
+
+    <span class=hljs-comment>&lt;!-- Default Package Sources that are disabled by default. --&gt;</span>
+    <span class=hljs-comment>&lt;!-- Works like the 'disabledPackageSources' section of NuGet.Config files. --&gt;</span>
+    <span class=hljs-comment>&lt;!-- Sources cannot be modified or deleted either but can be enabled/disabled by users. --&gt;</span>
+    <span class=hljs-tag>&lt;<span class=hljs-name>disabledPackageSources</span>&gt;</span>
+        <span class=hljs-tag>&lt;<span class=hljs-name>add</span> <span class=hljs-attr>key</span>=<span class=hljs-string>"nuget.org"</span> <span class=hljs-attr>value</span>=<span class=hljs-string>"true"</span> /&gt;</span>
+    <span class=hljs-tag>&lt;/<span class=hljs-name>disabledPackageSources</span>&gt;</span>
+<span class=hljs-tag>&lt;/<span class=hljs-name>configuration</span>&gt;</span>
+</span></code></pre>
+ </div>
+ <div id=assertive-live-region role=alert aria-live=assertive class=visually-hidden aria-relevant=additions aria-atomic=true></div>
+ <div id=polite-live-region role=status aria-live=polite class=visually-hidden aria-relevant=additions aria-atomic=true></div>
+ 
+ </main>
+ 
+ 
+ 
+<section class="feedback-section position-relative" data-bi-name=feedback-section>
+ <h2 id=feedback class="title is-3 margin-top-sm">Feedback</h2>
+ <div class="alert choose-feedback-type padding-bottom-sm">
+ <p id=send-feedback-about>Submit and view feedback for</p>
+ <div class="choose-feedback-buttons buttons margin-top-xs">
+ <a class="button has-external-link-indicator feedback-type-product" aria-label="Send feedback about this product" href=https://github.com/NuGet/Home/issues/ data-bi-name=product-feedback>
+ <span>This product</span>
+ </a>
+ <a class="button feedback-type-product github-link" aria-label="Send feedback about this page" data-bi-name=create-issue-on-github href="https://github.com/NuGet/docs.microsoft.com-nuget/issues/new?title=&amp;body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23%23%23%23%20Document%20Details%0A%0A%E2%9A%A0%20*Do%20not%20edit%20this%20section.%20It%20is%20required%20for%20learn.microsoft.com%20%E2%9E%9F%20GitHub%20issue%20linking.*%0A%0A*%20ID%3A%20370d9d91-9f35-79aa-3ace-7b77436e988f%0A*%20Version%20Independent%20ID%3A%203da4591a-3d3d-c07a-6672-97964de13b14%0A*%20Content%3A%20%5BCommon%20NuGet%20configurations%5D(https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior)%0A*%20Content%20Source%3A%20%5Bdocs%2Fconsume-packages%2Fconfiguring-nuget-behavior.md%5D(https%3A%2F%2Fgithub.com%2FNuGet%2Fdocs.microsoft.com-nuget%2Fblob%2Fmain%2Fdocs%2Fconsume-packages%2Fconfiguring-nuget-behavior.md)%0A*%20Service%3A%20**nuget**%0A*%20GitHub%20Login%3A%20%40JonDouglas%0A*%20Microsoft%20Alias%3A%20**jodou**">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-brand-github"></span>
+ </span>
+ <span>This page</span>
+ </a>
+ </div>
+ </div>
+ <div class="action-container display-flex justify-content-flex-end margin-block-xxs">
+ <a class="view-on-github has-external-link-indicator" data-bi-name=view-on-github href="https://github.com/NuGet/docs.microsoft.com-nuget/issues?utf8=%E2%9C%93&amp;q=%223da4591a-3d3d-c07a-6672-97964de13b14%22&amp;in=body">
+ <span aria-hidden=true class="docon docon-brand-github"></span>
+ <span>View all page feedback</span>
+ </a>
+ </div>
+</section>
+ 
+ 
+ 
+ <div id=ms--additional-resources-mobile role=complementary aria-label="Additional resources" class="display-none-desktop display-none-print sf-hidden">
+ 
+ 
+ 
+ 
+ 
+ 
+ </div>
+ <div class="border-top is-visible-interactive has-default-focus margin-top-sm sf-hidden">
+ 
+ </div>
+ </div>
+ <div id=ms--additional-resources class="right-container column is-4-desktop display-none display-block-desktop" data-bi-name=pageactions role=complementary aria-label="Additional resources">
+ <div id=affixed-right-container class="margin-top-sm-tablet position-sticky" data-bi-name=right-column style=top:36px;bottom:36px>
+ <h2 id=ms--additional-resources-heading class="title is-6 margin-top-md">Additional resources</h2>
+ <section id=right-rail-events data-bi-name=events-card hidden class=sf-hidden></section>
+ <section id=right-rail-training data-bi-name=learning-resources-card hidden class=sf-hidden></section>
+ <section id=right-rail-recommendations data-bi-name=recommendations>
+ <hr class="hr display-none display-block-desktop">
+ <article class="margin-top-md margin-top-sm-desktop">
+ 
+ <p class="font-weight-semibold font-size-md display-flex align-items-center">
+ <span class="icon margin-right-xxs" aria-hidden=true>
+ <span class="docon docon-book-art64"></span>
+ </span>
+ Documentation
+ </p>
+ 
+ <div class=margin-top-xs>
+ 
+ <ul aria-live=polite aria-relevant=additions id=right-rail-recommendations-list-1>
+ 
+ <li class="padding-none margin-top-xs margin-bottom-none position-relative">
+ 
+ 
+ <p class=line-clamp-3>
+ <a class="display-block inner-focus font-weight-semibold font-size-sm has-line-height-reset stretched-link" href="https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file?source=recommendations" data-bi-name=right-rail-recommendation-item-0>
+ nuget.config File Reference
+ </a>
+ </p>
+ 
+ 
+ <p class="font-size-sm has-line-height-reset color-text-subtle margin-top-xxs line-clamp-3">
+ NuGet.Config file reference including the config, bindingRedirects, packageRestore, solution, and packageSource sections.
+ </p>
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative">
+ 
+ 
+ <p class=line-clamp-3>
+ <a class="display-block inner-focus font-weight-semibold font-size-sm has-line-height-reset stretched-link" href="https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-sources?source=recommendations" data-bi-name=right-rail-recommendation-item-1>
+ NuGet CLI sources command
+ </a>
+ </p>
+ 
+ 
+ <p class="font-size-sm has-line-height-reset color-text-subtle margin-top-xxs line-clamp-3">
+ Reference for the nuget.exe sources command
+ </p>
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative">
+ 
+ 
+ <p class=line-clamp-3>
+ <a class="display-block inner-focus font-weight-semibold font-size-sm has-line-height-reset stretched-link" href="https://learn.microsoft.com/en-us/nuget/reference/nuget-exe-cli-reference?source=recommendations" data-bi-name=right-rail-recommendation-item-2>
+ NuGet Command-Line Interface (CLI) Reference
+ </a>
+ </p>
+ 
+ 
+ <p class="font-size-sm has-line-height-reset color-text-subtle margin-top-xxs line-clamp-3">
+ Command-line reference index for the nuget.exe CLI
+ </p>
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative expandable sf-hidden">
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative expandable sf-hidden">
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative expandable sf-hidden">
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative expandable sf-hidden">
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </li>
+ 
+ <li class="padding-none margin-top-sm margin-bottom-none position-relative expandable sf-hidden">
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </li>
+ 
+ </ul>
+ 
+ </div>
+ 
+ 
+ <button type=button aria-expanded=false data-show-more class="link-button font-weight-semibold font-size-sm margin-top-sm" aria-controls=right-rail-recommendations-list-1 data-title="Show 5 more" data-bi-name=show-more-btn>
+ <span class=show-more-text>Show 5 more</span>
+ 
+ </button>
+ 
+ 
+ </article>
+ </section>
+ <nav id=side-doc-outline class=doc-outline data-bi-name="intopic toc" role=navigation aria-label="In this article">
+ <h3 class=sf-hidden>In this article</h3>
+ </nav>
+ <section id=right-rail-qna class="margin-top-xxs sf-hidden" data-bi-name=qna-link-card hidden></section>
+ </div>
+ </div>
+ </div>
+ 
+ </section>
+ 
+ 
+ <aside id=interactive-container class="interactive-container is-visible-interactive column has-body-background-dark sf-hidden">
+ </aside>
+ 
+ </div>
+ </div>
+ 
+ <section class="border-top has-default-focus is-hidden-interactive margin-top-sm">
+ <footer id=footer data-bi-name=footer class="footer-layout uhf-container has-padding" role=contentinfo>
+ <div class="display-flex is-full-height padding-right-lg-desktop">
+ <a data-mscc-ic=false class="locale-selector-link button button-sm button-clear flex-shrink-0" href="https://learn.microsoft.com/en-us/locale?target=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fnuget%2Fconsume-packages%2Fconfiguring-nuget-behavior" data-bi-name=select-locale aria-label="Content language selector. Currently set to English (United States).">
+ <span class=icon aria-hidden=true>
+ <span class="docon docon-world"></span>
+ </span>
+ <span class=local-selector-link-text>English (United States)</span></a>
+ <div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+ <button class="dropdown-trigger button button-clear button-sm has-inner-focus theme-dropdown-trigger" aria-controls=theme-menu aria-expanded=false title=Theme data-bi-name=theme>
+ <span class=icon>
+ <span class="docon docon-sun" aria-hidden=true></span>
+ </span>
+ <span>Theme</span>
+ <span class="icon expanded-indicator" aria-hidden=true>
+ <span class="docon docon-chevron-down-light"></span>
+ </span>
+ </button>
+ <div class="dropdown-menu sf-hidden" id=theme-menu role=menu>
+ 
+ </div>
+</div>
+ </div>
+ </div>
+ <ul class=links data-bi-name=footerlinks>
+ <li class="manage-cookies-holder sf-hidden" hidden></li>
+ <li><a data-mscc-ic=false href=https://learn.microsoft.com/en-us/previous-versions/ data-bi-name=archivelink>Previous Versions</a></li>
+ <li><a data-mscc-ic=false href=https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog data-bi-name=bloglink>Blog</a></li>
+ <li><a data-mscc-ic=false href=https://learn.microsoft.com/en-us/contribute/ data-bi-name=contributorGuide>Contribute</a></li>
+ <li><a data-mscc-ic=false href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name=privacy>Privacy</a></li>
+ <li><a data-mscc-ic=false href=https://learn.microsoft.com/en-us/legal/termsofuse data-bi-name=termsofuse>Terms of Use</a></li>
+ <li><a data-mscc-ic=false href=https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx data-bi-name=trademarks>Trademarks</a></li>
+ <li>© Microsoft 2023</li>
+ </ul>
+</footer>
+ </section>
+ <div id=action-panel role=region aria-label="Action Panel" class="action-panel has-default-focus sf-hidden" tabindex=-1></div>
