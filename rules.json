@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "https://ehgt.org/m/*jpg",
+            "initiatorDomains": [
+                "e-hentai.org"
+            ],
+            "resourceTypes": [
+                "image"
+            ]
+        }
+    }
+]

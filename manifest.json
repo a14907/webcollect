@@ -10,8 +10,11 @@
         "default_popup":"popup/popup.html"
     },
     "permissions": [
-        "tabs"
+        "tabs", "declarativeNetRequest"
     ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
     "content_scripts": [
         {
             "matches": [
@@ -19,5 +22,14 @@
             ],
             "js": ["content-scripts/content.js"]
         }
-    ]
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    }
 }
