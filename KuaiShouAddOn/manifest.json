@@ -1,0 +1,35 @@
+{
+    "name": "Ehentai helper",
+    "version": "0.0.0.1",
+    "manifest_version": 3,
+    "description": "An extension to help download EHentai torrent file.",
+    "icons": {
+        "128": "icons/eh128x128.png"
+    },
+    "action":{
+        "default_popup":"popup/popup.html"
+    },
+    "permissions": [
+        "tabs", "declarativeNetRequest"
+    ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+              "https://e-hentai.org/*"
+            ],
+            "js": ["content-scripts/content.js"]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    }
+}
