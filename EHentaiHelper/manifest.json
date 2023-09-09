@@ -21,6 +21,12 @@
               "https://e-hentai.org/*", "https://www.bilibili.com/video/*"
             ],
             "js": ["content-scripts/content.js"]
+        },
+        {
+            "matches": [
+              "https://www.newtonsoft.com/*"
+            ],
+            "js": ["content-scripts/notranslate.js"]
         }
     ],
     "declarative_net_request": {
