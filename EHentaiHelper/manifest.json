@@ -24,7 +24,7 @@
         },
         {
             "matches": [
-              "https://www.newtonsoft.com/*"
+                "https://www.newtonsoft.com/*", "https://endjin.com/*"
             ],
             "js": ["content-scripts/notranslate.js"]
         }
