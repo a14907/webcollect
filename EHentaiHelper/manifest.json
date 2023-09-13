@@ -24,9 +24,9 @@
         },
         {
             "matches": [
-                "https://www.newtonsoft.com/*", "https://endjin.com/*"
+                "https://www.newtonsoft.com/*", "https://endjin.com/*", "https://tieba.baidu.com/*"
             ],
-            "js": ["content-scripts/notranslate.js"]
+            "js": ["content-scripts/contentchange.js"]
         }
     ],
     "declarative_net_request": {
