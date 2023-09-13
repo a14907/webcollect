@@ -10,10 +10,17 @@ if (window.location.host == 'endjin.com') {
 }
 
 if (window.location.host == 'tieba.baidu.com') {
-    document.querySelectorAll('.search-sec').forEach(m=>m.remove())
-    document.querySelectorAll('.top-sec').forEach(m=>m.remove())
-    document.querySelectorAll('.left-sec').forEach(m=>m.remove())
-    document.querySelectorAll('.userbar').forEach(m=>m.remove())
-    document.querySelectorAll('.r-top-sec').forEach(m=>m.remove())
-    document.querySelectorAll('.r-right-sec').forEach(m=>m.remove())
+    setTimeout(function(){
+        document.querySelectorAll('.userbar').forEach(m=>m.style.visibility='hidden')
+        document.querySelector("body > ul").hidden=true
+        document.querySelector("#spage-tbshare-container").hidden=true
+    },1000)
+
+    document.querySelectorAll('.search-sec').forEach(m=>m.style.visibility='hidden')
+    document.querySelectorAll('.top-sec').forEach(m=>m.style.visibility='hidden')
+    document.querySelectorAll('.left-sec').forEach(m=>m.style.visibility='hidden')
+    document.querySelectorAll('.r-top-sec').forEach(m=>m.style.visibility='hidden')
+    document.querySelectorAll('.r-right-sec').forEach(m=>m.style.visibility='hidden')
+    
 }
+ 
