@@ -9,6 +9,10 @@ if (window.location.host == 'endjin.com') {
     document.querySelectorAll('.js-table-wrap').forEach(m=>m.classList.add('notranslate'))
 }
 
+if (window.location.host == 'devblogs.microsoft.com') {
+    document.querySelectorAll('.table-responsive').forEach(m=>m.classList.add('notranslate'))
+}
+
 if (window.location.host == 'tieba.baidu.com') {
     setTimeout(function(){
         document.querySelectorAll('.userbar').forEach(m=>m.style.visibility='hidden')

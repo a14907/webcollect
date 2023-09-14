@@ -6,11 +6,12 @@
     "icons": {
         "128": "icons/eh128x128.png"
     },
-    "action":{
-        "default_popup":"popup/popup.html"
+    "action": {
+        "default_popup": "popup/popup.html"
     },
     "permissions": [
-        "tabs", "declarativeNetRequest"
+        "tabs",
+        "declarativeNetRequest"
     ],
     "background": {
         "service_worker": "service-worker.js"
@@ -18,15 +19,23 @@
     "content_scripts": [
         {
             "matches": [
-              "https://e-hentai.org/*", "https://www.bilibili.com/video/*"
+                "https://e-hentai.org/*",
+                "https://www.bilibili.com/video/*"
             ],
-            "js": ["content-scripts/content.js"]
+            "js": [
+                "content-scripts/content.js"
+            ]
         },
         {
             "matches": [
-                "https://www.newtonsoft.com/*", "https://endjin.com/*", "https://tieba.baidu.com/*"
+                "https://www.newtonsoft.com/*",
+                "https://endjin.com/*",
+                "https://tieba.baidu.com/*",
+                "https://devblogs.microsoft.com/*"
             ],
-            "js": ["content-scripts/contentchange.js"]
+            "js": [
+                "content-scripts/contentchange.js"
+            ]
         }
     ],
     "declarative_net_request": {
