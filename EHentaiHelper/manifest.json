@@ -31,7 +31,8 @@
                 "https://www.newtonsoft.com/*",
                 "https://endjin.com/*",
                 "https://tieba.baidu.com/*",
-                "https://devblogs.microsoft.com/*"
+                "https://devblogs.microsoft.com/*",
+                "https://learn.microsoft.com/*"
             ],
             "js": [
                 "content-scripts/contentchange.js"
