@@ -1,31 +1,3 @@
 [
-    {
-        "id": 1,
-        "priority": 1,
-        "action": {
-            "type": "block"
-        },
-        "condition": {
-            "urlFilter": "https://ehgt.org/m/*jpg",
-            "initiatorDomains": [
-                "e-hentai.org"
-            ],
-            "resourceTypes": [
-                "image"
-            ]
-        }
-    },    
-    {
-        "id": 2,
-        "priority": 1,
-        "action": {
-            "type": "block"
-        },
-        "condition": {
-            "urlFilter": "https://mat1.gtimg.com/www/mb/js/portal/mi.MiniNav_110901V1.js",
-            "initiatorDomains": [
-                "news.qq.com"
-            ]
-        }
-    }
+
 ]
