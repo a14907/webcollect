@@ -29,6 +29,11 @@ if (window.location.host == 'tieba.baidu.com') {
     document.querySelectorAll('.left-sec').forEach(m=>m.style.visibility='hidden')
     document.querySelectorAll('.r-top-sec').forEach(m=>m.style.visibility='hidden')
     document.querySelectorAll('.r-right-sec').forEach(m=>m.style.visibility='hidden')
+
+    
+    document.querySelectorAll('#head').forEach(m=>m.style.visibility='hidden')
+    document.querySelectorAll('.right_section').forEach(m=>m.style.visibility='hidden')
+    document.querySelectorAll('.p_author_face').forEach(m=>m.style.visibility='hidden')
     
 }
  
