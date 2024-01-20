@@ -188,15 +188,32 @@
     </details>
     <details>
         <summary>03-14 对象移动、移动构造函数、移动赋值运算符</summary>
-        <ul>
-            <li>对象移动的概念</li>
-            <li>移动构造函数和移动赋值运算符概念</li>
+        <ol>
+            <li>
+                对象移动的概念
+            </li>
+            <li>
+                移动构造函数和移动赋值运算符概念
+                <p>移动后不能再使用</p>
+                <p>移动：不是真的移动了内存，只是所有者发生变更</p>	  
+                <p>移动构造函数：Time::Time(TIme&& t){}</p>  
+                <p>noexception</p>
+                <p>移动构造函数调用，一种是系统决定，一种是结合std::move手动执行</p>
+            </li>
             <li>移动构造函数演示</li>
-            <li>移动赋值运算符演示</li>
-            <li>囚用4均同</li>
+            <li>移动赋值运算符演示
+                <p>跟普通的赋值运算符的区别就是 A& operator=(A && src){}</p>
+            </li>
             <li>合成的移动操作</li>
-            <li>总结</li>
-        </ul>
+            <li>总结
+                <ul>
+                    <li>尽量给类增加移动构造函数和移动赋值运算符;</li>
+                    <li>noexcept</li>
+                    <li>该给nullptr的就要给nullptr,让被移动对象随时处于一种能够被析构的状态;</li>
+                    <li>没有移动，会调用拷贝代替</li>
+                </ul>
+            </li>
+        </ol>
     </details>
     <details>
         <summary>03-15 继承的构造函数、多重继承、虚继承</summary>
