@@ -1,88 +1,412 @@
-<!DOCTYPE html> <html lang=en style><!--
+<!DOCTYPE html>
+<html lang=en style><!--
  Page saved with SingleFile 
  url: http://localhost:81/demo.html 
  saved date: Wed Jan 17 2024 10:25:44 GMT+0800 (中国标准时间)
---><meta charset=utf-8>
+-->
+<meta charset=utf-8>
 <meta name=viewport content="width=device-width, initial-scale=1.0">
 <title>c++知识点</title>
-<style data-id=immersive-translate-input-injected-css>@-webkit-keyframes immersive-translate-loading-animation{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(359deg)}}@keyframes immersive-translate-loading-animation{from{transform:rotate(0deg)}to{transform:rotate(359deg)}}@keyframes immersiveTranslateShadowRolling{0%{box-shadow:0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0)}12%{box-shadow:100px 0 var(--loading-color),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0)}25%{box-shadow:110px 0 var(--loading-color),100px 0 var(--loading-color),0px 0 rgba(255,255,255,0),0px 0 rgba(255,255,255,0)}36%{box-shadow:120px 0 var(--loading-color),110px 0 var(--loading-color),100px 0 var(--loading-color),0px 0 rgba(255,255,255,0)}50%{box-shadow:130px 0 var(--loading-color),120px 0 var(--loading-color),110px 0 var(--loading-color),100px 0 var(--loading-color)}62%{box-shadow:200px 0 rgba(255,255,255,0),130px 0 var(--loading-color),120px 0 var(--loading-color),110px 0 var(--loading-color)}75%{box-shadow:200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),130px 0 var(--loading-color),120px 0 var(--loading-color)}87%{box-shadow:200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),130px 0 var(--loading-color)}100%{box-shadow:200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0),200px 0 rgba(255,255,255,0)}}@media (prefers-color-scheme:dark){}</style><meta name=referrer content=no-referrer><link rel=canonical href=http://localhost:81/demo.html><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
-<body> <details><summary>01-01 c++ 语言课程详细介绍</summary><p>笔记</p></details>
-<details><summary>02-01 语言特性、工程构成、可移植性</summary><p>笔记</p></details>
-<details><summary>02-02 auto、头文件防卫、引用、常量</summary><p>笔记</p></details>
-<details><summary>02-03 命名空间简介、基本输入输出精解</summary><p>笔记</p></details>
-<details><summary>02-04 范围for、new内存动态分配、nullptr</summary><p>笔记</p></details>
-<details><summary>02-05 结构、权限修饰符、类简介</summary><p>笔记</p></details>
-<details><summary>02-06 函数新特性、内联函数、const详解</summary><p>笔记</p></details>
-<details><summary>02-07 string类型介绍</summary><p>笔记</p></details>
-<details><summary>02-08 vector类型介绍</summary><p>笔记</p></details>
-<details><summary>02-09 迭代器精彩演绎，失效分析及弥补、实战</summary><p>笔记</p></details>
-<details><summary>02-10 类型转换：static_cast等</summary><p>笔记</p></details>
-<details><summary>03-01 成员函数、对象拷贝、私有成员</summary><p>笔记</p></details>
-<details><summary>03-02 构造函数详解，explicit，初始化列表</summary><p>笔记</p></details>
-<details><summary>03-03 inline、const、mutable、this、stat</summary><p>笔记</p></details>
-<details><summary>03-04 类内初始化、默认构造函数、=default;</summary><p>笔记</p></details>
-<details><summary>03-05 拷贝构造函数</summary><p>笔记</p></details>
-<details><summary>03-06 重载运算符、拷贝赋值运算符、析构函数</summary><p>笔记</p></details>
-<details><summary>03-07 派生类、调用顺序、访问等级、函数遮蔽</summary><p>笔记</p></details>
-<details><summary>03-08 基类指针、虚纯虚函数、多态性、虚析构</summary><p>笔记</p></details>
-<details><summary>03-09 友元函数、友元类、友元成员函数</summary><p>笔记</p></details>
-<details><summary>03-10 RTTI、dynamic_cast、typeid、虚函数表</summary><p>笔记</p></details>
-<details><summary>03-11 基类与派生类关系的详细再探讨</summary><p>笔记</p></details>
-<details><summary>03-12 左值、右值，左值引用、右值引用、move</summary><p>笔记</p></details>
-<details><summary>03-13 临时对象深入探讨、解析，提高性能手段</summary><p>笔记</p></details>
-<details><summary>03-14 对象移动、移动构造函数、移动赋值运算符</summary><p>笔记</p></details>
-<details><summary>03-15 继承的构造函数、多重继承、虚继承</summary><p>笔记</p></details>
-<details><summary>03-16 类型转换构造函数、运算符，类成员指针</summary><p>笔记</p></details>
-<details><summary>04-01 模板概念，函数模板定义、调用</summary><p>笔记</p></details>
-<details><summary>04-02 类模板概念，类模板定义、使用</summary><p>笔记</p></details>
-<details><summary>04-03 typename场合、默认模板参数、趣味写法分析</summary><p>笔记</p></details>
-<details><summary>04-04 成员函数模板，显式实例化、声明</summary><p>笔记</p></details>
-<details><summary>04-05 using定义模板别名，显式指定模板参数</summary><p>笔记</p></details>
-<details><summary>04-06 模板全特化、偏特化(局部特化)</summary><p>笔记</p></details>
-<details><summary>04-07 可变参模板</summary><p>笔记</p></details>
-<details><summary>04-08 可变参模板续、模板模板参数</summary><p>笔记</p></details>
-<details><summary>05-01 直接内存管理(new-delete)、创建新工程观察内存泄漏</summary><p>笔记</p></details>
-<details><summary>05-02 new、delete探秘，智能指针概述、shared_ptr</summary><p>笔记</p></details>
-<details><summary>05-03 shared_ptr常用操作、计数、自定义删除器等等</summary><p>笔记</p></details>
-<details><summary>05-04 weak_ptr概述、weak_ptr常用操作、尺寸</summary><p>笔记</p></details>
-<details><summary>05-05 shared_ptr使用场景、陷阱、性能分析、使用建议</summary><p>笔记</p></details>
-<details><summary>05-06 unique_ptr概述、常用操作</summary><p>笔记</p></details>
-<details><summary>05-07 返回unique_ptr、删除器、尺寸、智能指针</summary><p>笔记</p></details>
-<details><summary>06-01 并发基本概念及实现，进程、线程基本概念</summary><p>笔记</p></details>
-<details><summary>06-02 线程启动、结束，创建线程多法、join，detach</summary><p>笔记</p></details>
-<details><summary>06-03 线程传参详解，detach()大坑，成员函数做线程函数</summary><p>笔记</p></details>
-<details><summary>06-04 创建多个线程、数据共享问题分析、案例代码</summary><p>笔记</p></details>
-<details><summary>06-05 互斥量概念、用法、死锁演示及解决详解</summary><p>笔记</p></details>
-<details><summary>06-06 unique_lock详解</summary><p>笔记</p></details>
-<details><summary>06-07 单例设计模式共享数据分析、解决，call_once</summary><p>笔记</p></details>
-<details><summary>06-08 condition_variable、wait</summary><p>笔记</p></details>
-<details><summary>06-09 async、future、packaged_task、pro</summary><p>笔记</p></details>
-<details><summary>06-10 future其他成员函数、shared_future、ato</summary><p>笔记</p></details>
-<details><summary>06-11 std atomic续谈、std async深入谈</summary><p>笔记</p></details>
-<details><summary>06-12 windows临界区、其他各种mutex互斥量</summary><p>笔记</p></details>
-<details><summary>06-13 补充知识、线程池浅谈、数量谈、总结</summary><p>笔记</p></details>
-<details><summary>07-01 new、delete的进一步认识</summary><p>笔记</p></details>
-<details><summary>07-02 new细节探秘，重载类operator new delete</summary><p>笔记</p></details>
-<details><summary>07-03 内存池概念、代码实现和详细分析</summary><p>笔记</p></details>
-<details><summary>07-04 嵌入式指针概念及范例、内存池改进版</summary><p>笔记</p></details>
-<details><summary>07-05 重载全局new、delete，定位new及重载等</summary><p>笔记</p></details>
-<details><summary>08-01 STL总述、发展史、组成，数据结构谈</summary><p>笔记</p></details>
-<details><summary>08-02 容器分类，array、vector容器精解</summary><p>笔记</p></details>
-<details><summary>08-03 容器的说明和简单应用例续</summary><p>笔记</p></details>
-<details><summary>08-04 分配器概述、使用，工作原理说</summary><p>笔记</p></details>
-<details><summary>08-05 迭代器的概念和分类</summary><p>笔记</p></details>
-<details><summary>08-06 算法概述、内部处理、使用范例</summary><p>笔记</p></details>
-<details><summary>08-07 函数对象回顾、系统函数对象及范例</summary><p>笔记</p></details>
-<details><summary>08-08 适配器概念、分类、范例及总结</summary><p>笔记</p></details>
-<details><summary>09-01 函数调用运算符、function类模板</summary><p>笔记</p></details>
-<details><summary>09-02 万能引用universal reference</summary><p>笔记</p></details>
-<details><summary>09-03 理解模板类型推断、查看类型推断结果</summary><p>笔记</p></details>
-<details><summary>09-04 引用折叠，转发、完美转发，forward</summary><p>笔记</p></details>
-<details><summary>09-05 理解auto类型推断，auto应用场合</summary><p>笔记</p></details>
-<details><summary>09-06 详解decltype含义，decltype主要用途</summary><p>笔记</p></details>
-<details><summary>09-07 可调用对象、std function、std bind</summary><p>笔记</p></details>
-<details><summary>09-08 lambda表达式，for_each、find_if简介</summary><p>笔记</p></details>
-<details><summary>09-09 lambda表达式捕获模式的陷阱分析和展示</summary><p>笔记</p></details>
-<details><summary>09-10 可变参数函数、initializer_list、省略号形参</summary><p>笔记</p></details>
-<details><summary>09-11 萃取(traits)技术概念、范例等</summary><p>笔记</p></details>
-<details><summary>10-01 结束语、未来之路</summary><p>笔记</p></details>
+<style data-id=immersive-translate-input-injected-css>
+    @-webkit-keyframes immersive-translate-loading-animation {
+        from {
+            -webkit-transform: rotate(0deg)
+        }
+
+        to {
+            -webkit-transform: rotate(359deg)
+        }
+    }
+
+    @keyframes immersive-translate-loading-animation {
+        from {
+            transform: rotate(0deg)
+        }
+
+        to {
+            transform: rotate(359deg)
+        }
+    }
+
+    @keyframes immersiveTranslateShadowRolling {
+        0% {
+            box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0)
+        }
+
+        12% {
+            box-shadow: 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0)
+        }
+
+        25% {
+            box-shadow: 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0)
+        }
+
+        36% {
+            box-shadow: 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0)
+        }
+
+        50% {
+            box-shadow: 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color)
+        }
+
+        62% {
+            box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color)
+        }
+
+        75% {
+            box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color)
+        }
+
+        87% {
+            box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color)
+        }
+
+        100% {
+            box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0)
+        }
+    }
+
+    @media (prefers-color-scheme:dark) {}
+</style>
+<meta name=referrer content=no-referrer>
+<link rel=canonical href=http://localhost:81/demo.html>
+<meta http-equiv=content-security-policy
+    content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;">
+<style>
+    img[src="data:,"],
+    source[src="data:,"] {
+        display: none !important
+    }
+</style>
+</head>
+
+<body>
+    <details>
+        <summary>01-01 c++ 语言课程详细介绍</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-01 语言特性、工程构成、可移植性</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-02 auto、头文件防卫、引用、常量</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-03 命名空间简介、基本输入输出精解</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-04 范围for、new内存动态分配、nullptr</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-05 结构、权限修饰符、类简介</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-06 函数新特性、内联函数、const详解</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-07 string类型介绍</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-08 vector类型介绍</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-09 迭代器精彩演绎，失效分析及弥补、实战</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>02-10 类型转换：static_cast等</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-01 成员函数、对象拷贝、私有成员</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-02 构造函数详解，explicit，初始化列表</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-03 inline、const、mutable、this、stat</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-04 类内初始化、默认构造函数、=default;</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-05 拷贝构造函数</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-06 重载运算符、拷贝赋值运算符、析构函数</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-07 派生类、调用顺序、访问等级、函数遮蔽</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-08 基类指针、虚纯虚函数、多态性、虚析构</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-09 友元函数、友元类、友元成员函数</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-10 RTTI、dynamic_cast、typeid、虚函数表</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-11 基类与派生类关系的详细再探讨</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-12 左值、右值，左值引用、右值引用、move</summary> 
+    </details>
+    <details>
+        <summary>03-13 临时对象深入探讨、解析，提高性能手段</summary>
+        <ul>
+            <li>(1) 临时对象的概念</li>
+            <li>
+                (2)产生临时对象的情况和解决
+                <ul>
+                    <li>(2.1) 以传值的方式给函数传递参数</li>
+                    <li>(2.2)类型转换生成的临时对象/隐式类型转换以保证函数调用成功</li>
+                    <li>(2.3)函数返回对象的时候</li>
+                </ul>
+            </li>
+        </ul> 
+    </details>
+    <details>
+        <summary>03-14 对象移动、移动构造函数、移动赋值运算符</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-15 继承的构造函数、多重继承、虚继承</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>03-16 类型转换构造函数、运算符，类成员指针</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-01 模板概念，函数模板定义、调用</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-02 类模板概念，类模板定义、使用</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-03 typename场合、默认模板参数、趣味写法分析</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-04 成员函数模板，显式实例化、声明</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-05 using定义模板别名，显式指定模板参数</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-06 模板全特化、偏特化(局部特化)</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-07 可变参模板</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>04-08 可变参模板续、模板模板参数</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-01 直接内存管理(new-delete)、创建新工程观察内存泄漏</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-02 new、delete探秘，智能指针概述、shared_ptr</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-03 shared_ptr常用操作、计数、自定义删除器等等</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-04 weak_ptr概述、weak_ptr常用操作、尺寸</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-05 shared_ptr使用场景、陷阱、性能分析、使用建议</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-06 unique_ptr概述、常用操作</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>05-07 返回unique_ptr、删除器、尺寸、智能指针</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-01 并发基本概念及实现，进程、线程基本概念</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-02 线程启动、结束，创建线程多法、join，detach</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-03 线程传参详解，detach()大坑，成员函数做线程函数</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-04 创建多个线程、数据共享问题分析、案例代码</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-05 互斥量概念、用法、死锁演示及解决详解</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-06 unique_lock详解</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-07 单例设计模式共享数据分析、解决，call_once</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-08 condition_variable、wait</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-09 async、future、packaged_task、pro</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-10 future其他成员函数、shared_future、ato</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-11 std atomic续谈、std async深入谈</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-12 windows临界区、其他各种mutex互斥量</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>06-13 补充知识、线程池浅谈、数量谈、总结</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>07-01 new、delete的进一步认识</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>07-02 new细节探秘，重载类operator new delete</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>07-03 内存池概念、代码实现和详细分析</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>07-04 嵌入式指针概念及范例、内存池改进版</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>07-05 重载全局new、delete，定位new及重载等</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-01 STL总述、发展史、组成，数据结构谈</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-02 容器分类，array、vector容器精解</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-03 容器的说明和简单应用例续</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-04 分配器概述、使用，工作原理说</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-05 迭代器的概念和分类</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-06 算法概述、内部处理、使用范例</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-07 函数对象回顾、系统函数对象及范例</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>08-08 适配器概念、分类、范例及总结</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-01 函数调用运算符、function类模板</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-02 万能引用universal reference</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-03 理解模板类型推断、查看类型推断结果</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-04 引用折叠，转发、完美转发，forward</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-05 理解auto类型推断，auto应用场合</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-06 详解decltype含义，decltype主要用途</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-07 可调用对象、std function、std bind</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-08 lambda表达式，for_each、find_if简介</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-09 lambda表达式捕获模式的陷阱分析和展示</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-10 可变参数函数、initializer_list、省略号形参</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>09-11 萃取(traits)技术概念、范例等</summary>
+        <p>笔记</p>
+    </details>
+    <details>
+        <summary>10-01 结束语、未来之路</summary>
+        <p>笔记</p>
+    </details>
