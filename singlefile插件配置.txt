@@ -1,0 +1,2 @@
+{year-locale}-{month-locale}-{day-locale} {hours-locale}_{minutes-locale}_{seconds-locale} {page-title}.{filename-extension}
+
